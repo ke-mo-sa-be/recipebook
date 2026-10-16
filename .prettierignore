@@ -1,0 +1,9 @@
+pnpm-lock.yaml
+dist/
+coverage/
+supabase/seed.sql
+supabase/.temp/
+apps/web/src/theme/tokens.css
+apps/web/src/theme/tailwind-theme.css
+docs/wireframes/
+deploy/local/

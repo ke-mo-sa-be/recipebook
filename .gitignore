@@ -1,0 +1,26 @@
+# dependencies & builds
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.vite/
+
+# env & secrets — only .env.example is committed
+.env
+.env.*
+!.env.example
+supabase/functions/.env
+supabase/.env
+
+# Supabase CLI local state
+supabase/.temp/
+supabase/.branches/
+
+# this server's real deployment config (see deploy/examples for templates)
+deploy/local/*
+!deploy/local/README.md
+
+# misc
+*.log
+.DS_Store
+.idea/

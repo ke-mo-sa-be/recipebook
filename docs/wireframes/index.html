@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recipebook wireframes</title>
+<style>
+  /* Low-fidelity on purpose: grey boxes + real labels. Colour only marks the primary action. */
+  :root {
+    --bg: #f4f1ec; --frame: #ffffff; --ink: #222; --mute: #6b6b6b; --line: #c9c4bc;
+    --box: #e4e0d9; --box2: #d6d1c8; --hi: #c2361c; --on-hi: #fff; --note: #fff7d6; --note-ink: #5a4500;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141210; --frame: #1f1c19; --ink: #eee; --mute: #a9a39b; --line: #48423b;
+      --box: #2d2925; --box2: #3a352f; --hi: #ff7a55; --on-hi: #1c0f08; --note: #3a2e10; --note-ink: #f8d676;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Malayalam", sans-serif; }
+  header.top { padding: 20px 16px 8px; max-width: 1200px; margin: auto; }
+  header.top h1 { margin: 0 0 4px; font-size: 1.6rem; }
+  header.top p { margin: 0; color: var(--mute); max-width: 70ch; }
+  nav.toc { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line);
+    overflow-x: auto; white-space: nowrap; padding: 8px 16px; }
+  nav.toc a { display: inline-block; padding: 10px 14px; margin-right: 6px; border-radius: 999px;
+    background: var(--frame); color: var(--ink); text-decoration: none; border: 1px solid var(--line); font-weight: 600; }
+  section.screen { max-width: 1200px; margin: 0 auto; padding: 24px 16px 8px; }
+  section.screen > h2 { margin: 0 0 4px; font-size: 1.35rem; }
+  section.screen > p.why { margin: 0 0 16px; color: var(--mute); max-width: 75ch; }
+  .row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+  .col { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 360px; }
+  .cap { font-weight: 700; font-size: .95rem; }
+  .phone { width: 100%; max-width: 360px; min-height: 700px; background: var(--frame); border: 2px solid var(--line);
+    border-radius: 28px; padding: 14px 14px 0; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
+  .phone.wide { max-width: 820px; min-height: 520px; border-radius: 14px; padding-bottom: 14px; }
+  .notes { background: var(--note); color: var(--note-ink); border-radius: 10px; padding: 10px 12px; font-size: .9rem; }
+  .notes ol, .notes ul { margin: 4px 0 0; padding-left: 18px; }
+  .box { background: var(--box); border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    color: var(--mute); font-size: .85rem; text-align: center; }
+  .line { height: 12px; background: var(--box2); border-radius: 6px; }
+  .line.s { width: 40%; } .line.m { width: 65%; } .line.l { width: 90%; }
+  .hstack { display: flex; gap: 8px; align-items: center; }
+  .hstack.between { justify-content: space-between; }
+  .wrap { flex-wrap: wrap; }
+  .scroll-x { display: flex; gap: 10px; overflow: hidden; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .h { font-weight: 800; font-size: 1.05rem; }
+  .hs { font-weight: 700; font-size: .95rem; }
+  .mute { color: var(--mute); font-size: .85rem; }
+  .btn { min-height: 48px; border-radius: 12px; border: 2px solid var(--line); background: var(--frame); color: var(--ink);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 14px; font-weight: 700; font-size: .95rem; }
+  .btn.pri { background: var(--hi); border-color: var(--hi); color: var(--on-hi); min-height: 56px; }
+  .btn.soft { background: var(--box); border-color: var(--box); }
+  .btn.full { width: 100%; }
+  .chip { min-height: 40px; padding: 0 12px; border-radius: 999px; border: 2px solid var(--line); display: inline-flex;
+    align-items: center; font-size: .85rem; font-weight: 600; }
+  .chip.on { border-color: var(--ink); background: var(--box2); }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-weight: 700; font-size: .85rem; }
+  .input { min-height: 50px; border: 2px solid var(--line); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; color: var(--mute); }
+  .bottomnav { margin-top: auto; margin-inline: -14px; border-top: 2px solid var(--line); display: grid;
+    grid-template-columns: repeat(5, 1fr); min-height: 68px; align-items: center; text-align: center; font-size: .72rem; font-weight: 700; }
+  .bottomnav span::before { content: ""; display: block; width: 24px; height: 24px; margin: 0 auto 2px; border-radius: 6px; background: var(--box2); }
+  .bottomnav .add::before { width: 52px; height: 52px; border-radius: 50%; background: var(--hi); margin-top: -26px; }
+  .bottomnav .act::before { background: var(--ink); }
+  .stickybar { margin-top: auto; margin-inline: -14px; padding: 10px 14px; border-top: 2px solid var(--line); background: var(--frame); }
+  .card { display: flex; flex-direction: column; gap: 6px; }
+  .listrow { display: flex; gap: 10px; align-items: center; }
+  .tick { width: 28px; height: 28px; border: 2px solid var(--line); border-radius: 6px; flex: none; }
+  .tick.on { background: var(--ink); }
+  .badge { font-size: .7rem; font-weight: 800; border: 2px solid var(--ink); border-radius: 6px; padding: 1px 6px; }
+  .sheet { margin-inline: -14px; margin-top: auto; border-top: 2px solid var(--line); border-radius: 20px 20px 0 0; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: var(--frame); box-shadow: 0 -8px 24px rgba(0,0,0,.12); }
+  .scrim { position: absolute; inset: 0; background: rgba(0,0,0,.25); pointer-events: none; }
+  .progress { display: flex; gap: 4px; }
+  .progress i { flex: 1; height: 8px; border-radius: 4px; background: var(--box2); }
+  .progress i.on { background: var(--ink); }
+  .bigstep { font-size: 1.6rem; line-height: 1.45; font-weight: 600; }
+  .dash { border: 3px dashed var(--line); border-radius: 16px; }
+  .sidebar { width: 180px; flex: none; display: flex; flex-direction: column; gap: 6px; }
+  .sidebar .item { padding: 10px 12px; border-radius: 10px; font-weight: 700; font-size: .9rem; }
+  .sidebar .item.on { background: var(--box2); }
+  .ml { font-family: "Noto Sans Malayalam", system-ui, sans-serif; line-height: 1.7; }
+  footer { max-width: 1200px; margin: 24px auto 40px; padding: 0 16px; color: var(--mute); font-size: .9rem; }
+  @media (max-width: 700px) { .phone.wide .sidebar { display: none; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Recipebook: low-fi wireframes (M0)</h1>
+  <p>Layout and flow only, not visual design. Colours, fonts and art come from <code>DESIGN_SYSTEM.md</code>. Grey boxes are photos or text. The red block marks the one primary action on each screen. Every icon in the real UI has a text label beside it.</p>
+</header>
+<nav class="toc" aria-label="Screens">
+  <a href="#home">Home</a><a href="#search">Search</a><a href="#recipe">Recipe</a><a href="#cooking">Cooking mode</a><a href="#wizard">Add wizard</a><a href="#profile">Profile</a><a href="#admin">Admin</a>
+</nav>
+
+<!-- ───────────────────────── HOME ───────────────────────── -->
+<section class="screen" id="home">
+  <h2>1 · Home</h2>
+  <p class="why">One scroll with no tabs. The search field is the biggest thing at the top, because "find a recipe" is the main job. Categories are big picture tiles with words.</p>
+  <div class="row">
+    <div class="col">
+      <div class="cap">Phone: Home</div>
+      <div class="phone">
+        <div class="hstack between"><span class="h">Recipebook</span><span class="chip">മല / EN</span></div>
+        <div class="input">🔍  Search recipes or ingredients…</div>
+        <div class="hstack between"><span class="hs">Featured</span><span class="mute">See all</span></div>
+        <div class="scroll-x">
+          <div class="card" style="min-width:250px"><div class="box" style="height:150px">featured photo</div><div class="line m"></div><div class="line s"></div></div>
+          <div class="card" style="min-width:250px"><div class="box" style="height:150px">photo</div></div>
+        </div>
+        <div class="hs">Categories</div>
+        <div class="grid4">
+          <div class="card"><div class="box" style="height:58px">art</div><span class="mute">Breakfast</span></div>
+          <div class="card"><div class="box" style="height:58px">art</div><span class="mute">Curry</span></div>
+          <div class="card"><div class="box" style="height:58px">art</div><span class="mute">Rice</span></div>
+          <div class="card"><div class="box" style="height:58px">art</div><span class="mute">Snacks</span></div>
+          <div class="card"><div class="box" style="height:58px">art</div><span class="mute">Payasam</span></div>
+          <div class="card"><div class="box" style="height:58px">art</div><span class="mute">Pickles</span></div>
+          <div class="card"><div class="box" style="height:58px">art</div><span class="mute">Drinks</span></div>
+          <div class="card"><div class="box" style="height:58px">+</div><span class="mute">More</span></div>
+        </div>
+        <div class="hstack between"><span class="hs">Popular this week</span><span class="mute">See all</span></div>
+        <div class="scroll-x">
+          <div class="card" style="min-width:150px"><div class="box" style="height:112px">photo</div><div class="line l"></div><div class="mute">⏱ 30 min · 👥 4 · ▣ Veg</div></div>
+          <div class="card" style="min-width:150px"><div class="box" style="height:112px">photo</div><div class="line l"></div><div class="mute">⏱ 45 min · ▲ Non-veg</div></div>
+          <div class="card" style="min-width:150px"><div class="box" style="height:112px">photo</div></div>
+        </div>
+        <div class="hs">Latest</div>
+        <div class="grid2"><div class="box" style="height:90px">card</div><div class="box" style="height:90px">card</div></div>
+        <div class="bottomnav"><span class="act">Home</span><span>Search</span><span class="add">Add</span><span>Saved</span><span>Profile</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Notes</div>
+      <div class="notes"><ol>
+        <li>Tapping the search field opens the Search screen with the keyboard already up.</li>
+        <li>The language switch is always one tap away, at the top of Home and in Settings.</li>
+        <li>Each card shows ❤ likes and 🍳 "cooked it" counts under the meta row (left out here for space).</li>
+        <li>Loading shows skeleton rails in the same shapes. Offline shows a banner, and the rails list cached recipes only.</li>
+        <li>On desktop: top nav, featured as a wide hero, and 4-column grids.</li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── SEARCH ───────────────────────── -->
+<section class="screen" id="search">
+  <h2>2 · Search</h2>
+  <p class="why">One box that works in Malayalam, English and Manglish. The app shows what it understood ("jeerakam = ജീരകം · cumin"), so people trust the results. Filters live in a bottom sheet, with active filters shown as removable chips.</p>
+  <div class="row">
+    <div class="col">
+      <div class="cap">Phone: results</div>
+      <div class="phone">
+        <div class="hstack"><span class="btn">← Back</span><div class="input" style="flex:1;color:var(--ink)">jeerakam</div></div>
+        <div class="mute">Showing recipes with <b>ജീരകം · cumin</b></div>
+        <div class="hstack wrap"><span class="chip on">Filters · 2</span><span class="chip on">Veg ✕</span><span class="chip on">Under 30 min ✕</span></div>
+        <div class="mute">24 recipes</div>
+        <div class="listrow"><div class="box" style="width:96px;height:80px">photo</div><div style="flex:1"><div class="hs ml">ജീരകക്കഞ്ഞി</div><div class="mute">Cumin rice gruel · ⏱ 25 min · ▣ Veg</div></div></div>
+        <div class="listrow"><div class="box" style="width:96px;height:80px">photo</div><div style="flex:1"><div class="line l"></div><div class="mute">⏱ 20 min · ▣ Veg</div></div></div>
+        <div class="listrow"><div class="box" style="width:96px;height:80px">photo</div><div style="flex:1"><div class="line m"></div><div class="mute">⏱ 15 min · ▣ Veg</div></div></div>
+        <div class="listrow"><div class="box" style="width:96px;height:80px">no-photo art</div><div style="flex:1"><div class="line l"></div><div class="mute">⏱ 30 min · ▣ Veg</div></div></div>
+        <div class="bottomnav"><span>Home</span><span class="act">Search</span><span class="add">Add</span><span>Saved</span><span>Profile</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Phone: filter sheet</div>
+      <div class="phone">
+        <div class="input">jeerakam</div>
+        <div class="box" style="height:120px">results (dimmed)</div>
+        <div class="scrim"></div>
+        <div class="sheet" style="position:relative;z-index:1">
+          <div class="hstack between"><span class="h">Filters</span><span class="btn">Close</span></div>
+          <div class="hs">Category</div>
+          <div class="hstack wrap"><span class="chip">Breakfast</span><span class="chip">Curry</span><span class="chip">Rice</span><span class="chip">Snacks</span><span class="chip">Payasam</span><span class="chip">+5</span></div>
+          <div class="hs">Food type</div>
+          <div class="hstack wrap"><span class="chip on">▣ Veg</span><span class="chip">◉ Egg</span><span class="chip">▲ Non-veg</span><span class="chip">Vegan</span></div>
+          <div class="hs">Total time</div>
+          <div class="hstack wrap"><span class="chip">15 min</span><span class="chip on">30 min</span><span class="chip">1 hour</span><span class="chip">Any</span></div>
+          <div class="hs">Region</div>
+          <div class="hstack wrap"><span class="chip">Malabar</span><span class="chip">Travancore</span><span class="chip">Kochi</span><span class="chip">Rest of India</span><span class="chip">World</span></div>
+          <div class="hstack"><span class="btn" style="flex:1">Clear all</span><span class="btn pri" style="flex:2">Show 24 recipes</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Notes</div>
+      <div class="notes"><ol>
+        <li>Before you type, the screen shows recent searches (kept on the device only) and popular ingredients as tappable chips.</li>
+        <li>The result count on the sheet's button updates live as you pick filters.</li>
+        <li>No results: "No recipes with 'xyz' yet." It suggests the closest dictionary match and offers "Add the first one".</li>
+        <li>Desktop: filters become a left sidebar.</li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── RECIPE ───────────────────────── -->
+<section class="screen" id="recipe">
+  <h2>3 · Recipe</h2>
+  <p class="why">No life story: the photo, the facts, then a big <b>Start cooking</b> button. Servings and units sit right on top of the ingredient list, where you need them.</p>
+  <div class="row">
+    <div class="col">
+      <div class="cap">Phone: top</div>
+      <div class="phone">
+        <div class="box" style="height:220px;margin:-14px -14px 0;border-radius:0">cover photo (or category art)</div>
+        <div class="hstack between"><span class="btn">← Back</span><span class="btn">⋯ More</span></div>
+        <div class="h ml" style="font-size:1.4rem">മീൻ കറി</div>
+        <div class="mute">Kerala fish curry · in Malayalam</div>
+        <div class="listrow"><div class="box" style="width:36px;height:36px;border-radius:50%"></div><span class="mute"><b>Ammini</b> · Ernakulam</span></div>
+        <div class="hstack wrap mute"><span>Prep 15 min</span>·<span>Cook 30 min</span>·<span>Serves 4</span>·<span class="badge">▲ Non-veg</span></div>
+        <div class="grid4">
+          <span class="btn soft" style="flex-direction:column;font-size:.75rem">♡<br>Save</span>
+          <span class="btn soft" style="flex-direction:column;font-size:.75rem">❤ 128<br>Like</span>
+          <span class="btn soft" style="flex-direction:column;font-size:.75rem">↗<br>Share</span>
+          <span class="btn soft" style="flex-direction:column;font-size:.75rem">🍳 12<br>Cooked</span>
+        </div>
+        <div class="line l"></div><div class="line m"></div>
+        <div class="hstack between"><span class="h">Ingredients</span></div>
+        <div class="hstack between"><span class="hs">Servings</span><span class="hstack"><span class="btn">−</span><b>4</b><span class="btn">+</span></span></div>
+        <div class="hstack"><span class="chip on" style="flex:1;justify-content:center">Traditional</span><span class="chip" style="flex:1;justify-content:center">Metric</span></div>
+        <div class="mute"><b>For the curry</b></div>
+        <div class="listrow"><span>½ kg</span><span>fish (seer / neymeen)</span></div>
+        <div class="listrow"><span>1 glass</span><span>thin coconut milk <span class="mute">≈ 200 ml</span></span></div>
+        <div class="listrow"><span>2 pieces</span><span>kudampuli <span class="mute">· Malabar tamarind</span></span></div>
+        <div class="listrow"><span class="mute">to taste</span><span>salt</span></div>
+        <div class="stickybar"><span class="btn pri full">▶ Start cooking</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Phone: scrolled down</div>
+      <div class="phone">
+        <div class="h">Steps</div>
+        <div class="listrow" style="align-items:flex-start"><b>1</b><div style="flex:1"><div class="line l"></div><div class="line m" style="margin-top:6px"></div></div></div>
+        <div class="listrow" style="align-items:flex-start"><b>2</b><div style="flex:1"><div class="line l"></div><span class="chip" style="margin-top:6px">⏱ 10 min timer</span></div></div>
+        <div class="listrow" style="align-items:flex-start"><b>3</b><div style="flex:1"><div class="box" style="height:90px">step photo</div></div></div>
+        <div class="box" style="height:60px;justify-content:flex-start;padding:10px">💡 Tip box (accent-soft)</div>
+        <div class="hstack between"><span class="h">Cooked it · 12</span><span class="mute">See all</span></div>
+        <div class="scroll-x"><div class="box" style="min-width:80px;height:80px">photo</div><div class="box" style="min-width:80px;height:80px">photo</div><div class="box dash" style="min-width:80px;height:80px">＋ Add yours</div></div>
+        <div class="hstack between"><span class="h">Variations · 3</span><span class="btn">Make my version</span></div>
+        <div class="h">Comments · 8</div>
+        <div class="listrow"><div class="box" style="width:32px;height:32px;border-radius:50%"></div><div style="flex:1"><div class="line m"></div></div></div>
+        <div class="input">Write a comment…</div>
+        <div class="mute" style="text-align:center;padding:8px">⚑ Report this recipe</div>
+        <div class="stickybar"><span class="btn pri full">▶ Start cooking</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Notes</div>
+      <div class="notes"><ol>
+        <li>The title shows the author's language first, with the other language small underneath if it was given.</li>
+        <li>The metric toggle shows "≈ 200 ml" beside traditional measures instead of replacing them. "To taste" never scales.</li>
+        <li><b>Share</b> opens a sheet with <b>WhatsApp</b> first, then "More options…" (the native share sheet).</li>
+        <li>The <b>Cooked it</b> button opens the camera or gallery, then a one-line note.</li>
+        <li>A variation shows a banner: "Based on <u>Amma's fish curry</u>" (or "original removed").</li>
+        <li><b>More</b> menu: edit or delete (owner), report, copy link.</li>
+        <li>Desktop: ingredients in a sticky left column, steps on the right.</li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── COOKING ───────────────────────── -->
+<section class="screen" id="cooking">
+  <h2>4 · Cooking mode</h2>
+  <p class="why">The phone sits on the counter: one step per screen, huge text, and the two biggest buttons are Back and Next. The screen stays on. Voice is a bonus, never required.</p>
+  <div class="row">
+    <div class="col">
+      <div class="cap">Phone: step view</div>
+      <div class="phone">
+        <div class="hstack between"><span class="btn">✕ Exit</span><span class="mute">☀ Screen stays on</span></div>
+        <div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        <div class="hs">Step 3 of 7</div>
+        <div class="bigstep">Add the ground coconut paste and simmer on low flame for 10 minutes. Don't let it boil.</div>
+        <span class="btn" style="min-height:64px;font-size:1.1rem">⏱ Start 10:00 timer</span>
+        <div class="box" style="height:110px">step photo (if any)</div>
+        <div class="hstack"><span class="btn soft" style="flex:1">☰ Ingredients</span><span class="btn soft" style="flex:1">🎤 Voice: on</span></div>
+        <div class="mute" style="text-align:center">Say "next" / "അടുത്തത്" or "back" / "തിരികെ"</div>
+        <div class="stickybar hstack"><span class="btn" style="flex:1;min-height:64px">◀ Back</span><span class="btn pri" style="flex:2;min-height:64px">Next ▶</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Phone: timers + checklist</div>
+      <div class="phone">
+        <div class="hstack between"><span class="btn">✕ Exit</span><span class="hs">Step 5 of 7</span></div>
+        <div class="hstack wrap"><span class="chip on">⏱ Step 3 · 04:12</span><span class="chip">⏱ Step 5 · 15:00 ▶</span></div>
+        <div class="box" style="height:80px">step text (dimmed)</div>
+        <div class="scrim"></div>
+        <div class="sheet" style="position:relative;z-index:1">
+          <div class="hstack between"><span class="h">Ingredients</span><span class="btn">Close</span></div>
+          <div class="listrow"><span class="tick on"></span><s class="mute">½ kg fish</s></div>
+          <div class="listrow"><span class="tick on"></span><s class="mute">2 pieces kudampuli</s></div>
+          <div class="listrow"><span class="tick"></span><span>1 glass thin coconut milk</span></div>
+          <div class="listrow"><span class="tick"></span><span>1 tsp chilli powder</span></div>
+          <div class="listrow"><span class="tick"></span><span>salt, to taste</span></div>
+          <div class="mute">Servings: 4 (change on the recipe page)</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Phone: last step</div>
+      <div class="phone">
+        <div class="hstack between"><span class="btn">✕ Exit</span><span class="hs">Done!</span></div>
+        <div class="box" style="height:160px">friendly illustration</div>
+        <div class="h" style="text-align:center">Enjoy your meal 🎉</div>
+        <span class="btn pri full">📷 Share a "Cooked it" photo</span>
+        <span class="btn full">♡ Save recipe</span>
+        <span class="btn full">Back to recipe</span>
+      </div>
+      <div class="notes"><ol>
+        <li>Timers keep running when you change steps, and the running ones float as chips at the top. When a timer ends, the phone sounds, vibrates and shows a full-width banner.</li>
+        <li>The mic button only appears where the browser supports voice. Recognised words show briefly ("Heard: next").</li>
+        <li>Saved recipes open in cooking mode offline.</li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── WIZARD ───────────────────────── -->
+<section class="screen" id="wizard">
+  <h2>5 · Add-recipe wizard</h2>
+  <p class="why">Five short steps instead of one long form. Every step saves automatically ("Saved ✓"), so closing the app loses nothing. Back and Next are always in the same place.</p>
+  <div class="row">
+    <div class="col">
+      <div class="cap">1 · Basics</div>
+      <div class="phone">
+        <div class="hstack between"><span class="btn">✕ Close</span><span class="mute">Saved ✓ just now</span></div>
+        <div class="progress"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        <div class="h">What are you cooking?</div>
+        <div class="field"><label>I'm writing in</label><div class="hstack"><span class="chip on" style="flex:1;justify-content:center">മലയാളം</span><span class="chip" style="flex:1;justify-content:center">English</span></div></div>
+        <div class="field"><label>Recipe name (Malayalam)</label><div class="input ml">ഉദാ: മീൻ കറി</div></div>
+        <div class="field"><label>Name in English <span class="mute">(optional)</span></label><div class="input">e.g. Fish curry</div></div>
+        <div class="field"><label>Category</label><div class="hstack wrap"><span class="chip">Breakfast</span><span class="chip on">Curry</span><span class="chip">Rice</span><span class="chip">+ more</span></div></div>
+        <div class="field"><label>Food type</label><div class="hstack wrap"><span class="chip">▣ Veg</span><span class="chip">◉ Egg</span><span class="chip on">▲ Non-veg</span><span class="chip">Vegan</span></div></div>
+        <div class="grid2"><div class="field"><label>Prep (min)</label><div class="hstack"><span class="btn">−</span><b>15</b><span class="btn">+</span></div></div><div class="field"><label>Cook (min)</label><div class="hstack"><span class="btn">−</span><b>30</b><span class="btn">+</span></div></div></div>
+        <div class="field"><label>Serves</label><div class="hstack"><span class="btn">−</span><b>4</b><span class="btn">+</span></div></div>
+        <div class="stickybar hstack"><span class="btn" style="flex:1">Back</span><span class="btn pri" style="flex:2">Next: Photo</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">2 · Photo</div>
+      <div class="phone">
+        <div class="hstack between"><span class="btn">✕ Close</span><span class="mute">Saved ✓</span></div>
+        <div class="progress"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="h">Add a photo</div>
+        <div class="box dash" style="height:260px;flex-direction:column;gap:12px"><span class="btn">📷 Take a photo</span><span class="btn">🖼 Choose from gallery</span></div>
+        <div class="mute">Photos are made smaller before upload, and location info is removed.</div>
+        <span class="btn full">Skip: use a picture for "Curry"</span>
+        <div class="stickybar hstack"><span class="btn" style="flex:1">Back</span><span class="btn pri" style="flex:2">Next: Ingredients</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">3 · Ingredients</div>
+      <div class="phone">
+        <div class="hstack between"><span class="btn">✕ Close</span><span class="mute">Saved ✓</span></div>
+        <div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+        <div class="h">Ingredients</div>
+        <div class="box" style="padding:10px;flex-direction:column;align-items:stretch;gap:8px;background:transparent;border:2px solid var(--line)">
+          <div class="hstack"><span class="btn">−</span><b>1</b><span class="btn">+</span><span class="chip" style="flex:1">glass ▾</span></div>
+          <div class="input" style="color:var(--ink)">jeerak|</div>
+          <div class="box" style="padding:8px;justify-content:flex-start;flex-direction:column;align-items:flex-start;gap:4px">
+            <b class="ml">ജീരകം · cumin</b><span>ജീരകപ്പൊടി · cumin powder</span><span class="mute">Use "jeerak" as typed</span>
+          </div>
+          <div class="input">Note: e.g. crushed</div>
+        </div>
+        <div class="listrow"><span class="mute">↑↓</span><span>½ kg fish</span><span class="mute" style="margin-left:auto">Edit</span></div>
+        <div class="listrow"><span class="mute">↑↓</span><span>2 pieces kudampuli</span><span class="mute" style="margin-left:auto">Edit</span></div>
+        <span class="btn full">＋ Add ingredient</span>
+        <span class="btn soft full">＋ Add a group (e.g. "For grinding")</span>
+        <div class="stickybar hstack"><span class="btn" style="flex:1">Back</span><span class="btn pri" style="flex:2">Next: Steps</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">4 · Steps</div>
+      <div class="phone">
+        <div class="hstack between"><span class="btn">✕ Close</span><span class="mute">Saved ✓</span></div>
+        <div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+        <div class="h">Steps</div>
+        <div class="field"><label>Step 1</label><div class="box" style="height:90px;justify-content:flex-start;align-items:flex-start;padding:10px;background:transparent;border:2px solid var(--line)">Soak kudampuli in warm water…</div></div>
+        <div class="field"><label>Step 2</label><div class="box" style="height:90px;justify-content:flex-start;align-items:flex-start;padding:10px;background:transparent;border:2px solid var(--line)">…simmer for 10 minutes.</div>
+          <div class="hstack"><span class="chip on">⏱ Timer found: 10 min ✓</span><span class="chip">Remove</span></div>
+          <div class="hstack"><span class="btn">📷 Add photo</span><span class="btn">↑</span><span class="btn">↓</span><span class="btn">🗑</span></div></div>
+        <span class="btn full">＋ Add step</span>
+        <div class="field"><label>Tips <span class="mute">(optional)</span></label><div class="input">Anything that helps…</div></div>
+        <div class="stickybar hstack"><span class="btn" style="flex:1">Back</span><span class="btn pri" style="flex:2">Next: Review</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">5 · Review</div>
+      <div class="phone">
+        <div class="hstack between"><span class="btn">✕ Close</span><span class="mute">Saved ✓</span></div>
+        <div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+        <div class="h">Ready to share?</div>
+        <div class="card"><div class="box" style="height:150px">card preview</div><div class="line m"></div><div class="mute">⏱ 45 min · 👥 4 · ▲ Non-veg</div></div>
+        <div class="listrow"><span class="tick on"></span>Name, category, food type</div>
+        <div class="listrow"><span class="tick on"></span>6 ingredients</div>
+        <div class="listrow"><span class="tick on"></span>5 steps</div>
+        <div class="listrow"><span class="tick"></span><span>No photo <span class="mute">(that's OK)</span></span></div>
+        <div class="mute">By publishing you agree to the <u>Community Guidelines</u>.</div>
+        <div class="stickybar" style="display:flex;flex-direction:column;gap:8px"><span class="btn pri full">Publish recipe</span><span class="btn full">Keep as draft</span></div>
+      </div>
+      <div class="notes"><ol>
+        <li>Each step can be revisited by tapping the progress bar. Missing required fields are listed on Review with "Fix" links.</li>
+        <li>Steps are reordered with ↑/↓ buttons, not drag and drop, which is hard with greasy hands.</li>
+        <li>The unit picker lists Kerala measures first: glass, cup, tea cup, pidi, pinch, spoon…</li>
+        <li>Import from URL (M7) opens straight at Review with the fields filled in.</li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── PROFILE ───────────────────────── -->
+<section class="screen" id="profile">
+  <h2>6 · Profile</h2>
+  <p class="why">The public profile and your own profile use one layout. On your own, you also get Edit, Drafts and Settings.</p>
+  <div class="row">
+    <div class="col">
+      <div class="cap">Phone: your own profile</div>
+      <div class="phone">
+        <div class="hstack between"><span class="h">Profile</span><span class="btn">⚙ Settings</span></div>
+        <div class="hstack"><div class="box" style="width:84px;height:84px;border-radius:50%">avatar</div><div><div class="h">Ammini</div><div class="mute">@ammini_cooks · Ernakulam</div></div></div>
+        <div class="line l"></div><div class="line m"></div>
+        <div class="hstack"><span class="btn" style="flex:1">✎ Edit profile</span><span class="btn" style="flex:1">Drafts · 2</span></div>
+        <div class="hstack" style="border-bottom:2px solid var(--line)"><span class="chip on" style="border-radius:8px">Recipes · 12</span><span class="chip" style="border-radius:8px">Variations · 3</span><span class="chip" style="border-radius:8px">Cooked it · 8</span></div>
+        <div class="grid2"><div class="box" style="height:120px">card</div><div class="box" style="height:120px">card</div><div class="box" style="height:120px">card</div><div class="box" style="height:120px">card</div></div>
+        <div class="bottomnav"><span>Home</span><span>Search</span><span class="add">Add</span><span>Saved</span><span class="act">Profile</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Phone: Settings</div>
+      <div class="phone">
+        <div class="hstack"><span class="btn">← Back</span><span class="h">Settings</span></div>
+        <div class="field"><label>Language</label><div class="hstack"><span class="chip on" style="flex:1;justify-content:center">മലയാളം</span><span class="chip" style="flex:1;justify-content:center">English</span></div></div>
+        <div class="field"><label>Text size</label><div class="hstack"><span class="chip" style="flex:1;justify-content:center">A</span><span class="chip on" style="flex:1;justify-content:center;font-size:1rem">A</span><span class="chip" style="flex:1;justify-content:center;font-size:1.2rem">A</span></div></div>
+        <div class="field"><label>Theme</label><div class="hstack"><span class="chip on" style="flex:1;justify-content:center">Auto</span><span class="chip" style="flex:1;justify-content:center">Light</span><span class="chip" style="flex:1;justify-content:center">Dark</span></div></div>
+        <span class="btn full">⬇ Download my recipes (JSON)</span>
+        <span class="btn full">Sign out</span>
+        <span class="btn full" style="border-color:currentColor">Delete my account…</span>
+        <div class="mute">About · Guidelines · Terms · Privacy · Contact</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Notes</div>
+      <div class="notes"><ol>
+        <li>Someone else's profile has no Edit, Drafts or Settings. Instead the ⋯ menu offers "Report profile".</li>
+        <li>Deleting an account goes to a confirm screen that lists exactly what will be deleted, and you type your handle to confirm.</li>
+        <li>Text size and theme apply instantly, without saving.</li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── ADMIN ───────────────────────── -->
+<section class="screen" id="admin">
+  <h2>7 · Admin</h2>
+  <p class="why">Built for a moderator on a phone or laptop: a queue of reports, each one actionable in one tap, with every action logged.</p>
+  <div class="row">
+    <div class="col" style="max-width:820px">
+      <div class="cap">Tablet / desktop: report queue</div>
+      <div class="phone wide">
+        <div class="hstack between"><span class="h">Admin</span><span class="mute">Moderator: Admin</span></div>
+        <div class="hstack" style="align-items:flex-start;gap:16px">
+          <div class="sidebar">
+            <span class="item on">⚑ Reports · 5</span><span class="item">Hidden content</span><span class="item">Users</span><span class="item">Featured row</span><span class="item">Ingredient dictionary</span><span class="item">Activity log</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+            <div class="hstack"><span class="chip on">Open · 5</span><span class="chip">Actioned</span><span class="chip">Dismissed</span></div>
+            <div class="box" style="padding:12px;flex-direction:column;align-items:stretch;gap:8px;background:transparent;border:2px solid var(--line)">
+              <div class="hstack between"><span class="hs">Recipe: "Best biryani!!! click here"</span><span class="badge">Auto-hidden</span></div>
+              <div class="mute">Spam × 3 reports · by @newuser42 (joined 2 days ago) · 1 h ago</div>
+              <div class="hstack"><div class="box" style="width:80px;height:60px">thumb</div><div style="flex:1"><div class="line l"></div><div class="line m" style="margin-top:6px"></div></div></div>
+              <div class="hstack wrap"><span class="btn">Keep hidden</span><span class="btn">Restore</span><span class="btn">Delete</span><span class="btn">Suspend user…</span><span class="btn">Dismiss</span></div>
+            </div>
+            <div class="box" style="padding:12px;flex-direction:column;align-items:stretch;gap:8px;background:transparent;border:2px solid var(--line)">
+              <div class="hstack between"><span class="hs">Comment on "Sambar"</span><span class="mute">Offensive × 1</span></div>
+              <div class="line l"></div>
+              <div class="hstack wrap"><span class="btn">Hide</span><span class="btn">Delete</span><span class="btn">Dismiss</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="cap">Notes</div>
+      <div class="notes"><ol>
+        <li>Each action asks for an optional reason and writes it to the Activity log.</li>
+        <li>"Suspend user…" offers 1 day, 7 days or until lifted. A suspended user can still read but can't post.</li>
+        <li><b>Users</b> (admin only): search, see their role, suspend, and change role.</li>
+        <li><b>Featured row</b>: pick recipes and reorder them with ↑↓.</li>
+        <li><b>Dictionary</b>: an editable table with Malayalam, English and Manglish aliases, plus a "used in N recipes" count.</li>
+        <li>On phone: the sidebar becomes a top tab list and the cards stack.</li>
+      </ol></div>
+    </div>
+  </div>
+</section>
+
+<footer>Recipebook · M0 low-fi wireframes · 2026-10-16. Malayalam samples are drafts for family review.</footer>
+</body>
+</html>

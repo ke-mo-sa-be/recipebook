@@ -7,3 +7,4 @@ apps/web/src/theme/tokens.css
 apps/web/src/theme/tailwind-theme.css
 docs/wireframes/
 deploy/local/
+supabase/tests/**/*.inc

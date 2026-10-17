@@ -2,7 +2,7 @@
 
 ## 1. Project context
 
-- **Project:** Recipebook (working name; the name lives only in `apps/web/src/brand/brand.ts`)
+- **Project:** Paachakam / പാചകം (the name lives only in `apps/web/src/brand/brand.ts`; the repo and packages keep the older `recipebook` name)
 - **Purpose:** a free, public, open-source community recipe platform, built for Kerala first and open to everyone. Malayalam comes first, with English as an equal. It's built to be kitchen-proof.
 - **Primary users:** home cooks in Kerala, often with low tech confidence (comfortable with WhatsApp and YouTube), using mid-range Android phones on 4G.
 

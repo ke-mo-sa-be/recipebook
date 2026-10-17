@@ -2,7 +2,7 @@
 
 ## 1. System overview
 
-Recipebook is a static React PWA talking to a **self-hosted Supabase** stack: Postgres, Auth (GoTrue), PostgREST, Storage with imgproxy, Realtime and Edge Functions behind the Supabase API gateway. There is **no custom API server**:
+Paachakam is a static React PWA talking to a **self-hosted Supabase** stack: Postgres, Auth (GoTrue), PostgREST, Storage with imgproxy, Realtime and Edge Functions behind the Supabase API gateway. There is **no custom API server**:
 
 - **Row-level security** in Postgres enforces business rules and permissions.
 - **RPC functions** cover multi-step operations: search, make-variation, moderation.

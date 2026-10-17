@@ -2,13 +2,13 @@
 
 ## 1. Product overview
 
-|                          |                                                                                               |
-| ------------------------ | --------------------------------------------------------------------------------------------- |
-| **Product name**         | Recipebook (working name; final name TBD, changed only in `apps/web/src/brand/brand.ts`)      |
-| **One-line description** | A free, ad-free community recipe app, built for Kerala home cooks first and open to everyone. |
-| **Product type**         | Community web app / installable PWA                                                           |
-| **Primary platform**     | Mobile web (mid-range Android, 4G). Desktop is supported.                                     |
-| **Licence**              | AGPL-3.0, self-hostable                                                                       |
+|                          |                                                                                                   |
+| ------------------------ | ------------------------------------------------------------------------------------------------- |
+| **Product name**         | Paachakam / പാചകം ("cooking"), decided 2026-10-17. Defined only in `apps/web/src/brand/brand.ts`. |
+| **One-line description** | A free, ad-free community recipe app, built for Kerala home cooks first and open to everyone.     |
+| **Product type**         | Community web app / installable PWA                                                               |
+| **Primary platform**     | Mobile web (mid-range Android, 4G). Desktop is supported.                                         |
+| **Licence**              | AGPL-3.0, self-hostable                                                                           |
 
 ## 2. Problem
 
@@ -146,7 +146,7 @@ Privacy-preserving and server-side only. No analytics SDKs.
 
 ## 12. Open questions
 
-- The final product name and logo.
+- The logo. The name is decided: Paachakam / പാചകം.
 - The exact values for Kerala measures. A draft goes to family review in M2.
 - Who the first moderators are, beyond the admin.
 

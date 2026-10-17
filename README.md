@@ -1,11 +1,11 @@
-# Recipebook · പാചകപ്പുസ്തകം
+# Paachakam · പാചകം
 
 **A free community recipe app, built for Kerala home cooks first and open to everyone.**
 Malayalam-first, with English as an equal. Kitchen-proof: big text, one step at a time, the screen stays on. No ads, no life stories, no tracking. Free forever. Self-hostable. AGPL-3.0.
 
 > **Status: early development (M1).** The design is approved. Accounts, profiles, settings and the app shell work; recipes arrive in M2. Nothing is usable by the public yet. See [ROADMAP.md](ROADMAP.md) and [CHANGELOG.md](CHANGELOG.md).
 >
-> "Recipebook" is a working name.
+> The repository and package names (`recipebook`, `@recipebook/*`) predate the product name and are kept for stability.
 
 ## What makes it different
 

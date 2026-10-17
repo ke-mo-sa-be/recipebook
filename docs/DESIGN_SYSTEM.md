@@ -26,7 +26,7 @@ Tokens live in [`apps/web/src/theme/tokens.json`](../apps/web/src/theme/tokens.j
 
 |                  |                                                                                                                                                                       |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Brand name       | Placeholder **Recipebook / പാചകപ്പുസ്തകം**, defined only in `apps/web/src/brand/brand.ts`.                                                                            |
+| Brand name       | **Paachakam / പാചകം** (decided 2026-10-17), defined only in `apps/web/src/brand/brand.ts`.                                                                            |
 | Logo             | Placeholder: the "cooking" pan sticker plus the wordmark in Inter Semibold. To be replaced when the final name is chosen.                                             |
 | Voice            | Like a kind neighbour who cooks well. Short sentences. Uses "you". Never says "invalid", "error occurred" or "failed to".                                             |
 | Headline pattern | **Two-tone:** a statement in black, then a soft-grey continuation. "Good evening, Ammini. / What's cooking today?" · "Ammini's cookbook. / 12 recipes, 3 variations." |

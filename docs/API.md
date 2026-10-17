@@ -1,6 +1,6 @@
 # API Documentation
 
-Recipebook has no custom API server. "The API" means:
+Paachakam has no custom API server. "The API" means:
 
 - **PostgREST** for table CRUD, filtered by RLS,
 - **Postgres RPCs** for multi-step operations,

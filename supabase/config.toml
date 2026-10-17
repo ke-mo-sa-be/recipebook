@@ -434,3 +434,10 @@ enabled = true
 # Edge Functions. `verify_jwt = false` only for endpoints that must work without a session.
 [functions.health]
 verify_jwt = false
+
+[functions.process-image]
+verify_jwt = true
+
+# Called with the service key only (checked in the function); the gateway JWT check would reject it.
+[functions.media-gc]
+verify_jwt = false

@@ -6,3 +6,4 @@ export * from './measures.ts';
 export * from './scale.ts';
 export * from './timers.ts';
 export * from './manglish.ts';
+export * from './webp.ts';

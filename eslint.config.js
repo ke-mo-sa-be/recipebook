@@ -14,6 +14,7 @@ export default tseslint.config(
       'docs/wireframes/**',
       'deploy/local/**',
       'e2e/.results/**',
+      'e2e/.tools/**',
     ],
   },
   js.configs.recommended,

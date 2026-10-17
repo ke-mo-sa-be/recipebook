@@ -42,10 +42,10 @@ export function SettingsPage() {
 
   return (
     <div key={i18n.language} className="mx-auto flex w-full max-w-(--rb-size-reading-max) flex-col gap-8">
-      <PageHeader title={t('settings.title')} back />
+      <PageHeader title={t('settings.title')} soft={t('settings.soft')} back />
 
-      <section aria-labelledby="display" className="flex flex-col gap-6 rounded-lg bg-surface p-5 shadow-sm">
-        <h2 id="display" className="text-h2">
+      <section aria-labelledby="display" className="card flex flex-col gap-6 p-5">
+        <h2 id="display" className="text-h3">
           {t('settings.display')}
         </h2>
         <ChoiceGroup<Lang>
@@ -80,12 +80,8 @@ export function SettingsPage() {
       </section>
 
       {session && (
-        <section
-          id="profile"
-          aria-labelledby="profile-h"
-          className="flex flex-col gap-4 rounded-lg bg-surface p-5 shadow-sm"
-        >
-          <h2 id="profile-h" className="text-h2">
+        <section id="profile" aria-labelledby="profile-h" className="card flex flex-col gap-4 p-5">
+          <h2 id="profile-h" className="text-h3">
             {t('settings.profile')}
           </h2>
           {profile.data ? (
@@ -97,11 +93,8 @@ export function SettingsPage() {
       )}
 
       {session && (
-        <section
-          aria-labelledby="account"
-          className="flex flex-col gap-4 rounded-lg bg-surface p-5 shadow-sm"
-        >
-          <h2 id="account" className="text-h2">
+        <section aria-labelledby="account" className="card flex flex-col gap-4 p-5">
+          <h2 id="account" className="text-h3">
             {t('settings.account')}
           </h2>
           <p className="text-text-muted">{t('settings.signedInAs', { email: session.user.email })}</p>

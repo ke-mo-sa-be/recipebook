@@ -1,39 +1,88 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { ChefHat } from 'lucide-react';
-import { brand } from '../../brand/brand.ts';
-import { currentLang } from '../../i18n/index.ts';
-import { buttonClass } from '../../components/ui/Button.tsx';
+import { Camera, Settings, UserRound } from 'lucide-react';
+import { Headline } from '../../components/ui/Headline.tsx';
+import { Composer } from '../../components/ui/Composer.tsx';
+import { Chip } from '../../components/ui/Chip.tsx';
 import { EmptyState } from '../../components/ui/States.tsx';
+import { IconLink } from '../../components/ui/IconButton.tsx';
+import { Avatar } from '../../components/ui/Avatar.tsx';
+import { useAuth } from '../auth/AuthProvider.tsx';
+import { useMyProfile } from '../profile/api.ts';
+import { KitchenPicker } from './KitchenPicker.tsx';
 
-// Real feeds (featured, popular, latest, categories) arrive in M3.
+const QUICK = ['quick', 'breakfast', 'onam', 'snacks'] as const;
+
+function greetingKey(hour = new Date().getHours()) {
+  if (hour < 12) return 'home.greeting.morning';
+  if (hour < 17) return 'home.greeting.afternoon';
+  return 'home.greeting.evening';
+}
+
 export function HomePage() {
   const { t } = useTranslation();
-  const lang = currentLang();
+  const navigate = useNavigate();
+  const { session } = useAuth();
+  const profile = useMyProfile();
+  const name = profile.data?.display_name;
+  const search = (q: string) => navigate(q ? `/search?q=${encodeURIComponent(q)}` : '/search');
+
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        {/* Shrinks with the screen only when the brand name would not fit (long Malayalam word at XL text). */}
-        <h1 className="text-[length:min(var(--rb-text-display),9.5vw)] leading-(--rb-leading-display) font-extrabold md:text-display">
-          {brand.name[lang]}
-        </h1>
-        <p className="text-lead text-text-muted">{brand.tagline[lang]}</p>
+      {/* Phone/tablet top row; desktop has the top bar instead. */}
+      <div className="flex items-center justify-between lg:hidden">
+        <IconLink to="/settings" label={t('nav.settings')} icon={<Settings aria-hidden />} />
+        {session ? (
+          <Link to="/me" aria-label={t('nav.profile')} className="rounded-pill">
+            <Avatar name={name ?? '?'} />
+          </Link>
+        ) : (
+          <IconLink to="/me" label={t('nav.profile')} icon={<UserRound aria-hidden />} />
+        )}
       </div>
-      <Link
-        to="/search"
-        className="flex min-h-[56px] items-center rounded-md border-2 border-border-strong bg-surface px-4 text-text-muted"
-      >
-        {t('search.placeholder')}
-      </Link>
+
+      {/* minmax(0,…): without it the chip row's natural width stretches the column past the screen. */}
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center lg:gap-10">
+        <div className="flex flex-col gap-5">
+          <Headline size="display" soft={t('home.question')}>
+            {name ? t(greetingKey(), { name }) : t('home.welcome')}
+          </Headline>
+          <p className="hidden max-w-[46ch] text-lead text-text-muted lg:block">{t('home.pitch')}</p>
+          <Composer
+            className="lg:hidden"
+            label={t('search.placeholder')}
+            placeholder={t('search.placeholder')}
+            submitLabel={t('nav.search')}
+            onSubmit={search}
+            extra={
+              <button
+                type="button"
+                disabled
+                className="inline-flex min-h-[40px] items-center gap-2 rounded-pill bg-surface-sunken px-3.5 text-small font-medium text-text disabled:cursor-not-allowed"
+              >
+                <Camera aria-hidden className="size-[18px]" />
+                {t('home.scan')}
+                <span className="rounded-pill bg-accent-soft px-1.5 text-[10px] font-bold tracking-wide text-on-accent-soft uppercase">
+                  {t('badge.soon')}
+                </span>
+              </button>
+            }
+          />
+          <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 lg:mx-0 lg:flex-wrap lg:px-0">
+            {QUICK.map((k) => (
+              <Chip key={k} to={`/search?q=${encodeURIComponent(t(`home.chips.${k}`))}`}>
+                {t(`home.chips.${k}`)}
+              </Chip>
+            ))}
+          </div>
+        </div>
+        <KitchenPicker />
+      </div>
+
       <EmptyState
-        icon={<ChefHat />}
+        stickers={['pancakes', 'curry-rice', 'steaming-bowl']}
         title={t('home.soon.title')}
         body={t('home.soon.body')}
-        action={
-          <Link to="/add" className={buttonClass('primary')}>
-            {t('home.soon.action')}
-          </Link>
-        }
       />
     </div>
   );

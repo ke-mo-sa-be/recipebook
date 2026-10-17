@@ -9,8 +9,8 @@ import { useAuth } from '../features/auth/AuthProvider.tsx';
 import { useMyProfile } from '../features/profile/api.ts';
 import { OnboardingSheet } from '../features/onboarding/OnboardingSheet.tsx';
 import { LanguageChooser } from '../features/onboarding/LanguageChooser.tsx';
-import { BottomNav } from './BottomNav.tsx';
-import { TopNav } from './TopNav.tsx';
+import { FloatingNav } from './FloatingNav.tsx';
+import { TopBar } from './TopBar.tsx';
 
 function useOnline() {
   return useSyncExternalStore(
@@ -77,7 +77,7 @@ export function AppShell() {
       >
         {t('nav.skip')}
       </a>
-      <TopNav />
+      <TopBar />
       {!online && (
         <p
           role="status"
@@ -89,11 +89,11 @@ export function AppShell() {
       )}
       <main
         id="main"
-        className="mx-auto w-full max-w-(--rb-size-content-max) px-4 pt-6 pb-[calc(var(--rb-size-bottom-nav)+2rem)] md:px-6 md:pb-12"
+        className="mx-auto w-full max-w-(--rb-size-content-max) px-5 pt-4 pb-[calc(120px+env(safe-area-inset-bottom))] lg:px-10 lg:pt-2 lg:pb-16"
       >
         <Outlet />
       </main>
-      <BottomNav />
+      <FloatingNav />
       <QueryToast />
       <ScrollRestoration />
       <LanguageChooser />

@@ -34,9 +34,9 @@ export function TextField({ label, hint, error, className, type = 'text', id, ..
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy || undefined}
           className={cx(
-            'min-h-[52px] w-full rounded-sm border-2 bg-surface px-3 text-body text-text placeholder:text-text-muted',
+            'min-h-[54px] w-full rounded-md border-[1.5px] bg-surface px-4 text-body text-text placeholder:text-text-muted',
             'focus-visible:border-focus',
-            error ? 'border-danger' : 'border-border-strong',
+            error ? 'border-danger' : 'border-border focus-visible:border-border-strong',
             isPassword && 'pr-14',
           )}
           {...rest}

@@ -20,7 +20,7 @@ export function Sheet({ labelledBy, children }: { labelledBy: string; children: 
         role="dialog"
         aria-modal="true"
         aria-labelledby={labelledBy}
-        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-xl bg-surface p-6 shadow-lg md:max-w-md md:rounded-xl"
+        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-[32px] bg-bg p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-lg md:max-w-md md:rounded-[32px]"
       >
         {children}
       </div>

@@ -11,7 +11,9 @@
     font-family: var(--rb-font-sans);
     font-size: var(--rb-text-body);
     line-height: var(--rb-leading-body);
+    letter-spacing: var(--rb-tracking-body);
     -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
     overflow-wrap: break-word;
   }
   h1,
@@ -30,5 +32,20 @@
       animation-duration: 0.01ms !important;
       transition-duration: 0.01ms !important;
     }
+  }
+}
+
+@layer components {
+  /* Die-cut stickers: the white outline is baked into the image (scripts/stickers.mjs), so one soft
+     shadow is all the CSS needed. */
+  .sticker {
+    filter: drop-shadow(0 5px 7px rgb(21 20 19 / 0.16));
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .card {
+    background: var(--rb-color-surface);
+    border-radius: var(--rb-radius-lg);
+    box-shadow: var(--rb-shadow-sm);
   }
 }

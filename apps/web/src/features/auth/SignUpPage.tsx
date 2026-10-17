@@ -38,7 +38,15 @@ export function SignUpPage() {
   }
 
   return (
-    <AuthLayout title={t('auth.signUp.title')} intro={t('auth.signUp.intro')}>
+    <AuthLayout
+      title={t('auth.signUp.heading')}
+      soft={t('auth.signUp.soft')}
+      stickers={[
+        { slug: 'coconut', size: 74, tilt: -7 },
+        { slug: 'curry-rice', size: 92, tilt: 4 },
+        { slug: 'banana', size: 72, tilt: 9 },
+      ]}
+    >
       <GoogleButton next={next} />
       <form noValidate onSubmit={onSubmit} className="flex flex-col gap-4">
         <TextField
@@ -66,7 +74,7 @@ export function SignUpPage() {
           error={errors.password && t(errors.password)}
         />
         {formError && (
-          <p role="alert" className="rounded-md bg-danger-soft p-3 text-on-danger-soft">
+          <p role="alert" className="rounded-lg bg-danger-soft p-3 text-on-danger-soft">
             {t(formError)}
           </p>
         )}
@@ -78,7 +86,7 @@ export function SignUpPage() {
         {t('auth.signUp.haveAccount')}{' '}
         <Link
           to={`/auth/sign-in?next=${encodeURIComponent(next)}`}
-          className="font-bold text-primary underline-offset-4 hover:underline"
+          className="font-semibold underline decoration-border-strong underline-offset-4"
         >
           {t('auth.signIn.title')}
         </Link>

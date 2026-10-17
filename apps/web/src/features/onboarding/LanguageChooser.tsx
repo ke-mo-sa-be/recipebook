@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { brand } from '../../brand/brand.ts';
 import { hasChosenLanguage, setLanguage } from '../../i18n/index.ts';
 import { buttonClass } from '../../components/ui/Button.tsx';
 import { Sheet } from '../../components/ui/Sheet.tsx';
+import { Sticker } from '../../components/ui/Sticker.tsx';
 
 /**
  * First visit only. Deliberately bilingual and not translated: the person hasn't picked a language yet.
@@ -18,11 +18,16 @@ export function LanguageChooser() {
   return (
     <Sheet labelledBy="lang-title">
       <div className="flex flex-col items-center gap-5 text-center">
-        <img src={brand.logo} alt="" className="size-16" />
-        <h2 id="lang-title" className="text-h2">
-          <span lang="ml">ഭാഷ തിരഞ്ഞെടുക്കൂ</span>
-          <br />
-          <span lang="en" className="text-h3 text-text-muted">
+        <div className="flex items-end justify-center" aria-hidden>
+          <Sticker slug="coconut" size={64} tilt={-8} />
+          <Sticker slug="curry-rice" size={84} tilt={4} className="-ml-2" />
+          <Sticker slug="pancakes" size={64} tilt={9} className="-ml-2" />
+        </div>
+        <h2 id="lang-title" className="text-h1">
+          <span lang="ml" className="block">
+            ഭാഷ തിരഞ്ഞെടുക്കൂ
+          </span>
+          <span lang="en" className="block text-text-soft">
             Choose your language
           </span>
         </h2>

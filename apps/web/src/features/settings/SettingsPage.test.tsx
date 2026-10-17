@@ -22,7 +22,7 @@ describe('SettingsPage (signed out)', () => {
   it('switches language and remembers it', async () => {
     await renderWithApp(<SettingsPage />);
     fireEvent.click(screen.getByRole('radio', { name: 'മലയാളം' }));
-    expect(await screen.findByRole('heading', { name: 'സെറ്റിംഗ്സ്' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /^സെറ്റിംഗ്സ്/ })).toBeInTheDocument();
     expect(document.documentElement.lang).toBe('ml');
     expect(localStorage.getItem('rb-lang')).toBe('ml');
   });

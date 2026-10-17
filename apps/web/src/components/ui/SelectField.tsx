@@ -18,7 +18,7 @@ export function SelectField({ label, options, placeholder, className, id, ...res
       </label>
       <select
         id={selectId}
-        className="min-h-[52px] w-full rounded-sm border-2 border-border-strong bg-surface px-3 text-body text-text focus-visible:border-focus"
+        className="min-h-[54px] w-full rounded-md border-[1.5px] border-border bg-surface px-4 text-body text-text focus-visible:border-border-strong"
         {...rest}
       >
         {placeholder !== undefined && <option value="">{placeholder}</option>}

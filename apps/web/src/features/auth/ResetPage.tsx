@@ -32,7 +32,7 @@ export function ResetPage() {
   }
 
   return (
-    <AuthLayout title={t('auth.reset.title')}>
+    <AuthLayout title={t('auth.reset.title')} soft={t('auth.reset.soft')}>
       <form noValidate onSubmit={onSubmit} className="flex flex-col gap-4">
         <TextField
           label={t('auth.reset.newPassword')}

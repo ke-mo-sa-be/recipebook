@@ -28,3 +28,4 @@ deploy/local/*
 e2e/.results/
 
 docs/design/hifi.html
+e2e/.tools/

@@ -1,6 +1,6 @@
 # Design System
 
-Status: **v2, proposed 2026-10-17, awaiting approval**. v1 (warm spice palette, approved 2026-10-17) was built in M1, and the project owner then asked for a calmer, sticker-led direction. Hi-fi mockups for mobile and desktop are in [`docs/design/hifi.src.html`](design/hifi.src.html) (build with `node scripts/build-mockups.mjs`).
+Status: **v2, approved 2026-10-17** and implemented in the app. v1 (warm spice palette, approved 2026-10-17) was built in M1, and the project owner then asked for a calmer, sticker-led direction. Hi-fi mockups for mobile and desktop are in [`docs/design/hifi.src.html`](design/hifi.src.html) (build with `node scripts/build-mockups.mjs`).
 
 Tokens live in [`apps/web/src/theme/tokens.json`](../apps/web/src/theme/tokens.json), which is the source of truth: `pnpm tokens` regenerates the CSS and `pnpm tokens:check` verifies contrast. If this doc and the JSON disagree, the JSON wins, and this doc gets fixed.
 

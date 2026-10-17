@@ -51,7 +51,8 @@ describe('locales', () => {
     for (const file of sourceFiles(src)) {
       for (const m of readFileSync(file, 'utf8').matchAll(/\bt\(\s*'([a-zA-Z0-9_.]+)'/g)) used.add(m[1]!);
     }
-    const missing = [...used].filter((k) => !enKeys.has(k));
+    // Plural keys exist only with i18next suffixes (_zero/_one/_other).
+    const missing = [...used].filter((k) => !enKeys.has(k) && !enKeys.has(`${k}_other`));
     expect(missing).toEqual([]);
     expect(used.size).toBeGreaterThan(20);
   });

@@ -31,9 +31,9 @@ export function ForgotPage() {
   }
 
   return (
-    <AuthLayout title={t('auth.forgot.title')} intro={t('auth.forgot.intro')}>
+    <AuthLayout title={t('auth.forgot.title')} soft={t('auth.forgot.soft')} intro={t('auth.forgot.intro')}>
       {sent ? (
-        <p role="status" className="rounded-lg bg-leaf-soft p-5 text-lead text-on-leaf-soft">
+        <p role="status" className="card p-5 text-lead">
           {t('auth.forgot.sent')}
         </p>
       ) : (
@@ -53,7 +53,7 @@ export function ForgotPage() {
       )}
       <Link
         to="/auth/sign-in"
-        className="min-h-tap font-semibold text-primary underline-offset-4 hover:underline"
+        className="inline-flex min-h-tap items-center font-semibold underline decoration-border-strong underline-offset-4"
       >
         {t('auth.checkEmail.backToSignIn')}
       </Link>

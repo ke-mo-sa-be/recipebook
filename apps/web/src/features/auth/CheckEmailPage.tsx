@@ -34,9 +34,16 @@ export function CheckEmailPage() {
   }
 
   return (
-    <AuthLayout title={t('auth.checkEmail.title')}>
-      <div className="flex flex-col items-start gap-4 rounded-lg bg-leaf-soft p-5 text-on-leaf-soft">
-        <MailCheck aria-hidden className="size-10" />
+    <AuthLayout
+      title={t('auth.checkEmail.title')}
+      soft={t('auth.checkEmail.soft')}
+      stickers={[
+        { slug: 'sparkles', size: 64, tilt: -8 },
+        { slug: 'bookmark', size: 84, tilt: 5 },
+      ]}
+    >
+      <div className="card flex flex-col items-start gap-3 p-5">
+        <MailCheck aria-hidden className="size-8 text-leaf" />
         <p className="text-lead">{t('auth.checkEmail.body', { email })}</p>
       </div>
       <p className="text-text-muted">{t('auth.checkEmail.notArrived')}</p>
@@ -52,7 +59,7 @@ export function CheckEmailPage() {
       )}
       <Link
         to="/auth/sign-in"
-        className="min-h-tap font-semibold text-primary underline-offset-4 hover:underline"
+        className="inline-flex min-h-tap items-center font-semibold underline decoration-border-strong underline-offset-4"
       >
         {t('auth.checkEmail.backToSignIn')}
       </Link>

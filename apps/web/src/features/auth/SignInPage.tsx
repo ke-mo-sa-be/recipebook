@@ -41,7 +41,7 @@ export function SignInPage() {
   const needsConfirm = formError === 'auth.errors.emailNotConfirmed';
 
   return (
-    <AuthLayout title={t('auth.signIn.title')} intro={t('auth.signIn.intro')}>
+    <AuthLayout title={t('auth.signIn.heading')} soft={t('auth.signIn.soft')}>
       <GoogleButton next={next} />
       <form noValidate onSubmit={onSubmit} className="flex flex-col gap-4">
         <TextField
@@ -62,7 +62,7 @@ export function SignInPage() {
           error={errors.password && t(errors.password)}
         />
         {formError && (
-          <p role="alert" className="rounded-md bg-danger-soft p-3 text-on-danger-soft">
+          <p role="alert" className="rounded-lg bg-danger-soft p-3 text-on-danger-soft">
             {t(formError)}{' '}
             {needsConfirm && (
               <Link
@@ -81,7 +81,7 @@ export function SignInPage() {
       <div className="flex flex-col gap-2">
         <Link
           to="/auth/forgot"
-          className="min-h-tap font-semibold text-primary underline-offset-4 hover:underline"
+          className="inline-flex min-h-tap items-center font-semibold underline decoration-border-strong underline-offset-4"
         >
           {t('auth.signIn.forgot')}
         </Link>
@@ -89,7 +89,7 @@ export function SignInPage() {
           {t('auth.signIn.noAccount')}{' '}
           <Link
             to={`/auth/sign-up?next=${encodeURIComponent(next)}`}
-            className="font-bold text-primary underline-offset-4 hover:underline"
+            className="font-semibold underline decoration-border-strong underline-offset-4"
           >
             {t('auth.signUp.title')}
           </Link>

@@ -8,7 +8,14 @@
     "addRecipe": "Add a recipe",
     "saved": "Saved",
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "tab": {
+      "home": "Home",
+      "search": "Search",
+      "add": "Add",
+      "saved": "Saved",
+      "profile": "Profile"
+    }
   },
   "actions": {
     "back": "Back",
@@ -43,16 +50,18 @@
     },
     "signIn": {
       "title": "Sign in",
-      "intro": "Welcome back! Sign in to save and share recipes.",
       "submit": "Sign in",
       "forgot": "Forgot your password?",
-      "noAccount": "New here?"
+      "noAccount": "New here?",
+      "heading": "Welcome back.",
+      "soft": "Sign in to save and share."
     },
     "signUp": {
       "title": "Create account",
-      "intro": "It's free, forever. No ads.",
       "submit": "Create account",
-      "haveAccount": "Already have an account?"
+      "haveAccount": "Already have an account?",
+      "heading": "Join the kitchen.",
+      "soft": "Free forever. No ads."
     },
     "checkEmail": {
       "title": "Check your email",
@@ -62,18 +71,21 @@
       "resendIn": "Send again in {{seconds}} s",
       "resent": "Sent! Check your inbox again.",
       "resendLink": "Send the email again",
-      "backToSignIn": "Back to sign in"
+      "backToSignIn": "Back to sign in",
+      "soft": "One tap to finish."
     },
     "forgot": {
       "title": "Forgot password",
       "intro": "Enter your email and we'll send you a link to set a new password.",
       "submit": "Send link",
-      "sent": "If that email has an account, a link is on its way. Check your inbox."
+      "sent": "If that email has an account, a link is on its way. Check your inbox.",
+      "soft": "We'll send you a link."
     },
     "reset": {
       "title": "Set a new password",
       "newPassword": "New password",
-      "submit": "Save new password"
+      "submit": "Save new password",
+      "soft": "Make it one you'll remember."
     },
     "callback": {
       "working": "Signing you in…",
@@ -138,13 +150,17 @@
       "handleTaken": "That username is taken. Please try another.",
       "nameRequired": "Please enter your name.",
       "cannotEdit": "Your profile can't be changed right now."
-    }
+    },
+    "cookbookTitle": "{{name}}'s cookbook.",
+    "cookbookCounts": "{{recipes}} recipes, {{variations}} variations.",
+    "cookbookEmpty": "First recipe coming soon."
   },
   "me": {
     "signedOut": {
-      "title": "Join the kitchen",
+      "title": "Join the kitchen.",
       "body": "Create a free account to share your recipes, save favourites and post what you cooked.",
-      "settings": "Language and text size"
+      "settings": "Language and text size",
+      "soft": "Free forever. No ads."
     }
   },
   "settings": {
@@ -166,39 +182,72 @@
     "profile": "Your profile",
     "account": "Account",
     "signedInAs": "Signed in as {{email}}",
-    "moreSoon": "Downloading your data and deleting your account are coming soon."
+    "moreSoon": "Downloading your data and deleting your account are coming soon.",
+    "soft": "Make it yours."
   },
   "onboarding": {
     "title": "Welcome, {{name}}!",
     "body": "Check your name and pick a username. You can change these later in Settings.",
-    "done": "Done"
+    "done": "Done",
+    "soft": "Pick a username."
   },
   "home": {
     "soon": {
       "title": "Recipes are coming soon",
-      "body": "We're setting up the kitchen. Soon you'll find home recipes from across Kerala and beyond.",
-      "action": "Add a recipe"
+      "body": "We're setting up the kitchen. Soon you'll find home recipes from across Kerala and beyond."
+    },
+    "welcome": "Home recipes, made simple.",
+    "question": "What's cooking today?",
+    "pitch": "Home recipes from Kerala and beyond. No ads, no life stories — just the recipe.",
+    "greeting": {
+      "morning": "Good morning, {{name}}.",
+      "afternoon": "Good afternoon, {{name}}.",
+      "evening": "Good evening, {{name}}."
+    },
+    "scan": "Scan a recipe",
+    "chips": {
+      "quick": "15-min recipes",
+      "breakfast": "Kerala breakfast",
+      "onam": "Onam sadya",
+      "snacks": "Tea-time snacks"
+    },
+    "kitchen": {
+      "title": "Let's see what's",
+      "titleSoft": "in your kitchen.",
+      "body": "Tap what you have. We'll find recipes that use it.",
+      "find": "Find recipes",
+      "picked_zero": "Nothing picked yet",
+      "picked_one": "1 picked",
+      "picked_other": "{{count}} picked"
     }
   },
   "search": {
     "placeholder": "Search recipes or ingredients…",
     "soon": {
       "title": "Search is coming soon",
-      "body": "You'll be able to search in Malayalam, English or Manglish — like jeerakam, ജീരകം or cumin."
-    }
+      "body": "You'll be able to search in Malayalam, English or Manglish — like jeerakam, ജീരകം or cumin.",
+      "bodyQuery": "Results for “{{q}}” will show here once recipes arrive."
+    },
+    "title": "Search",
+    "soft": "Malayalam, English or Manglish.",
+    "hint": "Try jeerakam or ജീരകം",
+    "withLabel": "Your ingredients"
   },
   "saved": {
     "empty": {
       "title": "Nothing saved yet",
       "body": "Tap Save on any recipe to keep it here — even offline."
-    }
+    },
+    "title": "Saved",
+    "soft": "Your recipes, even offline."
   },
   "add": {
     "title": "Add a recipe",
     "soon": {
       "title": "Coming soon",
       "body": "A simple step-by-step way to add your recipes is on its way."
-    }
+    },
+    "soft": "Step by step, made easy."
   },
   "notFound": {
     "title": "We couldn't find that page",
@@ -221,5 +270,18 @@
     "knr": "Kannur",
     "ksd": "Kasaragod",
     "other": "Outside Kerala"
+  },
+  "badge": {
+    "soon": "Soon"
+  },
+  "ingredients": {
+    "coconut": "Coconut",
+    "onion": "Shallots",
+    "herb": "Curry leaves",
+    "hot-pepper": "Chilli",
+    "tomato": "Tomato",
+    "fish": "Fish",
+    "garlic": "Garlic",
+    "ginger-root": "Ginger"
   }
 }

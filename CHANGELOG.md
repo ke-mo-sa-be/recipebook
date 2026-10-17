@@ -4,7 +4,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
-### Design v2 (proposed 2026-10-17, awaiting approval)
+### Design v2 (approved 2026-10-17) and app screens rebuilt on it
 
 - New direction after review of the M1 build: a neutral canvas, white cards, one black action per screen, two-tone headlines, and **die-cut ingredient stickers** as the signature element. `docs/DESIGN_SYSTEM.md` has been rewritten as v2.
 - Hi-fi mockups (`docs/design/hifi.src.html`, built by `node scripts/build-mockups.mjs`) in light and dark, covering:
@@ -12,7 +12,17 @@ All notable changes to this project are documented here. The format follows [Kee
   - desktop: Home, Recipe, Cookbook.
 - Stickers: 71 Fluent Emoji 3D images (MIT), listed in `scripts/stickers.json`. `pnpm stickers` converts them to 192 px WebP with a baked-in white outline (296 KB total).
 - Tokens v2: neutral palette, black and white primary, chilli accent used sparingly, Inter replacing Figtree, larger radii, softer shadows, per-language letter-spacing. All 66 contrast pairs pass.
-- The app screens still use the v1 components. They will be rebuilt on v2 once the design is approved.
+- **App rebuilt on v2:**
+  - new primitives: `Sticker` / `StickerRow`, `IconButton`, `Chip`, `Composer`, two-tone `Headline`, `Avatar`,
+  - mobile **floating pill nav** with a raised black "+" (below 1024 px), and a desktop **top bar** with the search field, Home / Saved, a black "Add a recipe" and the avatar,
+  - Home: greeting, search composer ("Scan a recipe" marked Soon), quick-pick chips, and the **"What's in your kitchen?" sticker picker**, which links to search with the picked ingredients (results arrive in M3),
+  - the profile is now "Name's cookbook." with chip tabs and sticker empty states,
+  - Search, Saved, Add, Settings, all auth screens, onboarding, the language chooser and 404 use sticker clusters and two-tone headlines,
+  - buttons are pills, inputs are 54 px with rounded corners, the segmented control has a white thumb, and sheets are rounded with a canvas background.
+- Layout fixes found by the tests:
+  - on phones, the Home hero column stretched to the chip row's natural width (about 600 px), so it is now a `minmax(0,1fr)` grid,
+  - the kitchen picker uses 3 columns on phones with capped label size, so long Malayalam names such as വെളുത്തുള്ളി fit at 360 px.
+- The layout test now measures against `clientWidth` and checks real text overflow. Mobile Chrome widens `innerWidth` to fit overflowing content, which had hidden the bug above.
 
 ### Added: M0, design gate (approved 2026-10-17)
 
@@ -103,6 +113,6 @@ All notable changes to this project are documented here. The format follows [Kee
 
 - Google sign-in end to end: needs the Google Cloud OAuth client.
 - Real email: staging uses the local test inbox until SMTP (Brevo) is set up.
-- Staging goes live after Authelia is restarted (the new access rule is written and validated) and the Cloudflare public hostname is added.
-- The JS bundle is 221 KB gzipped against the 170 KB M7 budget. Route-level code splitting is planned.
+- Staging is live behind SSO, with the design mockups at `/design/`.
+- The JS bundle is 225 KB gzipped against the 170 KB M7 budget. Route-level code splitting is planned.
 - E2E runs locally in the Playwright container. It joins CI in M2.

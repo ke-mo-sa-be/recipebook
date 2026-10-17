@@ -23,9 +23,11 @@
     "db:lint": "supabase db lint --level warning",
     "tokens": "node scripts/tokens.mjs build",
     "tokens:check": "node scripts/tokens.mjs check",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && node scripts/check-no-secrets.mjs",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && pnpm seed:check && node scripts/check-no-secrets.mjs",
     "test:e2e": "playwright test",
-    "stickers": "node scripts/stickers.mjs"
+    "stickers": "node scripts/stickers.mjs",
+    "seed:build": "node scripts/build-seed.ts",
+    "seed:check": "node scripts/build-seed.ts --check"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

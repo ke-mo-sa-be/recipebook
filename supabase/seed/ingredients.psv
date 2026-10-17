@@ -1,0 +1,155 @@
+# slug | English | Malayalam | aliases (;) | group | sticker (blank = group default)
+cumin|Cumin|ജീരകം|jeerakam;jeeragam;jeera|spice|
+fennel|Fennel seeds|പെരുംജീരകം|perumjeerakam;saunf|spice|
+mustard-seeds|Mustard seeds|കടുക്|kaduku;kadugu;rai|spice|
+fenugreek|Fenugreek|ഉലുവ|uluva;methi|spice|
+turmeric|Turmeric powder|മഞ്ഞൾപ്പൊടി|manjal;manjalpodi;haldi|spice|
+chilli-powder|Chilli powder|മുളകുപൊടി|mulakupodi;red chilli powder|spice|hot-pepper
+kashmiri-chilli-powder|Kashmiri chilli powder|കാശ്മീരി മുളകുപൊടി|kashmiri mulakupodi|spice|hot-pepper
+dried-red-chilli|Dried red chilli|വറ്റൽമുളക്|vattal mulaku;unakka mulaku;dry chilli|spice|hot-pepper
+coriander-powder|Coriander powder|മല്ലിപ്പൊടി|mallipodi;dhania powder|spice|
+coriander-seeds|Coriander seeds|മല്ലി|malli;dhania|spice|
+black-pepper|Black pepper|കുരുമുളക്|kurumulaku;pepper|spice|
+pepper-powder|Pepper powder|കുരുമുളകുപൊടി|kurumulakupodi|spice|
+cardamom|Cardamom|ഏലയ്ക്ക|elakka;elaichi|spice|
+cloves|Cloves|ഗ്രാമ്പൂ|grampu;karayampu;lavang|spice|
+cinnamon|Cinnamon|കറുവപ്പട്ട|karuvapatta;patta;dalchini|spice|
+star-anise|Star anise|തക്കോലം|thakkolam|spice|
+bay-leaf|Bay leaf|വയണയില|vayanayila;tej patta|herb|herb
+garam-masala|Garam masala|ഗരം മസാല|garam masala|spice|
+meat-masala|Meat masala|മീറ്റ് മസാല|meat masala|spice|
+chicken-masala|Chicken masala|ചിക്കൻ മസാല|chicken masala|spice|
+sambar-powder|Sambar powder|സാമ്പാർ പൊടി|sambar podi|spice|
+asafoetida|Asafoetida|കായം|kaayam;kayam;hing|spice|
+nutmeg|Nutmeg|ജാതിക്ക|jathikka|spice|
+saffron|Saffron|കുങ്കുമപ്പൂവ്|kunkumapoovu;kesar|spice|
+kasuri-methi|Dried fenugreek leaves|കസൂരി മേത്തി|kasuri methi|herb|herb
+salt|Salt|ഉപ്പ്|uppu|spice|salt
+sugar|Sugar|പഞ്ചസാര|panchasara;chini|sweetener|
+jaggery|Jaggery|ശർക്കര|sharkkara;sarkkara;vellam;gud|sweetener|
+honey|Honey|തേൻ|then|sweetener|honey-pot
+cardamom-powder|Cardamom powder|ഏലയ്ക്കാപ്പൊടി|elakka podi|spice|
+curry-leaves|Curry leaves|കറിവേപ്പില|kariveppila;karivepila;curry leaf|herb|herb
+coriander-leaves|Coriander leaves|മല്ലിയില|malliyila;cilantro;dhania leaves|herb|herb
+mint-leaves|Mint leaves|പുതിനയില|puthinayila;pudina|herb|herb
+drumstick-leaves|Drumstick leaves|മുരിങ്ങയില|muringayila;moringa leaves|vegetable|leafy-green
+spinach|Spinach|ചീര|cheera;palak|vegetable|leafy-green
+red-amaranth|Red amaranth|ചുവന്ന ചീര|chuvanna cheera|vegetable|leafy-green
+banana-leaf|Banana leaf|വാഴയില|vazhayila|other|leafy-green
+shallots|Shallots|ചുവന്നുള്ളി|chuvannulli;kunjulli;small onion;cheriya ulli|vegetable|onion
+onion|Onion|സവാള|savala;big onion;valiya ulli|vegetable|onion
+garlic|Garlic|വെളുത്തുള്ളി|veluthulli;lahsun|vegetable|garlic
+ginger|Ginger|ഇഞ്ചി|inji;adrak|vegetable|ginger-root
+ginger-garlic-paste|Ginger-garlic paste|ഇഞ്ചി വെളുത്തുള്ളി പേസ്റ്റ്|ginger garlic paste|vegetable|garlic
+green-chilli|Green chilli|പച്ചമുളക്|pachamulaku;green chili|vegetable|hot-pepper
+tomato|Tomato|തക്കാളി|thakkali|vegetable|tomato
+potato|Potato|ഉരുളക്കിഴങ്ങ്|urulakizhangu;aloo|vegetable|potato
+sweet-potato|Sweet potato|മധുരക്കിഴങ്ങ്|madhurakizhangu|vegetable|potato
+tapioca|Tapioca|കപ്പ|kappa;cassava;maracheeni|vegetable|potato
+yam|Elephant foot yam|ചേന|chena|vegetable|potato
+colocasia|Colocasia|ചേമ്പ്|chembu;taro|vegetable|potato
+raw-banana|Raw banana|വാഴക്ക|vazhakka;plantain;pacha kaya|vegetable|banana
+banana-flower|Banana flower|വാഴപ്പൂ|vazhappoo;koombu|vegetable|
+banana-stem|Banana stem|വാഴപ്പിണ്ടി|vazhapindi;unnithandu|vegetable|
+ash-gourd|Ash gourd|കുമ്പളങ്ങ|kumbalanga;winter melon|vegetable|cucumber
+pumpkin|Pumpkin|മത്തങ്ങ|mathanga|vegetable|
+cucumber|Cucumber|വെള്ളരിക്ക|vellarikka|vegetable|cucumber
+snake-gourd|Snake gourd|പടവലങ്ങ|padavalanga|vegetable|cucumber
+bitter-gourd|Bitter gourd|പാവയ്ക്ക|pavakka;kaipakka;karela|vegetable|cucumber
+ivy-gourd|Ivy gourd|കോവയ്ക്ക|kovakka;tindora|vegetable|cucumber
+ridge-gourd|Ridge gourd|പീച്ചിങ്ങ|peechinga|vegetable|cucumber
+bottle-gourd|Bottle gourd|ചുരയ്ക്ക|churakka;lauki|vegetable|cucumber
+drumstick|Drumstick|മുരിങ്ങക്കായ|muringakka;moringa|vegetable|
+okra|Okra|വെണ്ടയ്ക്ക|vendakka;ladies finger;bhindi|vegetable|pea-pod
+brinjal|Brinjal|വഴുതനങ്ങ|vazhuthananga;eggplant;aubergine|vegetable|eggplant
+long-beans|Long beans|അച്ചിങ്ങ പയർ|achinga payar;payar;yard long beans|vegetable|pea-pod
+green-beans|Green beans|ബീൻസ്|beans|vegetable|pea-pod
+carrot|Carrot|കാരറ്റ്|carrot|vegetable|carrot
+beetroot|Beetroot|ബീറ്റ്റൂട്ട്|beetroot|vegetable|
+cabbage|Cabbage|കാബേജ്|cabbage|vegetable|leafy-green
+cauliflower|Cauliflower|കോളിഫ്ലവർ|cauliflower;gobi|vegetable|broccoli
+capsicum|Capsicum|കാപ്സിക്കം|capsicum;bell pepper|vegetable|bell-pepper
+mushroom|Mushroom|കൂൺ|koon|vegetable|mushroom
+green-peas|Green peas|ഗ്രീൻ പീസ്|green peas;pattani|vegetable|pea-pod
+sweet-corn|Sweet corn|ചോളം|cholam;corn|vegetable|ear-of-corn
+raw-mango|Raw mango|പച്ചമാങ്ങ|pachamanga;green mango|fruit|mango
+raw-papaya|Raw papaya|പപ്പായ|pappaya;omakka;kappalanga|fruit|
+jackfruit|Jackfruit|ചക്ക|chakka|fruit|
+jackfruit-seeds|Jackfruit seeds|ചക്കക്കുരു|chakkakkuru|fruit|
+lemon|Lemon|ചെറുനാരങ്ങ|cherunaranga;naranga;lime|fruit|lemon
+kudampuli|Malabar tamarind|കുടംപുളി|kudampuli;kodampuli;fish tamarind;gamboge|fruit|
+tamarind|Tamarind|വാളൻപുളി|valanpuli;puli;imli|fruit|
+ripe-banana|Ripe plantain|നേന്ത്രപ്പഴം|nendrapazham;ethapazham;pazham|fruit|banana
+small-banana|Small banana|ചെറുപഴം|cherupazham;poovan pazham|fruit|banana
+mango|Ripe mango|മാമ്പഴം|mambazham|fruit|mango
+pineapple|Pineapple|കൈതച്ചക്ക|kaithachakka|fruit|pineapple
+coconut|Coconut|തേങ്ങ|thenga|fruit|coconut
+grated-coconut|Grated coconut|ചിരകിയ തേങ്ങ|chirakiya thenga;thengapeera|fruit|coconut
+coconut-milk|Coconut milk|തേങ്ങാപ്പാൽ|thengapal;thenga paal|fruit|coconut
+thick-coconut-milk|Thick coconut milk|ഒന്നാം പാൽ|onnam paal;first milk|fruit|coconut
+thin-coconut-milk|Thin coconut milk|രണ്ടാം പാൽ|randam paal;second milk|fruit|coconut
+coconut-oil|Coconut oil|വെളിച്ചെണ്ണ|velichenna|oil|coconut
+gingelly-oil|Sesame oil|നല്ലെണ്ണ|nallenna;gingelly oil|oil|
+sunflower-oil|Sunflower oil|സൂര്യകാന്തി എണ്ണ|sunflower oil;refined oil|oil|
+ghee|Ghee|നെയ്യ്|neyyu|dairy|butter
+butter|Butter|വെണ്ണ|venna|dairy|butter
+milk|Milk|പാൽ|paal|dairy|glass-of-milk
+curd|Curd|തൈര്|thairu;yogurt;dahi|dairy|bowl-with-spoon
+buttermilk|Buttermilk|മോര്|moru;chaas|dairy|glass-of-milk
+paneer|Paneer|പനീർ|paneer;cottage cheese|dairy|cheese-wedge
+cheese|Cheese|ചീസ്|cheese|dairy|cheese-wedge
+fresh-cream|Fresh cream|ക്രീം|cream|dairy|glass-of-milk
+condensed-milk|Condensed milk|കണ്ടൻസ്ഡ് മിൽക്ക്|milkmaid|dairy|glass-of-milk
+egg|Egg|മുട്ട|mutta|meat|egg
+rice|Rice|അരി|ari|grain|cooked-rice
+matta-rice|Kerala red rice|മട്ട അരി|matta;kuthari;rose matta|grain|cooked-rice
+raw-rice|Raw rice|പച്ചരി|pachari|grain|cooked-rice
+basmati-rice|Basmati rice|ബസ്മതി അരി|basmati|grain|cooked-rice
+jeerakasala-rice|Jeerakasala rice|ജീരകശാല അരി|jeerakasala;kaima rice|grain|cooked-rice
+cooked-rice|Cooked rice|ചോറ്|choru|grain|cooked-rice
+rice-flour|Rice flour|അരിപ്പൊടി|aripodi;puttu podi;appam podi|grain|bowl-with-spoon
+semolina|Semolina|റവ|rava;sooji|grain|bowl-with-spoon
+wheat-flour|Wheat flour|ഗോതമ്പ് പൊടി|gothambu podi;atta|grain|bread
+maida|All-purpose flour|മൈദ|maida|grain|bread
+rice-flakes|Beaten rice|അവൽ|aval;poha|grain|cooked-rice
+vermicelli|Vermicelli|സേമിയ|semiya|grain|spaghetti
+bread|Bread|ബ്രെഡ്|bread|grain|bread
+pappadam|Pappadam|പപ്പടം|pappadam;papad|other|rice-cracker
+urad-dal|Black gram|ഉഴുന്ന്|uzhunnu;urad dal|pulse|beans
+toor-dal|Pigeon pea dal|തുവരപ്പരിപ്പ്|thuvara parippu;toor dal;sambar parippu|pulse|beans
+moong-dal|Split green gram|ചെറുപയർ പരിപ്പ്|cherupayar parippu;moong dal|pulse|beans
+green-gram|Green gram|ചെറുപയർ|cherupayar;moong|pulse|beans
+black-chickpeas|Black chickpeas|കടല|kadala;kala chana|pulse|beans
+chickpeas|Chickpeas|വെള്ളക്കടല|vella kadala;kabuli chana|pulse|beans
+red-cowpeas|Red cowpeas|വൻപയർ|vanpayar;lobia|pulse|beans
+chana-dal|Bengal gram|കടലപ്പരിപ്പ്|kadala parippu;chana dal|pulse|beans
+chicken|Chicken|ചിക്കൻ|kozhi|meat|poultry-leg
+beef|Beef|ബീഫ്|pothu irachi;irachi|meat|cut-of-meat
+mutton|Mutton|മട്ടൺ|aattirachi;goat meat|meat|cut-of-meat
+duck|Duck|താറാവ്|tharavu|meat|poultry-leg
+pork|Pork|പോർക്ക്|panni irachi|meat|cut-of-meat
+fish|Fish|മീൻ|meen|seafood|fish
+sardine|Sardine|മത്തി|mathi;chaala|seafood|fish
+mackerel|Mackerel|അയല|ayala|seafood|fish
+seer-fish|Seer fish|നെയ്മീൻ|neymeen;king fish;surmai|seafood|fish
+pearl-spot|Pearl spot|കരിമീൻ|karimeen|seafood|fish
+anchovy|Anchovy|നെത്തോലി|netholi;kozhuva|seafood|fish
+prawns|Prawns|ചെമ്മീൻ|chemmeen;shrimp;konju|seafood|shrimp
+crab|Crab|ഞണ്ട്|njandu|seafood|
+squid|Squid|കണവ|kanava;koonthal|seafood|
+mussels|Mussels|കല്ലുമ്മക്കായ|kallummakkaya;kadukka|seafood|
+dried-fish|Dried fish|ഉണക്കമീൻ|unakkameen;unakka meen|seafood|fish
+cashew|Cashew nuts|കശുവണ്ടി|kashuvandi;andiparippu|nut|peanuts
+raisins|Raisins|ഉണക്കമുന്തിരി|unakka munthiri;kismis|nut|grapes
+peanuts|Peanuts|കപ്പലണ്ടി|kappalandi;nilakadala|nut|peanuts
+almonds|Almonds|ബദാം|badam|nut|peanuts
+sesame-seeds|Sesame seeds|എള്ള്|ellu;til|nut|
+dates|Dates|ഈന്തപ്പഴം|eenthappazham|fruit|
+water|Water|വെള്ളം|vellam|other|tumbler-glass
+tea-powder|Tea powder|ചായപ്പൊടി|chaya podi;tea leaves|other|teacup-without-handle
+coffee-powder|Coffee powder|കാപ്പിപ്പൊടി|kaapi podi|other|hot-beverage
+vinegar|Vinegar|വിനാഗിരി|vinagiri;sunnamba|other|jar
+baking-soda|Baking soda|അപ്പക്കാരം|appakkaram;soda podi|other|jar
+yeast|Yeast|യീസ്റ്റ്|yeast|other|jar
+chocolate|Chocolate|ചോക്ലേറ്റ്|chocolate|sweetener|chocolate-bar
+rose-water|Rose water|പനിനീർ|panineer|other|jar

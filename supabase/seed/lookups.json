@@ -1,0 +1,52 @@
+{
+  "$comment": "Reference rows. Display names live in the app's i18n files (categories.<slug>, regions.<slug>, tags.<slug>). Ids are stable: never renumber.",
+  "categories": [
+    { "id": 1, "slug": "breakfast", "sticker": "pancakes" },
+    { "id": 2, "slug": "curry", "sticker": "curry-rice" },
+    { "id": 3, "slug": "rice", "sticker": "cooked-rice" },
+    { "id": 4, "slug": "meat", "sticker": "poultry-leg" },
+    { "id": 5, "slug": "seafood", "sticker": "fish" },
+    { "id": 6, "slug": "sides", "sticker": "green-salad" },
+    { "id": 7, "slug": "snacks", "sticker": "rice-cracker" },
+    { "id": 8, "slug": "sweets", "sticker": "custard" },
+    { "id": 9, "slug": "drinks", "sticker": "teacup-without-handle" },
+    { "id": 10, "slug": "pickles", "sticker": "jar" },
+    { "id": 11, "slug": "bakes", "sticker": "bread" },
+    { "id": 12, "slug": "other", "sticker": "fork-and-knife-with-plate" }
+  ],
+  "regions": [
+    { "id": 1, "slug": "malabar", "grp": "kerala" },
+    { "id": 2, "slug": "central-kerala", "grp": "kerala" },
+    { "id": 3, "slug": "travancore", "grp": "kerala" },
+    { "id": 4, "slug": "kerala", "grp": "kerala" },
+    { "id": 5, "slug": "south-india", "grp": "india" },
+    { "id": 6, "slug": "north-india", "grp": "india" },
+    { "id": 7, "slug": "world", "grp": "world" }
+  ],
+  "tags": [
+    { "id": 1, "slug": "quick", "kind": "general" },
+    { "id": 2, "slug": "onam", "kind": "festival" },
+    { "id": 3, "slug": "vishu", "kind": "festival" },
+    { "id": 4, "slug": "christmas", "kind": "festival" },
+    { "id": 5, "slug": "ramadan", "kind": "festival" },
+    { "id": 6, "slug": "easter", "kind": "festival" },
+    { "id": 7, "slug": "kids", "kind": "general" },
+    { "id": 8, "slug": "monsoon", "kind": "general" },
+    { "id": 9, "slug": "tea-time", "kind": "general" }
+  ],
+  "groupStickers": {
+    "spice": "jar",
+    "vegetable": "leafy-green",
+    "fruit": "red-apple",
+    "grain": "cooked-rice",
+    "pulse": "beans",
+    "dairy": "glass-of-milk",
+    "meat": "cut-of-meat",
+    "seafood": "fish",
+    "oil": "jar",
+    "sweetener": "honey-pot",
+    "nut": "peanuts",
+    "herb": "herb",
+    "other": "spoon"
+  }
+}

@@ -1,0 +1,459 @@
+{
+  "$comment": "Development and staging seed only. Original recipes written for this project (AGPL-3.0). Demo users have dev-only passwords. Ingredient lines: a = amount, m = amount max, u = unit code, i = dictionary slug, t = text as written, n = note, g = group label. Step timers are detected at build time.",
+  "authors": [
+    {
+      "handle": "ammini",
+      "name": "Ammini",
+      "email": "ammini@example.com",
+      "district": "ekm",
+      "lang": "ml",
+      "bio": "Sadya every Onam, fish curry every Sunday."
+    },
+    {
+      "handle": "sheela_cooks",
+      "name": "Sheela",
+      "email": "sheela@example.com",
+      "district": "tsr",
+      "lang": "ml",
+      "bio": "Thrissur kitchen, simple food."
+    },
+    {
+      "handle": "thomas_k",
+      "name": "Thomas K",
+      "email": "thomas@example.com",
+      "district": "ktm",
+      "lang": "en",
+      "bio": "Kottayam recipes from my grandmother's notebook."
+    },
+    {
+      "handle": "rasiya",
+      "name": "Rasiya",
+      "email": "rasiya@example.com",
+      "district": "kkd",
+      "lang": "en",
+      "bio": "Malabar snacks and Sulaimani."
+    }
+  ],
+  "recipes": [
+    {
+      "author": "ammini",
+      "title_ml": "മീൻ കറി",
+      "title_en": "Kerala Fish Curry",
+      "content_lang": "ml",
+      "description": "കുടംപുളിയിട്ട് വെച്ച എരിവുള്ള നാടൻ മീൻ കറി. ചോറിനൊപ്പം നല്ലത്.",
+      "category": "seafood",
+      "region": "central-kerala",
+      "diet": "nonveg",
+      "prep": 15,
+      "cook": 30,
+      "servings": 4,
+      "tags": ["monsoon"],
+      "ingredients": [
+        { "a": 0.5, "u": "kg", "i": "seer-fish", "t": "നെയ്മീൻ", "n": "കഷണങ്ങളാക്കിയത്" },
+        { "a": 3, "u": "piece", "i": "kudampuli", "t": "കുടംപുളി", "n": "ഇളംചൂടുവെള്ളത്തിൽ കുതിർത്തത്" },
+        { "a": 10, "u": "piece", "i": "shallots", "t": "ചുവന്നുള്ളി", "n": "ചതച്ചത്" },
+        { "a": 1, "u": "inch", "i": "ginger", "t": "ഇഞ്ചി", "n": "ചതച്ചത്" },
+        { "a": 6, "u": "piece", "i": "garlic", "t": "വെളുത്തുള്ളി" },
+        { "a": 2, "u": "tbsp", "i": "kashmiri-chilli-powder", "t": "കാശ്മീരി മുളകുപൊടി" },
+        { "a": 0.25, "u": "tsp", "i": "turmeric", "t": "മഞ്ഞൾപ്പൊടി" },
+        { "a": 0.25, "u": "tsp", "i": "fenugreek", "t": "ഉലുവ" },
+        { "a": 2, "u": "sprig", "i": "curry-leaves", "t": "കറിവേപ്പില" },
+        { "a": 2, "u": "tbsp", "i": "coconut-oil", "t": "വെളിച്ചെണ്ണ" },
+        { "a": null, "u": "to_taste", "i": "salt", "t": "ഉപ്പ്" }
+      ],
+      "steps": [
+        "കുടംപുളി ഇളംചൂടുവെള്ളത്തിൽ 10 മിനിറ്റ് കുതിർത്തു വെക്കുക.",
+        "മൺചട്ടിയിൽ വെളിച്ചെണ്ണ ചൂടാക്കി ഉലുവ പൊട്ടിക്കുക. ചുവന്നുള്ളി, ഇഞ്ചി, വെളുത്തുള്ളി, കറിവേപ്പില ഇട്ട് വഴറ്റുക.",
+        "തീ കുറച്ച് മുളകുപൊടിയും മഞ്ഞൾപ്പൊടിയും ചേർത്ത് പച്ചമണം മാറുന്നതുവരെ ഇളക്കുക. കരിയരുത്.",
+        "കുടംപുളിയും വെള്ളവും ഒന്നര ഗ്ലാസ് വെള്ളവും ഉപ്പും ചേർത്ത് തിളപ്പിക്കുക.",
+        "മീൻ കഷണങ്ങൾ ഇട്ട് ചട്ടി ചുറ്റിച്ച് മൂടി 15 മിനിറ്റ് ഇടത്തരം തീയിൽ വേവിക്കുക. സ്പൂൺ കൊണ്ട് ഇളക്കരുത്.",
+        "മുകളിൽ ഒരു സ്പൂൺ പച്ച വെളിച്ചെണ്ണയും കറിവേപ്പിലയും ചേർത്ത് മൂടി വെക്കുക."
+      ],
+      "tips": "പിറ്റേ ദിവസം കൂടുതൽ രുചിയാകും. രാവിലെ ഉണ്ടാക്കി രാത്രി കഴിക്കാം."
+    },
+    {
+      "author": "sheela_cooks",
+      "title_ml": "പുട്ട്",
+      "title_en": "Puttu",
+      "content_lang": "ml",
+      "description": "ആവിയിൽ വേവിച്ച അരിപ്പുട്ട്. കടലക്കറിയോ പഴമോ കൂടെ.",
+      "category": "breakfast",
+      "region": "kerala",
+      "diet": "vegan",
+      "prep": 15,
+      "cook": 10,
+      "servings": 3,
+      "tags": ["quick"],
+      "ingredients": [
+        { "a": 2, "u": "cup", "i": "rice-flour", "t": "പുട്ടുപൊടി", "n": "വറുത്തത്" },
+        { "a": 1, "u": "cup", "i": "grated-coconut", "t": "ചിരകിയ തേങ്ങ" },
+        { "a": 0.75, "u": "cup", "i": "water", "t": "വെള്ളം", "n": "ഏകദേശം" },
+        { "a": 0.5, "u": "tsp", "i": "salt", "t": "ഉപ്പ്" }
+      ],
+      "steps": [
+        "പുട്ടുപൊടിയിൽ ഉപ്പും കുറേശ്ശെ വെള്ളവും തളിച്ച് കൈകൊണ്ട് തിരുമ്മി നനയ്ക്കുക. കൈയിൽ പിടിച്ചാൽ ഉരുളണം, വിട്ടാൽ പൊടിയണം.",
+        "10 മിനിറ്റ് മൂടി വെക്കുക. പിന്നെ മിക്സിയിൽ ഒന്ന് കറക്കിയാൽ കട്ടയില്ലാതെ കിട്ടും.",
+        "പുട്ടുകുറ്റിയിൽ ആദ്യം ഒരു പിടി തേങ്ങ, പിന്നെ പൊടി, വീണ്ടും തേങ്ങ എന്നിങ്ങനെ നിറയ്ക്കുക.",
+        "ആവി വരുന്ന കുടത്തിൽ വെച്ച് മുകളിലൂടെ ആവി വന്നു തുടങ്ങി 5 മിനിറ്റ് വേവിക്കുക.",
+        "കുറ്റിയിൽ നിന്ന് തള്ളിയിറക്കി ചൂടോടെ വിളമ്പുക."
+      ],
+      "tips": "പൊടി അധികം നനഞ്ഞാൽ പുട്ട് കട്ടിയാകും. കുറച്ചു കുറച്ചായി വെള്ളം ചേർക്കുക."
+    },
+    {
+      "author": "thomas_k",
+      "title_ml": "കടലക്കറി",
+      "title_en": "Kadala Curry",
+      "content_lang": "en",
+      "description": "Black chickpeas in a roasted coconut gravy. The classic partner for puttu and appam.",
+      "category": "curry",
+      "region": "kerala",
+      "diet": "vegan",
+      "prep": 20,
+      "cook": 40,
+      "servings": 4,
+      "tags": [],
+      "ingredients": [
+        { "a": 1, "u": "cup", "i": "black-chickpeas", "t": "Black chickpeas", "n": "soaked overnight" },
+        { "a": 1, "u": "cup", "i": "grated-coconut", "t": "Grated coconut", "g": "For the roasted paste" },
+        {
+          "a": 2,
+          "u": "tsp",
+          "i": "coriander-powder",
+          "t": "Coriander powder",
+          "g": "For the roasted paste"
+        },
+        {
+          "a": 1,
+          "u": "tsp",
+          "i": "kashmiri-chilli-powder",
+          "t": "Kashmiri chilli powder",
+          "g": "For the roasted paste"
+        },
+        { "a": 0.5, "u": "tsp", "i": "garam-masala", "t": "Garam masala", "g": "For the roasted paste" },
+        { "a": 1, "u": "piece", "i": "onion", "t": "Onion", "n": "sliced" },
+        { "a": 1, "u": "piece", "i": "tomato", "t": "Tomato", "n": "chopped" },
+        { "a": 1, "u": "tsp", "i": "mustard-seeds", "t": "Mustard seeds" },
+        { "a": 2, "u": "sprig", "i": "curry-leaves", "t": "Curry leaves" },
+        { "a": 2, "u": "tbsp", "i": "coconut-oil", "t": "Coconut oil" },
+        { "a": null, "u": "to_taste", "i": "salt", "t": "Salt" }
+      ],
+      "steps": [
+        "Pressure-cook the soaked chickpeas with salt and two glasses of water for 5 whistles, until soft.",
+        "Dry-roast the grated coconut on low heat, stirring, until deep brown. It takes about 8 minutes; don't rush it.",
+        "Add the powders to the coconut for the last minute, then grind to a smooth paste with a little water.",
+        "Heat coconut oil, splutter mustard seeds and curry leaves, then fry the onion until golden. Add the tomato and cook until soft.",
+        "Add the chickpeas with their water and the paste. Simmer for 10 minutes until the gravy thickens."
+      ],
+      "tips": "Mash a spoonful of chickpeas into the gravy to thicken it without extra coconut."
+    },
+    {
+      "author": "ammini",
+      "title_ml": "അപ്പം",
+      "title_en": "Appam",
+      "content_lang": "ml",
+      "description": "നടുഭാഗം മൃദുവും അരികുകൾ നേർത്തതുമായ പാലപ്പം.",
+      "category": "breakfast",
+      "region": "central-kerala",
+      "diet": "vegan",
+      "prep": 20,
+      "cook": 20,
+      "servings": 4,
+      "tags": ["christmas", "easter"],
+      "ingredients": [
+        { "a": 2, "u": "cup", "i": "raw-rice", "t": "പച്ചരി", "n": "4 മണിക്കൂർ കുതിർത്തത്" },
+        { "a": 0.5, "u": "cup", "i": "cooked-rice", "t": "ചോറ്" },
+        { "a": 1, "u": "cup", "i": "grated-coconut", "t": "ചിരകിയ തേങ്ങ" },
+        { "a": 0.5, "u": "tsp", "i": "yeast", "t": "യീസ്റ്റ്" },
+        { "a": 3, "u": "tbsp", "i": "sugar", "t": "പഞ്ചസാര" },
+        { "a": 1, "u": "tsp", "i": "salt", "t": "ഉപ്പ്" }
+      ],
+      "steps": [
+        "യീസ്റ്റും ഒരു സ്പൂൺ പഞ്ചസാരയും ഇളംചൂടുവെള്ളത്തിൽ കലക്കി 10 മിനിറ്റ് വെക്കുക.",
+        "കുതിർത്ത പച്ചരി, ചോറ്, തേങ്ങ എന്നിവ കുറച്ച് വെള്ളം ചേർത്ത് നന്നായി അരയ്ക്കുക.",
+        "യീസ്റ്റ് മിശ്രിതവും ബാക്കി പഞ്ചസാരയും ചേർത്ത് ഇളക്കി 8 മണിക്കൂർ പുളിക്കാൻ വെക്കുക.",
+        "ഉപ്പ് ചേർത്ത് മാവ് ദോശമാവിനേക്കാൾ അൽപ്പം അയവിൽ ആക്കുക.",
+        "ചൂടായ അപ്പച്ചട്ടിയിൽ ഒരു തവി മാവൊഴിച്ച് ചട്ടി ചുറ്റിച്ച് അരികുകളിലേക്ക് പരത്തുക. മൂടി 2 മിനിറ്റ് വേവിക്കുക."
+      ],
+      "tips": "തണുപ്പുകാലത്ത് പുളിക്കാൻ കൂടുതൽ സമയം വേണം."
+    },
+    {
+      "author": "thomas_k",
+      "title_ml": "ചിക്കൻ സ്റ്റൂ",
+      "title_en": "Kerala Chicken Stew",
+      "content_lang": "en",
+      "description": "A mild, fragrant coconut-milk stew from Kottayam kitchens. Perfect with appam.",
+      "category": "meat",
+      "region": "travancore",
+      "diet": "nonveg",
+      "prep": 20,
+      "cook": 35,
+      "servings": 4,
+      "tags": ["christmas", "easter"],
+      "ingredients": [
+        { "a": 0.5, "u": "kg", "i": "chicken", "t": "Chicken", "n": "medium pieces" },
+        { "a": 2, "u": "piece", "i": "potato", "t": "Potatoes", "n": "cubed" },
+        { "a": 1, "u": "piece", "i": "carrot", "t": "Carrot", "n": "cubed" },
+        { "a": 1, "u": "piece", "i": "onion", "t": "Onion", "n": "sliced" },
+        { "a": 4, "u": "piece", "i": "green-chilli", "t": "Green chillies", "n": "slit" },
+        { "a": 1, "u": "inch", "i": "ginger", "t": "Ginger", "n": "julienned" },
+        { "a": 2, "u": "glass", "i": "thin-coconut-milk", "t": "Thin coconut milk" },
+        { "a": 1, "u": "cup", "i": "thick-coconut-milk", "t": "Thick coconut milk" },
+        { "a": 4, "u": "piece", "i": "cloves", "t": "Cloves", "g": "Whole spices" },
+        { "a": 1, "u": "inch", "i": "cinnamon", "t": "Cinnamon", "g": "Whole spices" },
+        { "a": 3, "u": "piece", "i": "cardamom", "t": "Cardamom", "g": "Whole spices" },
+        { "a": 1, "u": "tsp", "i": "pepper-powder", "t": "Pepper powder" },
+        { "a": 2, "u": "tbsp", "i": "coconut-oil", "t": "Coconut oil" },
+        { "a": null, "u": "to_taste", "i": "salt", "t": "Salt" }
+      ],
+      "steps": [
+        "Heat coconut oil and fry the whole spices for a few seconds until fragrant.",
+        "Add onion, ginger and green chillies. Sauté until the onion is soft but not brown.",
+        "Add the chicken, potatoes, carrot, salt and the thin coconut milk. Cover and cook on low heat for 25 minutes.",
+        "Stir in the pepper powder and the thick coconut milk. Warm it through for 2 minutes without boiling.",
+        "Finish with a few curry leaves and a spoon of raw coconut oil."
+      ],
+      "tips": "Never boil after adding thick coconut milk, or it will split."
+    },
+    {
+      "author": "sheela_cooks",
+      "title_ml": "സാമ്പാർ",
+      "title_en": "Sambar",
+      "content_lang": "ml",
+      "description": "പച്ചക്കറികളും പരിപ്പും ചേർന്ന സദ്യ സ്റ്റൈൽ സാമ്പാർ.",
+      "category": "curry",
+      "region": "central-kerala",
+      "diet": "vegan",
+      "prep": 20,
+      "cook": 35,
+      "servings": 6,
+      "tags": ["onam", "vishu"],
+      "ingredients": [
+        { "a": 0.5, "u": "cup", "i": "toor-dal", "t": "തുവരപ്പരിപ്പ്" },
+        { "a": 1, "u": "piece", "i": "drumstick", "t": "മുരിങ്ങക്കായ", "n": "കഷണങ്ങൾ" },
+        { "a": 1, "u": "cup", "i": "ash-gourd", "t": "കുമ്പളങ്ങ", "n": "കഷണങ്ങൾ" },
+        { "a": 1, "u": "piece", "i": "carrot", "t": "കാരറ്റ്" },
+        { "a": 6, "u": "piece", "i": "okra", "t": "വെണ്ടയ്ക്ക" },
+        { "a": 1, "u": "piece", "i": "tomato", "t": "തക്കാളി" },
+        { "a": 1, "u": "pidi", "i": "shallots", "t": "ചുവന്നുള്ളി" },
+        { "a": 1, "u": "piece", "i": "tamarind", "t": "പുളി", "n": "നെല്ലിക്ക വലിപ്പം" },
+        { "a": 3, "u": "tbsp", "i": "sambar-powder", "t": "സാമ്പാർ പൊടി" },
+        { "a": 1, "u": "pinch", "i": "asafoetida", "t": "കായം" },
+        { "a": 1, "u": "tsp", "i": "mustard-seeds", "t": "കടുക്", "g": "താളിക്കാൻ" },
+        { "a": 2, "u": "piece", "i": "dried-red-chilli", "t": "വറ്റൽമുളക്", "g": "താളിക്കാൻ" },
+        { "a": 2, "u": "sprig", "i": "curry-leaves", "t": "കറിവേപ്പില", "g": "താളിക്കാൻ" },
+        { "a": 1, "u": "tbsp", "i": "coconut-oil", "t": "വെളിച്ചെണ്ണ", "g": "താളിക്കാൻ" },
+        { "a": null, "u": "to_taste", "i": "salt", "t": "ഉപ്പ്" }
+      ],
+      "steps": [
+        "പരിപ്പ് മഞ്ഞൾപ്പൊടിയും വെള്ളവും ചേർത്ത് കുക്കറിൽ 3 വിസിൽ വരുന്നതുവരെ വേവിച്ച് ഉടയ്ക്കുക.",
+        "പുളി രണ്ട് ഗ്ലാസ് വെള്ളത്തിൽ പിഴിഞ്ഞെടുക്കുക.",
+        "പച്ചക്കറികൾ പുളിവെള്ളവും ഉപ്പും ചേർത്ത് 10 മിനിറ്റ് വേവിക്കുക. വെണ്ടയ്ക്ക അവസാനം ഇടുക.",
+        "വേവിച്ച പരിപ്പും സാമ്പാർ പൊടിയും കായവും ചേർത്ത് 5 മിനിറ്റ് തിളപ്പിക്കുക.",
+        "വെളിച്ചെണ്ണയിൽ കടുക്, വറ്റൽമുളക്, കറിവേപ്പില താളിച്ച് സാമ്പാറിലേക്ക് ഒഴിക്കുക."
+      ],
+      "tips": "സദ്യയ്ക്ക് വറുത്തരച്ച തേങ്ങ കൂടി ചേർക്കാം."
+    },
+    {
+      "author": "sheela_cooks",
+      "title_ml": "അവിയൽ",
+      "title_en": "Avial",
+      "content_lang": "ml",
+      "description": "തേങ്ങയും തൈരും ചേർത്ത പച്ചക്കറി മിശ്രിതം. സദ്യയിലെ പ്രധാനി.",
+      "category": "sides",
+      "region": "kerala",
+      "diet": "veg",
+      "prep": 25,
+      "cook": 20,
+      "servings": 6,
+      "tags": ["onam", "vishu"],
+      "ingredients": [
+        { "a": 1, "u": "piece", "i": "raw-banana", "t": "വാഴക്ക", "n": "നീളത്തിൽ" },
+        { "a": 1, "u": "cup", "i": "yam", "t": "ചേന", "n": "നീളത്തിൽ" },
+        { "a": 1, "u": "piece", "i": "drumstick", "t": "മുരിങ്ങക്കായ" },
+        { "a": 1, "u": "piece", "i": "carrot", "t": "കാരറ്റ്" },
+        { "a": 1, "u": "cup", "i": "snake-gourd", "t": "പടവലങ്ങ" },
+        { "a": 1, "u": "cup", "i": "grated-coconut", "t": "ചിരകിയ തേങ്ങ", "g": "അരപ്പിന്" },
+        { "a": 3, "u": "piece", "i": "green-chilli", "t": "പച്ചമുളക്", "g": "അരപ്പിന്" },
+        { "a": 0.5, "u": "tsp", "i": "cumin", "t": "ജീരകം", "g": "അരപ്പിന്" },
+        { "a": 0.5, "u": "cup", "i": "curd", "t": "തൈര്", "n": "അൽപ്പം പുളിയുള്ളത്" },
+        { "a": 2, "u": "tbsp", "i": "coconut-oil", "t": "വെളിച്ചെണ്ണ" },
+        { "a": 2, "u": "sprig", "i": "curry-leaves", "t": "കറിവേപ്പില" },
+        { "a": null, "u": "to_taste", "i": "salt", "t": "ഉപ്പ്" }
+      ],
+      "steps": [
+        "പച്ചക്കറികൾ ഒരേ നീളത്തിൽ മുറിച്ച് മഞ്ഞളും ഉപ്പും അര ഗ്ലാസ് വെള്ളവും ചേർത്ത് 10 മിനിറ്റ് വേവിക്കുക. ഉടയരുത്.",
+        "തേങ്ങ, പച്ചമുളക്, ജീരകം എന്നിവ വെള്ളം ചേർക്കാതെ തരുതരുപ്പായി ചതച്ചെടുക്കുക.",
+        "അരപ്പ് പച്ചക്കറിയിൽ ചേർത്ത് മൂടി 3 മിനിറ്റ് ആവിയിൽ വെക്കുക.",
+        "തീ അണച്ച് തൈര് ചേർത്ത് പതുക്കെ ഇളക്കുക.",
+        "പച്ച വെളിച്ചെണ്ണയും കറിവേപ്പിലയും മുകളിൽ ചേർത്ത് മൂടി വെക്കുക."
+      ],
+      "tips": "തൈരിന് പകരം പച്ചമാങ്ങ ഉപയോഗിക്കുന്നവരുമുണ്ട്."
+    },
+    {
+      "author": "ammini",
+      "title_ml": "പാൽ പായസം",
+      "title_en": "Pal Payasam",
+      "content_lang": "ml",
+      "description": "പാലും അരിയും പഞ്ചസാരയും മാത്രം. ക്ഷമയോടെ കുറുക്കിയെടുക്കുന്ന പിങ്ക് നിറമുള്ള പായസം.",
+      "category": "sweets",
+      "region": "central-kerala",
+      "diet": "veg",
+      "prep": 5,
+      "cook": 60,
+      "servings": 6,
+      "tags": ["onam", "vishu"],
+      "ingredients": [
+        { "a": 1, "u": "l", "i": "milk", "t": "പാൽ" },
+        { "a": 0.25, "u": "cup", "i": "matta-rice", "t": "ഉണക്കലരി", "n": "കഴുകിയത്" },
+        { "a": 0.5, "u": "cup", "i": "sugar", "t": "പഞ്ചസാര" },
+        { "a": 1, "u": "glass", "i": "water", "t": "വെള്ളം" },
+        { "a": 1, "u": "tbsp", "i": "ghee", "t": "നെയ്യ്" },
+        { "a": 0.25, "u": "tsp", "i": "cardamom-powder", "t": "ഏലയ്ക്കാപ്പൊടി" }
+      ],
+      "steps": [
+        "അടി കട്ടിയുള്ള പാത്രത്തിൽ പാലും വെള്ളവും തിളപ്പിക്കുക.",
+        "അരി ചേർത്ത് ചെറുതീയിൽ ഇടയ്ക്കിടെ ഇളക്കി 40 മിനിറ്റ് വേവിക്കുക.",
+        "പഞ്ചസാര ചേർത്ത് ഇളം പിങ്ക് നിറമാകുന്നതുവരെ 15 മിനിറ്റ് കൂടി കുറുക്കുക.",
+        "നെയ്യും ഏലയ്ക്കാപ്പൊടിയും ചേർത്ത് തീ അണയ്ക്കുക."
+      ],
+      "tips": "പ്രഷർ കുക്കറിൽ ചെയ്താൽ സമയം പകുതി മതി."
+    },
+    {
+      "author": "thomas_k",
+      "title_ml": "ബീഫ് ഉലർത്തിയത്",
+      "title_en": "Beef Ularthiyathu",
+      "content_lang": "en",
+      "description": "Dry-roasted beef with coconut slivers, pepper and curry leaves. A Kottayam favourite.",
+      "category": "meat",
+      "region": "travancore",
+      "diet": "nonveg",
+      "prep": 20,
+      "cook": 60,
+      "servings": 4,
+      "tags": ["christmas"],
+      "ingredients": [
+        { "a": 0.5, "u": "kg", "i": "beef", "t": "Beef", "n": "small cubes" },
+        { "a": 1, "u": "tbsp", "i": "meat-masala", "t": "Meat masala" },
+        { "a": 1, "u": "tsp", "i": "kashmiri-chilli-powder", "t": "Kashmiri chilli powder" },
+        { "a": 1, "u": "tsp", "i": "pepper-powder", "t": "Pepper powder" },
+        { "a": 0.5, "u": "tsp", "i": "turmeric", "t": "Turmeric powder" },
+        { "a": 1, "u": "tbsp", "i": "ginger-garlic-paste", "t": "Ginger-garlic paste" },
+        { "a": 15, "u": "piece", "i": "shallots", "t": "Shallots", "n": "sliced" },
+        { "a": 0.25, "u": "cup", "i": "coconut", "t": "Coconut slivers" },
+        { "a": 3, "u": "sprig", "i": "curry-leaves", "t": "Curry leaves" },
+        { "a": 3, "u": "tbsp", "i": "coconut-oil", "t": "Coconut oil" },
+        { "a": null, "u": "to_taste", "i": "salt", "t": "Salt" }
+      ],
+      "steps": [
+        "Mix the beef with the powders, ginger-garlic paste and salt. Rest for 30 minutes.",
+        "Pressure-cook without water for 6 whistles. The beef releases its own juices.",
+        "In a wide pan, fry the coconut slivers in coconut oil until golden. Add shallots and curry leaves and fry until brown.",
+        "Add the cooked beef and roast on medium heat, stirring often, for 20 minutes until dark and dry.",
+        "Finish with more pepper and a sprig of curry leaves."
+      ],
+      "tips": "Patience is the recipe: the longer you roast, the better it gets."
+    },
+    {
+      "author": "rasiya",
+      "title_ml": "പഴംപൊരി",
+      "title_en": "Pazham Pori",
+      "content_lang": "en",
+      "description": "Ripe plantain fritters: crisp outside, soft and sweet inside. The tea-shop classic.",
+      "category": "snacks",
+      "region": "kerala",
+      "diet": "vegan",
+      "prep": 10,
+      "cook": 15,
+      "servings": 4,
+      "tags": ["tea-time", "kids", "monsoon"],
+      "ingredients": [
+        {
+          "a": 2,
+          "u": "piece",
+          "i": "ripe-banana",
+          "t": "Ripe plantains",
+          "n": "well ripened, with black spots"
+        },
+        { "a": 1, "u": "cup", "i": "maida", "t": "All-purpose flour" },
+        { "a": 2, "u": "tbsp", "i": "rice-flour", "t": "Rice flour", "n": "for crispness" },
+        { "a": 3, "u": "tbsp", "i": "sugar", "t": "Sugar" },
+        { "a": 1, "u": "pinch", "i": "turmeric", "t": "Turmeric" },
+        { "a": 1, "u": "pinch", "i": "salt", "t": "Salt" },
+        { "a": 0.75, "u": "cup", "i": "water", "t": "Water" },
+        { "a": null, "u": "to_taste", "i": "coconut-oil", "t": "Coconut oil", "n": "for deep frying" }
+      ],
+      "steps": [
+        "Whisk the flours, sugar, turmeric, salt and water into a thick, smooth batter. Rest it for 10 minutes.",
+        "Peel the plantains, cut each in half across, then slice each half lengthwise into three.",
+        "Heat oil until a drop of batter rises at once.",
+        "Dip each slice in the batter and fry, turning once, for 3 minutes until golden.",
+        "Drain on paper and serve hot with tea."
+      ],
+      "tips": "Too ripe and the slices go mushy; too green and they're not sweet."
+    },
+    {
+      "author": "rasiya",
+      "title_ml": "സുലൈമാനി",
+      "title_en": "Sulaimani",
+      "content_lang": "en",
+      "description": "Malabar's spiced black tea with lemon. Served after every biriyani.",
+      "category": "drinks",
+      "region": "malabar",
+      "diet": "vegan",
+      "prep": 2,
+      "cook": 5,
+      "servings": 2,
+      "tags": ["quick", "ramadan"],
+      "ingredients": [
+        { "a": 2, "u": "glass", "i": "water", "t": "Water" },
+        { "a": 1, "u": "tsp", "i": "tea-powder", "t": "Tea powder" },
+        { "a": 2, "u": "piece", "i": "cardamom", "t": "Cardamom", "n": "crushed" },
+        { "a": 2, "u": "piece", "i": "cloves", "t": "Cloves" },
+        { "a": 1, "u": "inch", "i": "cinnamon", "t": "Cinnamon" },
+        { "a": 2, "u": "tsp", "i": "sugar", "t": "Sugar" },
+        { "a": 1, "u": "tbsp", "i": "lemon", "t": "Lemon juice" },
+        { "a": 2, "u": "sprig", "i": "mint-leaves", "t": "Mint leaves", "n": "optional" }
+      ],
+      "steps": [
+        "Boil the water with cardamom, cloves and cinnamon for 2 minutes.",
+        "Turn off the heat, add the tea powder and sugar, cover and steep for 1 minute.",
+        "Strain into glasses and stir in the lemon juice. Add mint if you like."
+      ],
+      "tips": "Keep it light: you should see the bottom of the glass through the tea."
+    },
+    {
+      "author": "thomas_k",
+      "title_ml": "ദാൽ തഡ്ക",
+      "title_en": "Dal Tadka",
+      "content_lang": "en",
+      "description": "North Indian yellow dal with a sizzling cumin and garlic tempering.",
+      "category": "curry",
+      "region": "north-india",
+      "diet": "veg",
+      "prep": 10,
+      "cook": 30,
+      "servings": 4,
+      "tags": ["quick"],
+      "ingredients": [
+        { "a": 1, "u": "cup", "i": "toor-dal", "t": "Toor dal", "n": "washed" },
+        { "a": 1, "u": "piece", "i": "tomato", "t": "Tomato", "n": "chopped" },
+        { "a": 1, "u": "piece", "i": "onion", "t": "Onion", "n": "finely chopped" },
+        { "a": 2, "u": "piece", "i": "green-chilli", "t": "Green chillies" },
+        { "a": 0.5, "u": "tsp", "i": "turmeric", "t": "Turmeric powder" },
+        { "a": 1, "u": "tsp", "i": "cumin", "t": "Cumin", "g": "Tadka" },
+        { "a": 5, "u": "piece", "i": "garlic", "t": "Garlic", "n": "sliced", "g": "Tadka" },
+        { "a": 2, "u": "piece", "i": "dried-red-chilli", "t": "Dried red chillies", "g": "Tadka" },
+        { "a": 1, "u": "pinch", "i": "asafoetida", "t": "Asafoetida", "g": "Tadka" },
+        { "a": 2, "u": "tbsp", "i": "ghee", "t": "Ghee", "g": "Tadka" },
+        { "a": 1, "u": "pidi", "i": "coriander-leaves", "t": "Coriander leaves" },
+        { "a": null, "u": "to_taste", "i": "salt", "t": "Salt" }
+      ],
+      "steps": [
+        "Pressure-cook the dal with turmeric and three glasses of water for 4 whistles. Whisk until smooth.",
+        "Cook onion, green chillies and tomato in a little ghee until soft, then add the dal and salt. Simmer for 10 minutes.",
+        "For the tadka, heat ghee, add cumin, garlic, dried chillies and asafoetida. Fry until the garlic is golden.",
+        "Pour the sizzling tadka over the dal and finish with coriander leaves."
+      ]
+    }
+  ]
+}

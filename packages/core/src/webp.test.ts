@@ -25,7 +25,7 @@ describe('stripWebpMetadata', () => {
     expect(isWebp(out)).toBe(true);
     expect(webpHasMetadata(input)).toBe(true);
     expect(webpHasMetadata(out)).toBe(false);
-    expect(new TextDecoder('latin1').decode(out)).not.toContain('GPS-secret');
+    expect(String.fromCharCode(...out)).not.toContain('GPS-secret');
     expect(out.length).toBe(12 + vp8x.length + image.length);
   });
 

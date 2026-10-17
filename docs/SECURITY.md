@@ -54,6 +54,11 @@ Every variable is documented in [`.env.example`](../.env.example).
 | Exposure          | Only `/auth/v1`, `/rest/v1`, `/storage/v1`, `/realtime/v1` and `/functions/v1` are routed publicly. **Supabase Studio, `/pg` (meta) and other gateway paths are never public.** Studio is LAN-only or reached by SSH tunnel. It's off by default in local dev, because the CLI publishes ports on every interface. |
 | Outbound requests | `import-recipe` refuses private, loopback, link-local and metadata IP ranges, including after DNS resolution and redirects. It has a 5 s timeout and a 2 MB cap, and parses JSON-LD only.                                                                                                                          |
 
+### Staging and local dev
+
+- Staging runs on the Supabase CLI stack behind the SSO forward-auth (family and admins only) and sends `X-Robots-Tag: noindex`. The production app will be public and not behind SSO.
+- The Supabase CLI publishes its ports on all interfaces, including the database with its well-known default password. On a shared network, block them at the host firewall (for Docker, the `DOCKER-USER` chain) or only run the stack while needed. It must never hold real user data.
+
 ## 6. Data protection
 
 |                |                                                                                                                                                                                                                                                                                                                |

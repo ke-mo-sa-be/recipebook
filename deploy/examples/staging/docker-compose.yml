@@ -1,0 +1,31 @@
+# Staging frontend for a Supabase CLI dev stack, behind Traefik.
+# Copy to deploy/local/staging/, replace the CHANGE_ME values, build the site into ./site, then:
+#   docker compose up -d
+services:
+  web:
+    image: nginxinc/nginx-unprivileged:1.30.6-alpine
+    container_name: recipebook-staging
+    restart: unless-stopped
+    read_only: true
+    tmpfs: [/tmp]
+    volumes:
+      - ./site:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks: [traefik, supabase]
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_default
+      - traefik.http.routers.recipebook-staging.rule=Host(`CHANGE_ME.example.org`)
+      - traefik.http.routers.recipebook-staging.entrypoints=web
+      # Staging is private: put it behind your SSO's forward-auth middleware.
+      - traefik.http.routers.recipebook-staging.middlewares=CHANGE_ME_AUTH@docker
+      - traefik.http.services.recipebook-staging.loadbalancer.server.port=8080
+
+networks:
+  traefik:
+    name: traefik_default
+    external: true
+  supabase:
+    # Created by `supabase start` (supabase_network_<project_id>).
+    name: supabase_network_recipebook
+    external: true

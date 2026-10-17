@@ -3,7 +3,7 @@
 **A free community recipe app, built for Kerala home cooks first and open to everyone.**
 Malayalam-first, with English as an equal. Kitchen-proof: big text, one step at a time, the screen stays on. No ads, no life stories, no tracking. Free forever. Self-hostable. AGPL-3.0.
 
-> **Status: early development (M0–M1).** The design system and wireframes are in review, and the foundation (auth, database, CI) is being built. Nothing is usable by the public yet. See [ROADMAP.md](ROADMAP.md) and [CHANGELOG.md](CHANGELOG.md).
+> **Status: early development (M1).** The design is approved. Accounts, profiles, settings and the app shell work; recipes arrive in M2. Nothing is usable by the public yet. See [ROADMAP.md](ROADMAP.md) and [CHANGELOG.md](CHANGELOG.md).
 >
 > "Recipebook" is a working name.
 

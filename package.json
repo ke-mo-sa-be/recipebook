@@ -23,7 +23,8 @@
     "db:lint": "supabase db lint --level warning",
     "tokens": "node scripts/tokens.mjs build",
     "tokens:check": "node scripts/tokens.mjs check",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && node scripts/check-no-secrets.mjs"
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && node scripts/check-no-secrets.mjs",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

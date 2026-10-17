@@ -1,6 +1,6 @@
 # Design System
 
-Status: **M0 — awaiting approval**. Tokens live in [`apps/web/src/theme/tokens.json`](../apps/web/src/theme/tokens.json). That file is the source of truth: `pnpm tokens` regenerates the CSS and `pnpm tokens:check` verifies contrast. If this doc and the JSON disagree, the JSON wins, and this doc gets fixed.
+Status: **approved 2026-10-17** (M0). Tokens live in [`apps/web/src/theme/tokens.json`](../apps/web/src/theme/tokens.json). That file is the source of truth: `pnpm tokens` regenerates the CSS and `pnpm tokens:check` verifies contrast. If this doc and the JSON disagree, the JSON wins, and this doc gets fixed.
 
 ## 1. Design direction
 
@@ -158,6 +158,7 @@ Cards use `surface`, `sm` shadow, 12 px padding and no border. On phones, Home s
   - **Home · Search · Add · Saved · Profile**,
   - every item has an icon and a label, and the active item gets a `primary` colour pill behind its icon,
   - **Add** is a raised 56 px chilli-red circle in the centre.
+  - **Sizing exception:** the bar is fixed chrome, so its icons are sized in px and its labels are capped at 13 px (12–13 px) rather than following the text-size setting. Slots share the width but never shrink below their longest word, and two-word labels wrap at the space. This keeps all five Malayalam labels whole on a 360 px phone; `e2e/layout.spec.ts` checks it at every text size.
 - **Desktop top nav** (≥ 1024 px): logo on the left, search field in the centre, then Add (primary button), Saved, and an avatar menu.
 - **Header** on inner pages: a back button (labelled), the title, and at most one action on the right.
 

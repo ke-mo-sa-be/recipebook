@@ -4,7 +4,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
-### Added: M0, design gate (awaiting approval)
+### Added: M0, design gate (approved 2026-10-17)
 
 - `docs/DESIGN_SYSTEM.md`:
   - a warm spice palette (turmeric, chilli, curry leaf, coconut cream) with a real dark theme,
@@ -44,6 +44,44 @@ All notable changes to this project are documented here. The format follows [Kee
   - README, CONTRIBUTING, ROADMAP and SELF_HOSTING (stub),
   - AGPL-3.0 licence and `.env.example`.
 
+### Added: M1, app shell and auth (UI)
+
+- App shell:
+  - mobile bottom nav (Home · Search · Add · Saved · Profile, every icon labelled) and desktop top nav,
+  - skip link, offline banner, friendly 404 and crash screens,
+  - routes per `docs/UX_FLOWS.md`, with Saved and Add requiring sign-in.
+- First-visit language chooser (bilingual, Malayalam preselected).
+- Auth screens:
+  - sign up (name, email, password), "check your email" with a 60 s resend cooldown,
+  - sign in, forgot password, set a new password, and the email/OAuth callback,
+  - "Continue with Google", hidden until `VITE_AUTH_GOOGLE=true` (needs the OAuth client),
+  - errors mapped to plain-language messages in both languages; links opened in another browser get "That link worked, please sign in".
+- First sign-in onboarding: confirm name, pick a username, optional district.
+- Settings: language, text size (normal / large / extra large), theme (auto / light / dark), profile (name, username, district, bio), sign out. Signed-in choices are saved to the profile and follow the person to other devices.
+- Public profile page (`/u/:handle`) with Recipes / Variations / Cooked it tabs (empty states until M2/M4).
+- Placeholder Home, Search, Saved and Add screens with "coming soon" copy.
+- 147 UI strings in Malayalam and English (Malayalam is a first draft for review in M7).
+- Staging setup: `deploy/examples/staging/` (nginx serving the app and proxying the API paths to the CLI stack, with security headers), and an Authelia rule for the staging host (family and admins only).
+
+### Changed
+
+- Line-height tokens now switch by the `lang` attribute, so Malayalam gets taller lines even inside utility-styled text.
+- The bottom nav sizes each slot to its label and uses px icon sizes, so long Malayalam labels such as "പ്രൊഫൈൽ" fit whole on a 360 px phone at every text size.
+
+### Fixed
+
+- Email addresses with a leading or trailing space (common after phone keyboard autocomplete) were rejected. They are now trimmed before validation.
+- The secret scan flagged supabase-js's own `sb_secret_` prefix check and the library's doc comments. It now looks for real key values, and still catches service-role JWTs and secret keys.
+
+### Tests
+
+- 32 unit and component tests: nav, sign-up validation and submit, settings applying instantly, the language chooser, locale key and placeholder parity, and every `t('…')` key existing.
+- Playwright E2E (`pnpm test:e2e`), 15 tests:
+  - the full journey: language → sign up → sign-in refused before confirming → email link → onboarding (including a bad username) → profile → settings in Malayalam, extra-large text and dark mode → save profile → sign out,
+  - sign in on a fresh browser restores language and text size from the profile; a wrong password is explained,
+  - password reset by email (old password rejected, new one works),
+  - no clipping or sideways scrolling on 5 screens × 2 languages × 3 text sizes at 360 px and 412 px.
+
 ### Verified on 2026-10-16 (local stack)
 
 - Signing up sends a verification email, sign-in is refused until the email is confirmed, and confirming signs you in.
@@ -51,9 +89,10 @@ All notable changes to this project are documented here. The format follows [Kee
 - `PATCH profiles {"role":"admin"}` as a user is rejected with `42501`.
 - Mutation check: temporarily granting `update(role)` makes the pgTAP suite fail, as it should.
 
-### Not yet done in M1 (waiting on M0 approval or your accounts)
+### Known gaps
 
-- App shell (bottom nav, top nav, routes), the auth screens, onboarding and the language chooser.
-- Google sign-in end to end, which needs the OAuth client.
-- Real SMTP (Brevo).
-- Staging host on the server.
+- Google sign-in end to end: needs the Google Cloud OAuth client.
+- Real email: staging uses the local test inbox until SMTP (Brevo) is set up.
+- Staging goes live after Authelia is restarted (the new access rule is written and validated) and the Cloudflare public hostname is added.
+- The JS bundle is 221 KB gzipped against the 170 KB M7 budget. Route-level code splitting is planned.
+- E2E runs locally in the Playwright container. It joins CI in M2.

@@ -18,7 +18,7 @@ The functionality that matters most, in order:
 
 - **Unit:** pure logic in `packages/core` (schemas, scaler, measures, timer detection, Manglish normaliser, schema.org mapping) and React components with Testing Library.
 - **Database / integration:** pgTAP tests in `supabase/tests/database/`, run against the real local Supabase stack. **Every table has policy tests** from the viewpoints of anon, another user, the owner, a moderator and a suspended user. They include the expected denials (`throws_ok … '42501'`, or 0 rows affected). `01_rls_coverage.test.sql` fails if any `public` table lacks RLS, any `private` table is readable by API roles, or a `security definer` function in `public` doesn't pin its `search_path`.
-- **End-to-end:** Playwright against the dev stack, from M2 on:
+- **End-to-end:** Playwright against a built app and the local dev stack (`e2e/`). Implemented in M1: the auth journey and a no-clipping layout check. To be added from M2:
   - sign up and verify through the Mailpit API,
   - sign in,
   - create and publish a recipe,
@@ -36,7 +36,7 @@ The functionality that matters most, in order:
 | Unit / component | Vitest 5, @testing-library/react, jsdom                                     |
 | Database         | pgTAP through `supabase test db` (pg_prove)                                 |
 | Edge Functions   | `deno check` (CI). Behaviour tests with `deno test` as functions are added. |
-| E2E              | Playwright (from M2)                                                        |
+| E2E              | Playwright 1.63, run in its official Docker image (see §7)                  |
 | Accessibility    | axe (from M2, inside E2E), plus a TalkBack spot check in M7                 |
 | Performance      | Lighthouse CI, mobile profile (M7)                                          |
 | Contrast         | `pnpm tokens:check` (every token pair, both themes)                         |
@@ -47,7 +47,7 @@ The functionality that matters most, in order:
 packages/core/src/**/*.test.ts       unit
 apps/web/src/**/*.test.tsx           component
 supabase/tests/database/*.test.sql   pgTAP (shared helpers: _helpers.inc, included with \ir)
-e2e/                                 Playwright (from M2)
+e2e/                                 Playwright: auth.spec.ts, layout.spec.ts
 ```
 
 ## 5. Critical user flows
@@ -86,3 +86,15 @@ CI (`.github/workflows/ci.yml`) runs all of these on every push and PR: web chec
 - [ ] The critical flow for the change was verified (automated, or manually on a phone, and noted)
 - [ ] There are no blocking errors in the browser console
 - [ ] Unverified items are stated plainly in the CHANGELOG entry
+
+## Running the E2E tests
+
+Needs the local stack (`pnpm db:start`), a build pointed at it, and the preview server:
+
+```bash
+VITE_SUPABASE_URL=http://127.0.0.1:54321 VITE_SITE_URL=http://localhost:4173 VITE_SUPABASE_PUBLISHABLE_KEY=<from supabase status> pnpm --filter @recipebook/web build
+pnpm --filter @recipebook/web preview --port 4173
+docker run --rm --network host --ipc host -u "$(id -u):$(id -g)" -e HOME=/tmp -e E2E_PUBLISHABLE_KEY=<key> -v "$PWD:$PWD" -w "$PWD" mcr.microsoft.com/playwright:v1.63.0-noble ./node_modules/.bin/playwright test
+```
+
+The tests read auth emails from Mailpit and rewrite the link host to the local gateway, so they also work when the stack is configured for a staging hostname. Each run creates a uniquely named test account.

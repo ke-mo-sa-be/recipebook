@@ -56,4 +56,4 @@ Test emails (verification and reset) appear in the local Mailpit inbox. Its URL 
 
 ## Licence
 
-[AGPL-3.0](LICENSE). If you run a modified version for others, you must share your changes. The sample recipes in `supabase/seed/` (from M2) are written for this project and released under the same licence.
+[AGPL-3.0](LICENSE). Sticker art: [Microsoft Fluent Emoji](https://github.com/microsoft/fluentui-emoji) (MIT). Icons: [Lucide](https://lucide.dev) (ISC). If you run a modified version for others, you must share your changes. The sample recipes in `supabase/seed/` (from M2) are written for this project and released under the same licence.

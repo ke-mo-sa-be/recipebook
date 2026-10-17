@@ -33,12 +33,13 @@ function staticVars() {
   for (const [k, v] of Object.entries(tokens.space)) vars[`--rb-space-${k}`] = v;
   for (const [k, v] of Object.entries(tokens.radius)) vars[`--rb-radius-${k}`] = v;
   for (const [k, v] of Object.entries(tokens.size)) vars[`--rb-size-${k}`] = v;
-  for (const [k, [size, lh, lhMl, weight]] of Object.entries(tokens.type)) {
+  for (const [k, [size, lh, lhMl, weight, tracking = '0']] of Object.entries(tokens.type)) {
     if (k.startsWith('$')) continue;
     vars[`--rb-text-${k}`] = size;
     vars[`--rb-leading-${k}`] = lh;
     vars[`--rb-leading-${k}-ml`] = lhMl;
     vars[`--rb-weight-${k}`] = weight;
+    vars[`--rb-tracking-${k}`] = tracking;
   }
   return vars;
 }
@@ -47,9 +48,10 @@ function staticVars() {
 // Utilities read --rb-leading-<size>, which these blocks switch per [lang] (nearest ancestor wins).
 function leadingVars(variant) {
   const vars = {};
-  for (const [k, [, lh, lhMl]] of Object.entries(tokens.type)) {
+  for (const [k, [, lh, lhMl, , tracking = '0']] of Object.entries(tokens.type)) {
     if (k.startsWith('$')) continue;
     vars[`--rb-leading-${k}`] = variant === 'ml' ? lhMl : lh;
+    vars[`--rb-tracking-${k}`] = variant === 'ml' ? '0' : tracking;
   }
   return vars;
 }
@@ -82,6 +84,7 @@ function buildTailwindTheme() {
     lines.push(`  --text-${k}: var(--rb-text-${k});`);
     lines.push(`  --text-${k}--line-height: var(--rb-leading-${k});`);
     lines.push(`  --text-${k}--font-weight: var(--rb-weight-${k});`);
+    lines.push(`  --text-${k}--letter-spacing: var(--rb-tracking-${k});`);
   }
   for (const k of Object.keys(tokens.size)) lines.push(`  --spacing-${k}: var(--rb-size-${k});`);
   lines.push('  --font-sans: var(--rb-font-sans);', '  --font-ml: var(--rb-font-ml);');

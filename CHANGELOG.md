@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Design v2 (proposed 2026-10-17, awaiting approval)
+
+- New direction after review of the M1 build: a neutral canvas, white cards, one black action per screen, two-tone headlines, and **die-cut ingredient stickers** as the signature element. `docs/DESIGN_SYSTEM.md` has been rewritten as v2.
+- Hi-fi mockups (`docs/design/hifi.src.html`, built by `node scripts/build-mockups.mjs`) in light and dark, covering:
+  - mobile: Home, "What's in your kitchen?", Recipe (top and scrolled), Cooking mode, Add recipe (ingredients), Search, Cookbook (profile), Sign in, Home in Malayalam,
+  - desktop: Home, Recipe, Cookbook.
+- Stickers: 71 Fluent Emoji 3D images (MIT), listed in `scripts/stickers.json`. `pnpm stickers` converts them to 192 px WebP with a baked-in white outline (296 KB total).
+- Tokens v2: neutral palette, black and white primary, chilli accent used sparingly, Inter replacing Figtree, larger radii, softer shadows, per-language letter-spacing. All 66 contrast pairs pass.
+- The app screens still use the v1 components. They will be rebuilt on v2 once the design is approved.
+
 ### Added: M0, design gate (approved 2026-10-17)
 
 - `docs/DESIGN_SYSTEM.md`:

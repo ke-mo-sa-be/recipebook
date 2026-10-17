@@ -1,0 +1,2668 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Recipebook hi-fi design</title>
+    <!-- inline:tokens -->
+    <style>
+      /* Mockup page. Every colour, radius, shadow and type size comes from the real tokens above. */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--rb-color-surface-sunken);
+        color: var(--rb-color-text);
+        font-family: var(--rb-font-sans);
+        font-size: 16px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      [lang='ml'] {
+        font-family: var(--rb-font-ml);
+      }
+      img {
+        display: block;
+      }
+      svg.i {
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex: none;
+      }
+
+      /* ── page chrome ───────────────────────────── */
+      .page-head {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 28px 20px 8px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .page-head h1 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+      }
+      .page-head h1 span {
+        color: var(--rb-color-text-soft);
+      }
+      .page-head p {
+        margin: 8px 0 0;
+        color: var(--rb-color-text-muted);
+        max-width: 62ch;
+        font-size: 15px;
+      }
+      .toggles {
+        display: flex;
+        gap: 8px;
+      }
+      .tog {
+        border: 1px solid var(--rb-color-border);
+        background: var(--rb-color-surface);
+        color: var(--rb-color-text);
+        border-radius: 999px;
+        height: 40px;
+        padding: 0 16px;
+        font: 500 14px var(--rb-font-sans);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+      .toc {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: var(--rb-color-surface-sunken);
+        border-bottom: 1px solid var(--rb-color-border);
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 10px 20px;
+      }
+      .toc a {
+        display: inline-flex;
+        align-items: center;
+        height: 36px;
+        padding: 0 14px;
+        margin-right: 6px;
+        border-radius: 999px;
+        background: var(--rb-color-surface);
+        color: var(--rb-color-text);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      section.block {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 36px 20px 8px;
+      }
+      section.block > h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      section.block > p.lede {
+        margin: 6px 0 22px;
+        color: var(--rb-color-text-muted);
+        max-width: 70ch;
+        font-size: 15px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        align-items: flex-start;
+      }
+      .col {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 390px;
+      }
+      .cap {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--rb-color-text-muted);
+      }
+      .note {
+        background: var(--rb-color-surface);
+        border-radius: var(--rb-radius-md);
+        padding: 14px 16px;
+        font-size: 14px;
+        color: var(--rb-color-text-muted);
+      }
+      .note b {
+        color: var(--rb-color-text);
+      }
+      .note ul {
+        margin: 6px 0 0;
+        padding-left: 18px;
+      }
+
+      /* ── phone frame ───────────────────────────── */
+      .phone {
+        position: relative;
+        width: 100%;
+        max-width: 390px;
+        height: 844px;
+        border-radius: 52px;
+        background: var(--rb-color-bg);
+        border: 9px solid var(--rb-color-surface);
+        box-shadow: var(--rb-shadow-lg);
+        overflow: hidden;
+      }
+      .status {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 26px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .island {
+        width: 112px;
+        height: 32px;
+        background: #000;
+        border-radius: 20px;
+      }
+      .sig {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+      .sig i {
+        display: block;
+        width: 16px;
+        height: 9px;
+        border-radius: 2px;
+        background: currentColor;
+        opacity: 0.85;
+      }
+      .scr {
+        position: absolute;
+        inset: 50px 0 0;
+        padding: 4px 20px 0;
+        overflow: hidden;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .ib {
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        background: var(--rb-color-surface);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--rb-shadow-sm);
+        color: var(--rb-color-text);
+        flex: none;
+        border: 0;
+      }
+      .ib.dark {
+        background: var(--rb-color-primary);
+        color: var(--rb-color-on-primary);
+      }
+      .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        background: #f6c445;
+        color: #1c1208;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        flex: none;
+      }
+
+      /* type */
+      .hl {
+        font-size: var(--rb-text-h1);
+        font-weight: 500;
+        letter-spacing: var(--rb-tracking-h1);
+        line-height: 1.12;
+        margin: 0;
+      }
+      .hl .soft,
+      .soft {
+        color: var(--rb-color-text-soft);
+      }
+      .hl-xl {
+        font-size: var(--rb-text-display);
+        font-weight: 500;
+        letter-spacing: var(--rb-tracking-display);
+        line-height: 1.06;
+        margin: 0;
+      }
+      [lang='ml'].hl,
+      [lang='ml'] .hl {
+        letter-spacing: 0;
+        line-height: 1.4;
+      }
+      .sub {
+        color: var(--rb-color-text-muted);
+        font-size: 15px;
+        margin: 8px 0 0;
+      }
+      .sec {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin: 22px 0 10px;
+      }
+      .sec h3 {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+      }
+      .sec a {
+        font-size: 14px;
+        color: var(--rb-color-text-muted);
+        text-decoration: none;
+      }
+      .meta {
+        font-size: 13px;
+        color: var(--rb-color-text-muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .meta svg.i {
+        width: 14px;
+        height: 14px;
+      }
+
+      /* chips */
+      .chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .chips.scroll {
+        flex-wrap: nowrap;
+        overflow: hidden;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 36px;
+        padding: 0 14px;
+        border-radius: 999px;
+        background: var(--rb-color-surface);
+        border: 1px solid var(--rb-color-border);
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        color: var(--rb-color-text);
+      }
+      .chip.on {
+        background: var(--rb-color-primary);
+        color: var(--rb-color-on-primary);
+        border-color: var(--rb-color-primary);
+      }
+      .chip .t {
+        font-size: 11px;
+        font-weight: 600;
+        background: var(--rb-color-surface-sunken);
+        color: var(--rb-color-text);
+        border-radius: 999px;
+        padding: 2px 7px;
+      }
+      .chip.on .t {
+        background: rgba(255, 255, 255, 0.18);
+        color: inherit;
+      }
+      .chip img {
+        width: 22px;
+        height: 22px;
+        margin-left: -6px;
+      }
+      .seg {
+        display: inline-flex;
+        background: var(--rb-color-surface-sunken);
+        border-radius: 999px;
+        padding: 4px;
+        gap: 2px;
+      }
+      .seg span {
+        height: 34px;
+        padding: 0 14px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--rb-color-text-muted);
+      }
+      .seg span.on {
+        background: var(--rb-color-surface);
+        color: var(--rb-color-text);
+        box-shadow: var(--rb-shadow-sm);
+      }
+
+      /* stickers */
+      .stk {
+        width: var(--s, 56px);
+        height: var(--s, 56px);
+        filter: drop-shadow(0 5px 7px rgba(21, 20, 19, 0.16));
+        flex: none;
+      }
+      .tilt-l {
+        transform: rotate(-8deg);
+      }
+      .tilt-r {
+        transform: rotate(7deg);
+      }
+      .tilt-s {
+        transform: rotate(-3deg);
+      }
+
+      /* cards */
+      .card {
+        background: var(--rb-color-surface);
+        border-radius: var(--rb-radius-lg);
+        box-shadow: var(--rb-shadow-sm);
+        padding: 14px;
+      }
+      .cookcard {
+        text-align: center;
+        padding: 12px 14px 16px;
+      }
+      .cookcard .top {
+        display: flex;
+        justify-content: space-between;
+      }
+      .stkrow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        margin: 10px 0 8px;
+        min-height: 64px;
+      }
+      .stkrow .stk:nth-child(odd) {
+        transform: rotate(-6deg);
+      }
+      .stkrow .stk:nth-child(even) {
+        transform: rotate(5deg) translateY(2px);
+      }
+      .stkrow .more {
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        background: var(--rb-color-surface-sunken);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--rb-color-text-muted);
+      }
+      .cookcard h4 {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+      }
+      .cookcard h4 small {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--rb-color-text-muted);
+        letter-spacing: 0;
+        margin-top: 2px;
+      }
+      .diet {
+        width: 12px;
+        height: 12px;
+        border: 1.5px solid currentColor;
+        border-radius: 3px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .diet::after {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 99px;
+        background: currentColor;
+      }
+      .diet.v {
+        color: var(--rb-color-diet-veg);
+      }
+      .diet.n {
+        color: var(--rb-color-diet-nonveg);
+      }
+      .diet.e {
+        color: var(--rb-color-diet-egg);
+      }
+      .hscroll {
+        display: flex;
+        gap: 12px;
+        overflow: hidden;
+        margin: 0 -20px;
+        padding: 4px 20px 10px;
+      }
+
+      /* polaroid "photo sticker" */
+      .pola {
+        background: #fff;
+        padding: 7px 7px 7px;
+        border-radius: 22px;
+        box-shadow: var(--rb-shadow-lg);
+        transform: rotate(6deg);
+        width: var(--w, 150px);
+        flex: none;
+      }
+      .pola .ph {
+        aspect-ratio: 1;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .ph.warm {
+        background: radial-gradient(circle at 30% 25%, #fbe3c2, #edb27c 70%);
+      }
+      .ph.green {
+        background: radial-gradient(circle at 30% 25%, #e4f3d9, #a9d18e 75%);
+      }
+      .ph.rose {
+        background: radial-gradient(circle at 30% 25%, #fde2dd, #f2a79a 75%);
+      }
+      .ph.cream {
+        background: radial-gradient(circle at 30% 25%, #fff5de, #f2d59a 75%);
+      }
+      .ph .stk {
+        --s: 70%;
+        width: 70%;
+        height: auto;
+      }
+
+      /* composer */
+      .composer {
+        background: var(--rb-color-surface);
+        border-radius: var(--rb-radius-lg);
+        box-shadow: var(--rb-shadow-md);
+        padding: 14px 14px 12px;
+      }
+      .composer .ph-text {
+        color: var(--rb-color-text-muted);
+        font-size: 16px;
+        padding: 4px 4px 14px;
+      }
+      .composer .ph-text.typed {
+        color: var(--rb-color-text);
+      }
+      .composer .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .pillbtn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 40px;
+        padding: 0 14px;
+        border-radius: 999px;
+        background: var(--rb-color-surface-sunken);
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--rb-color-text);
+        border: 0;
+      }
+      .badge {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        background: var(--rb-color-accent-soft);
+        color: var(--rb-color-on-accent-soft);
+        border-radius: 999px;
+        padding: 2px 6px;
+      }
+      .send {
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        background: var(--rb-color-primary);
+        color: var(--rb-color-on-primary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* floating nav */
+      .fnav {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 22px;
+        height: 70px;
+        border-radius: 999px;
+        background: var(--rb-color-surface);
+        box-shadow: var(--rb-shadow-lg);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 6px;
+      }
+      .fnav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--rb-color-text-muted);
+        text-decoration: none;
+        min-width: 56px;
+      }
+      .fnav a.on {
+        color: var(--rb-color-text);
+      }
+      .fnav a svg.i {
+        width: 23px;
+        height: 23px;
+      }
+      .fnav .plus {
+        width: 54px;
+        height: 54px;
+        border-radius: 999px;
+        background: var(--rb-color-primary);
+        color: var(--rb-color-on-primary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--rb-shadow-md);
+      }
+      .fnav .plus svg.i {
+        width: 26px;
+        height: 26px;
+      }
+      .homebar {
+        position: absolute;
+        left: 50%;
+        bottom: 7px;
+        width: 134px;
+        height: 5px;
+        border-radius: 9px;
+        background: var(--rb-color-text);
+        transform: translateX(-50%);
+        opacity: 0.85;
+      }
+
+      /* kitchen sticker picker */
+      .kitchen {
+        position: relative;
+        height: 200px;
+        margin: 6px 0 0;
+      }
+      .kitchen .stk {
+        position: absolute;
+      }
+      .kitchen .add {
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        background: var(--rb-color-surface);
+        box-shadow: var(--rb-shadow-md);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .picked {
+        outline: 3px solid var(--rb-color-primary);
+        outline-offset: 2px;
+        border-radius: 999px;
+      }
+      .tick {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        border-radius: 99px;
+        background: var(--rb-color-primary);
+        color: var(--rb-color-on-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tick svg.i {
+        width: 13px;
+        height: 13px;
+        stroke-width: 3;
+      }
+
+      /* ingredient strip (recipe) */
+      .ingstrip {
+        display: flex;
+        gap: 14px;
+        overflow: hidden;
+        margin: 0 -20px;
+        padding: 6px 20px 4px;
+      }
+      .ing {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 72px;
+        flex: none;
+      }
+      .ing .stk {
+        --s: 58px;
+      }
+      .ing b {
+        font-size: 13px;
+        font-weight: 600;
+        margin-top: 4px;
+        line-height: 1.25;
+      }
+      .ing span {
+        font-size: 12px;
+        color: var(--rb-color-text-muted);
+      }
+      .ing span em {
+        font-style: normal;
+        color: var(--rb-color-text-soft);
+      }
+
+      /* steps */
+      .steps {
+        position: relative;
+        margin-top: 4px;
+      }
+      .step {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 10px;
+        padding: 10px 0;
+      }
+      .step .n {
+        width: 30px;
+        height: 30px;
+        border-radius: 99px;
+        background: var(--rb-color-surface);
+        box-shadow: var(--rb-shadow-sm);
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .step p {
+        margin: 3px 0 0;
+        font-size: 15px;
+      }
+      .step .time {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 8px;
+        height: 30px;
+        padding: 0 11px;
+        border-radius: 99px;
+        background: var(--rb-color-surface);
+        border: 1px solid var(--rb-color-border);
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .step .time svg.i {
+        width: 15px;
+        height: 15px;
+      }
+
+      /* bottom action bar */
+      .actbar {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 22px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background: var(--rb-color-surface);
+        border-radius: 999px;
+        padding: 8px;
+        box-shadow: var(--rb-shadow-lg);
+      }
+      .cta {
+        flex: 1;
+        height: 54px;
+        border-radius: 999px;
+        background: var(--rb-color-primary);
+        color: var(--rb-color-on-primary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        border: 0;
+      }
+      .cta.light {
+        background: var(--rb-color-surface-sunken);
+        color: var(--rb-color-text);
+      }
+      .cta svg.i {
+        width: 19px;
+        height: 19px;
+      }
+      .roundbtn {
+        width: 54px;
+        height: 54px;
+        border-radius: 99px;
+        background: var(--rb-color-surface-sunken);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+      }
+
+      /* form */
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+      .field label {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .input {
+        height: 54px;
+        border-radius: var(--rb-radius-md);
+        background: var(--rb-color-surface);
+        border: 1.5px solid var(--rb-color-border);
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        font-size: 16px;
+        color: var(--rb-color-text-muted);
+      }
+      .input.typed {
+        color: var(--rb-color-text);
+        border-color: var(--rb-color-border-strong);
+      }
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--rb-color-text-muted);
+        font-size: 13px;
+        margin: 14px 0;
+      }
+      .divider::before,
+      .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--rb-color-border);
+      }
+
+      /* progress */
+      .prog {
+        display: flex;
+        gap: 5px;
+        flex: 1;
+        margin: 0 14px;
+      }
+      .prog i {
+        flex: 1;
+        height: 5px;
+        border-radius: 9px;
+        background: var(--rb-color-border);
+      }
+      .prog i.on {
+        background: var(--rb-color-primary);
+      }
+
+      /* ── desktop frame ─────────────────────────── */
+      .dwrap {
+        width: 100%;
+        position: relative;
+      }
+      .desk {
+        width: 1280px;
+        height: 800px;
+        transform-origin: top left;
+        border-radius: 16px;
+        background: var(--rb-color-bg);
+        box-shadow: var(--rb-shadow-lg);
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .chrome {
+        height: 42px;
+        background: var(--rb-color-surface);
+        border-bottom: 1px solid var(--rb-color-border);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 16px;
+      }
+      .chrome i {
+        width: 12px;
+        height: 12px;
+        border-radius: 99px;
+        background: var(--rb-color-border);
+        display: block;
+      }
+      .chrome .url {
+        margin-left: 18px;
+        flex: 0 1 420px;
+        height: 26px;
+        border-radius: 99px;
+        background: var(--rb-color-surface-sunken);
+        font-size: 13px;
+        color: var(--rb-color-text-muted);
+        display: flex;
+        align-items: center;
+        padding: 0 14px;
+      }
+      .dtop {
+        height: 76px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 0 40px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        font-size: 18px;
+        letter-spacing: -0.02em;
+      }
+      .brand img {
+        width: 34px;
+        height: 34px;
+      }
+      .dsearch {
+        flex: 1;
+        max-width: 560px;
+        margin: 0 auto;
+        height: 50px;
+        border-radius: 99px;
+        background: var(--rb-color-surface);
+        box-shadow: var(--rb-shadow-sm);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 8px 0 18px;
+        color: var(--rb-color-text-muted);
+        font-size: 15px;
+      }
+      .dsearch .send {
+        width: 36px;
+        height: 36px;
+        margin-left: auto;
+      }
+      .dnav {
+        display: flex;
+        gap: 4px;
+      }
+      .dnav a {
+        height: 42px;
+        padding: 0 14px;
+        border-radius: 99px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--rb-color-text-muted);
+        text-decoration: none;
+      }
+      .dnav a.on {
+        background: var(--rb-color-surface);
+        color: var(--rb-color-text);
+        box-shadow: var(--rb-shadow-sm);
+      }
+      .dbtn {
+        height: 44px;
+        padding: 0 18px;
+        border-radius: 99px;
+        background: var(--rb-color-primary);
+        color: var(--rb-color-on-primary);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .dbody {
+        padding: 8px 40px 40px;
+      }
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .grid4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+
+      footer {
+        max-width: 1240px;
+        margin: 40px auto 60px;
+        padding: 0 20px;
+        color: var(--rb-color-text-muted);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute">
+      <!-- Lucide icons (ISC licence) -->
+      <symbol id="i-grid" viewBox="0 0 24 24">
+        <rect width="7" height="7" x="3" y="3" rx="1" />
+        <rect width="7" height="7" x="14" y="3" rx="1" />
+        <rect width="7" height="7" x="14" y="14" rx="1" />
+        <rect width="7" height="7" x="3" y="14" rx="1" />
+      </symbol>
+      <symbol id="i-home" viewBox="0 0 24 24">
+        <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+        <path
+          d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+        />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.3-4.3" />
+      </symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24">
+        <path d="M5 12h14" />
+        <path d="M12 5v14" />
+      </symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-bookmark" viewBox="0 0 24 24">
+        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+      </symbol>
+      <symbol id="i-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="5" />
+        <path d="M20 21a8 8 0 0 0-16 0" />
+      </symbol>
+      <symbol id="i-up" viewBox="0 0 24 24">
+        <path d="m5 12 7-7 7 7" />
+        <path d="M12 19V5" />
+      </symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24">
+        <path
+          d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"
+        />
+        <circle cx="12" cy="13" r="3" />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </symbol>
+      <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol>
+      <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24">
+        <path
+          d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+        />
+      </symbol>
+      <symbol id="i-share" viewBox="0 0 24 24">
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+        <polyline points="16 6 12 2 8 6" />
+        <line x1="12" x2="12" y1="2" y2="15" />
+      </symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol>
+      <symbol id="i-mic" viewBox="0 0 24 24">
+        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+        <line x1="12" x2="12" y1="19" y2="22" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24">
+        <line x1="21" x2="14" y1="4" y2="4" />
+        <line x1="10" x2="3" y1="4" y2="4" />
+        <line x1="21" x2="12" y1="12" y2="12" />
+        <line x1="8" x2="3" y1="12" y2="12" />
+        <line x1="21" x2="16" y1="20" y2="20" />
+        <line x1="12" x2="3" y1="20" y2="20" />
+        <line x1="14" x2="14" y1="2" y2="6" />
+        <line x1="8" x2="8" y1="10" y2="14" />
+        <line x1="16" x2="16" y1="18" y2="22" />
+      </symbol>
+      <symbol id="i-rotate" viewBox="0 0 24 24">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+        <path d="M3 3v5h5" />
+      </symbol>
+      <symbol id="i-users" viewBox="0 0 24 24">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24">
+        <rect width="14" height="14" x="8" y="8" rx="2" />
+        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+      </symbol>
+    </svg>
+
+    <header class="page-head">
+      <div>
+        <h1>Recipebook, redesigned. <span>Stickers, space and calm.</span></h1>
+        <p>
+          Hi-fi mockups for review. A quiet neutral canvas, white cards and one black action per screen. The
+          colour comes from food: every ingredient is a die-cut sticker. Inspired by the reference you shared,
+          but the layouts are our own. Mobile first, with matching desktop screens below.
+        </p>
+      </div>
+      <div class="toggles">
+        <button class="tog" onclick="toggleTheme()">
+          <svg class="i"><use href="#i-moon" /></svg>Light / dark
+        </button>
+      </div>
+    </header>
+    <nav class="toc">
+      <a href="#mobile">Mobile</a><a href="#home">Home</a><a href="#recipe">Recipe</a
+      ><a href="#cook">Cooking</a><a href="#add">Add recipe</a><a href="#search">Search</a
+      ><a href="#cookbook">Cookbook</a><a href="#auth">Sign in</a><a href="#ml">Malayalam</a
+      ><a href="#desktop">Desktop</a>
+    </nav>
+
+    <!-- ═══════════════════════ MOBILE ═══════════════════════ -->
+    <section class="block" id="mobile">
+      <h2>Mobile</h2>
+      <p class="lede">
+        A 390 × 844 phone. Floating pill navigation (Home · Search · Add · Saved · Profile, all labelled), and
+        one black primary action per screen. Every image you see is a sticker or a cook's own photo. There's
+        no stock art.
+      </p>
+
+      <div class="row" id="home">
+        <!-- M1 HOME -->
+        <div class="col">
+          <div class="cap">1 · Home</div>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="topbar">
+                <span class="ib"
+                  ><svg class="i"><use href="#i-grid" /></svg></span
+                ><span class="avatar">A</span>
+              </div>
+              <h1 class="hl">Good evening, Ammini.<br /><span class="soft">What's cooking today?</span></h1>
+              <div class="composer" style="margin-top: 18px">
+                <div class="ph-text">Search a dish or ingredient…</div>
+                <div class="bar">
+                  <span class="pillbtn"
+                    ><svg class="i"><use href="#i-camera" /></svg>Scan a recipe
+                    <span class="badge">Soon</span></span
+                  ><span class="send"
+                    ><svg class="i"><use href="#i-up" /></svg
+                  ></span>
+                </div>
+              </div>
+              <div class="chips scroll" style="margin-top: 12px">
+                <span class="chip">15-min recipes</span><span class="chip">Kerala breakfast</span
+                ><span class="chip">Onam sadya</span>
+              </div>
+              <div class="sec">
+                <h3>Popular this week</h3>
+                <a href="#">See all</a>
+              </div>
+              <div class="hscroll">
+                <div class="card cookcard" style="width: 210px; flex: none">
+                  <div class="top meta">
+                    <span
+                      ><svg class="i"><use href="#i-clock" /></svg>45 min</span
+                    ><span class="diet n"></span>
+                  </div>
+                  <div class="stkrow">
+                    <img class="stk" style="--s: 48px" src="stk:fish" alt="" /><img
+                      class="stk"
+                      style="--s: 48px"
+                      src="stk:coconut"
+                      alt=""
+                    /><img class="stk" style="--s: 48px" src="stk:hot-pepper" alt="" /><span class="more"
+                      >+4</span
+                    >
+                  </div>
+                  <h4>Kerala Fish Curry<small lang="ml">മീൻ കറി</small></h4>
+                </div>
+                <div class="card cookcard" style="width: 210px; flex: none">
+                  <div class="top meta">
+                    <span
+                      ><svg class="i"><use href="#i-clock" /></svg>20 min</span
+                    ><span class="diet v"></span>
+                  </div>
+                  <div class="stkrow">
+                    <img class="stk" style="--s: 48px" src="stk:cooked-rice" alt="" /><img
+                      class="stk"
+                      style="--s: 48px"
+                      src="stk:coconut"
+                      alt=""
+                    /><img class="stk" style="--s: 48px" src="stk:banana" alt="" />
+                  </div>
+                  <h4>Puttu &amp; Pazham<small lang="ml">പുട്ടും പഴവും</small></h4>
+                </div>
+              </div>
+              <div class="sec" style="margin-top: 8px"><h3>Fresh from the community</h3></div>
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-rotate" /></svg>2 days ago</span
+                  ><span>6 ingredients</span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:eggplant" alt="" /><img class="stk" src="stk:tomato" alt="" /><img
+                    class="stk"
+                    src="stk:onion"
+                    alt=""
+                  /><img class="stk" src="stk:herb" alt="" /><span class="more">+2</span>
+                </div>
+                <h4>Brinjal Theeyal<small>Malabar · Curry</small></h4>
+              </div>
+            </div>
+            <nav class="fnav">
+              <a class="on"
+                ><svg class="i"><use href="#i-home" /></svg>Home</a
+              ><a
+                ><svg class="i"><use href="#i-search" /></svg>Search</a
+              ><span class="plus"
+                ><svg class="i"><use href="#i-plus" /></svg></span
+              ><a
+                ><svg class="i"><use href="#i-bookmark" /></svg>Saved</a
+              ><a
+                ><svg class="i"><use href="#i-user" /></svg>Profile</a
+              >
+            </nav>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <!-- M1b KITCHEN -->
+        <div class="col">
+          <div class="cap">1b · "What's in your kitchen?" (scroll down on Home)</div>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="topbar">
+                <span class="ib"
+                  ><svg class="i"><use href="#i-grid" /></svg></span
+                ><span class="avatar">A</span>
+              </div>
+              <div class="kitchen">
+                <img class="stk tilt-l" style="--s: 86px; left: 52px; top: 18px" src="stk:cucumber" alt="" />
+                <img class="stk tilt-r" style="--s: 92px; left: 150px; top: 6px" src="stk:tomato" alt="" />
+                <img
+                  class="stk tilt-s picked"
+                  style="--s: 84px; left: 240px; top: 44px"
+                  src="stk:coconut"
+                  alt=""
+                /><span class="tick" style="left: 306px; top: 44px"
+                  ><svg class="i"><use href="#i-check" /></svg
+                ></span>
+                <img
+                  class="stk tilt-r picked"
+                  style="--s: 80px; left: 92px; top: 110px"
+                  src="stk:onion"
+                  alt=""
+                /><span class="tick" style="left: 156px; top: 108px"
+                  ><svg class="i"><use href="#i-check" /></svg
+                ></span>
+                <img
+                  class="stk tilt-l"
+                  style="--s: 78px; left: 190px; top: 118px"
+                  src="stk:hot-pepper"
+                  alt=""
+                />
+                <span class="add" style="left: 10px; top: 120px"
+                  ><svg class="i"><use href="#i-plus" /></svg
+                ></span>
+                <span class="add" style="left: 296px; top: 140px"
+                  ><svg class="i"><use href="#i-plus" /></svg
+                ></span>
+              </div>
+              <p
+                style="
+                  text-align: center;
+                  font-size: 21px;
+                  font-weight: 500;
+                  letter-spacing: -0.02em;
+                  margin: 18px 0 0;
+                  line-height: 1.25;
+                "
+              >
+                Let's see what's<br /><span class="soft">in your kitchen</span>
+              </p>
+              <p class="sub" style="text-align: center; margin-top: 6px">
+                Tap what you have. We'll find recipes that use it.
+              </p>
+              <div class="chips" style="justify-content: center; margin-top: 16px">
+                <span class="chip on"><img src="stk:coconut" alt="" />Coconut</span
+                ><span class="chip on"><img src="stk:onion" alt="" />Shallots</span
+                ><span class="chip"><img src="stk:herb" alt="" />Curry leaves</span
+                ><span class="chip"><img src="stk:fish" alt="" />Fish</span
+                ><span class="chip"><img src="stk:garlic" alt="" />Garlic</span>
+              </div>
+              <div class="composer" style="margin-top: 22px">
+                <div class="ph-text">
+                  Add another ingredient…
+                  <span style="color: var(--rb-color-text-soft)">jeerakam, cumin</span>
+                </div>
+                <div class="bar">
+                  <span class="meta">2 picked</span
+                  ><span class="cta" style="flex: 0 0 auto; height: 42px; padding: 0 18px; font-size: 15px"
+                    >Find 18 recipes</span
+                  >
+                </div>
+              </div>
+            </div>
+            <nav class="fnav">
+              <a class="on"
+                ><svg class="i"><use href="#i-home" /></svg>Home</a
+              ><a
+                ><svg class="i"><use href="#i-search" /></svg>Search</a
+              ><span class="plus"
+                ><svg class="i"><use href="#i-plus" /></svg></span
+              ><a
+                ><svg class="i"><use href="#i-bookmark" /></svg>Saved</a
+              ><a
+                ><svg class="i"><use href="#i-user" /></svg>Profile</a
+              >
+            </nav>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <div class="col" style="max-width: 340px">
+          <div class="cap">Notes</div>
+          <div class="note">
+            <b>Home</b>
+            <ul>
+              <li>Two-tone headline: a greeting in black, the question in soft grey.</li>
+              <li>
+                The search composer is the hero. "Scan a recipe" (photograph a handwritten card) is shown as
+                <i>Soon</i>: it's v1.5.
+              </li>
+              <li>
+                <b>Recipe cards use ingredient stickers</b> instead of needing a photo. That fixes "no good
+                photo, can't post", and every card still looks rich.
+              </li>
+              <li>
+                <b>Kitchen picker:</b> tap the ingredient stickers you have and get recipes that use them. It
+                runs on the v1 dictionary search (M3), so it's a new screen, not new scope.
+              </li>
+              <li>Floating pill nav with a raised black <b>+</b>. Every icon has a label.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="recipe" style="margin-top: 40px">
+        <!-- M2 RECIPE -->
+        <div class="col">
+          <div class="cap">2 · Recipe</div>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="topbar">
+                <span class="ib"
+                  ><svg class="i"><use href="#i-left" /></svg></span
+                ><span style="display: flex; gap: 8px"
+                  ><span class="ib"
+                    ><svg class="i"><use href="#i-share" /></svg></span
+                  ><span class="ib"
+                    ><svg class="i"><use href="#i-bookmark" /></svg></span
+                ></span>
+              </div>
+              <div style="display: flex; justify-content: flex-end; margin: -8px 4px 0 0">
+                <div class="pola" style="--w: 156px">
+                  <div class="ph warm"><img class="stk" src="stk:curry-rice" alt="" /></div>
+                </div>
+              </div>
+              <h1 class="hl" style="margin-top: 6px">
+                Kerala Fish Curry<br /><span class="soft" lang="ml" style="font-size: 24px">മീൻ കറി</span>
+              </h1>
+              <p class="meta" style="margin-top: 8px">
+                <span class="avatar" style="width: 24px; height: 24px; font-size: 12px">A</span>Ammini ·
+                Ernakulam · <svg class="i"><use href="#i-clock" /></svg>45 min ·
+                <span class="diet n"></span>Non-veg
+              </p>
+              <div style="display: flex; gap: 8px; margin-top: 14px; align-items: center">
+                <span class="seg"><span class="on">Traditional</span><span>Metric</span></span>
+                <span class="seg"
+                  ><span style="padding: 0 10px"
+                    ><svg class="i" style="width: 16px"><use href="#i-minus" /></svg></span
+                  ><span class="on"
+                    ><svg class="i" style="width: 16px; margin-right: 4px"><use href="#i-users" /></svg
+                    >4</span
+                  ><span style="padding: 0 10px"
+                    ><svg class="i" style="width: 16px"><use href="#i-plus" /></svg></span
+                ></span>
+              </div>
+              <div class="ingstrip" style="margin-top: 14px">
+                <div class="ing">
+                  <img class="stk" src="stk:fish" alt="" /><b>Seer fish</b><span>½ kg</span>
+                </div>
+                <div class="ing">
+                  <img class="stk" src="stk:coconut" alt="" /><b>Coconut milk</b
+                  ><span>1 glass <em>≈200 ml</em></span>
+                </div>
+                <div class="ing">
+                  <img class="stk" src="stk:onion" alt="" /><b>Shallots</b><span>10</span>
+                </div>
+                <div class="ing">
+                  <img class="stk" src="stk:hot-pepper" alt="" /><b>Chilli</b><span>1 tbsp</span>
+                </div>
+                <div class="ing">
+                  <img class="stk" src="stk:salt" alt="" /><b>Salt</b><span>to taste</span>
+                </div>
+              </div>
+              <div class="sec" style="margin-top: 14px">
+                <h3>Steps</h3>
+                <span class="meta">7 steps</span>
+              </div>
+              <div class="steps">
+                <div class="step">
+                  <span class="n">1</span>
+                  <div>
+                    <p>Soak kudampuli in a little warm water for 10 minutes.</p>
+                    <span class="time"
+                      ><svg class="i"><use href="#i-clock" /></svg>10 min</span
+                    >
+                  </div>
+                </div>
+                <div class="step">
+                  <span class="n">2</span>
+                  <div><p>Crush shallots, ginger and garlic. Sauté in coconut oil until golden.</p></div>
+                </div>
+              </div>
+            </div>
+            <div class="actbar">
+              <span class="roundbtn"
+                ><svg class="i"><use href="#i-heart" /></svg></span
+              ><span class="cta"
+                ><svg class="i"><use href="#i-play" /></svg>Start cooking</span
+              >
+            </div>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <!-- M2b RECIPE lower -->
+        <div class="col">
+          <div class="cap">2b · Recipe, scrolled: cooked-it, variations, comments</div>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="step" style="padding-top: 4px">
+                <span class="n">6</span>
+                <div>
+                  <p>Pour in the coconut milk and simmer gently. Don't let it boil.</p>
+                  <span class="time"
+                    ><svg class="i"><use href="#i-clock" /></svg>8 min</span
+                  >
+                </div>
+              </div>
+              <div
+                class="card"
+                style="
+                  background: var(--rb-color-accent-soft);
+                  box-shadow: none;
+                  margin-top: 6px;
+                  display: flex;
+                  gap: 12px;
+                  align-items: center;
+                "
+              >
+                <img class="stk" style="--s: 44px" src="stk:sparkles" alt="" />
+                <p style="margin: 0; font-size: 14px; color: var(--rb-color-on-accent-soft)">
+                  Tastes even better the next day. Make it in the morning for dinner.
+                </p>
+              </div>
+              <div class="sec">
+                <h3>Cooked it · 12</h3>
+                <a href="#">See all</a>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center">
+                <div class="pola" style="--w: 96px; transform: rotate(-5deg)">
+                  <div class="ph rose"><img class="stk" src="stk:curry-rice" alt="" /></div>
+                </div>
+                <div class="pola" style="--w: 96px; transform: rotate(4deg)">
+                  <div class="ph cream"><img class="stk" src="stk:steaming-bowl" alt="" /></div>
+                </div>
+                <span
+                  class="roundbtn"
+                  style="
+                    width: 64px;
+                    height: 64px;
+                    background: var(--rb-color-surface);
+                    box-shadow: var(--rb-shadow-sm);
+                  "
+                  ><svg class="i"><use href="#i-camera" /></svg
+                ></span>
+              </div>
+              <div class="sec"><h3>Variations · 3</h3></div>
+              <div class="card" style="display: flex; align-items: center; gap: 12px">
+                <img class="stk" style="--s: 46px" src="stk:shrimp" alt="" />
+                <div style="flex: 1">
+                  <b style="font-size: 15px">Prawn version</b>
+                  <div class="meta">by Sheela · 2 swaps</div>
+                </div>
+                <svg class="i"><use href="#i-right" /></svg>
+              </div>
+              <div
+                class="card"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  margin-top: 8px;
+                  background: var(--rb-color-surface-sunken);
+                  box-shadow: none;
+                "
+              >
+                <svg class="i"><use href="#i-copy" /></svg
+                ><b style="font-size: 15px; flex: 1">Make my version</b
+                ><svg class="i"><use href="#i-right" /></svg>
+              </div>
+              <div class="sec"><h3>Comments · 8</h3></div>
+              <div style="display: flex; gap: 10px">
+                <span class="avatar" style="width: 32px; height: 32px; font-size: 13px; background: #a5dca6"
+                  >S</span
+                >
+                <div class="card" style="padding: 10px 12px; flex: 1; font-size: 14px">
+                  Added a little raw mango, came out lovely!
+                </div>
+              </div>
+            </div>
+            <div class="actbar">
+              <span class="roundbtn"
+                ><svg class="i"><use href="#i-heart" /></svg></span
+              ><span class="cta"
+                ><svg class="i"><use href="#i-play" /></svg>Start cooking</span
+              >
+            </div>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <div class="col" style="max-width: 340px">
+          <div class="cap">Notes</div>
+          <div class="note">
+            <b>Recipe</b>
+            <ul>
+              <li>
+                The cook's photo is a tilted "polaroid sticker". With no photo, the dish sticker on a warm
+                gradient takes its place.
+              </li>
+              <li>
+                <b>Ingredients are a sticker strip</b> with the name and amount. The traditional amount comes
+                first, with the metric value in soft grey ("1 glass ≈200 ml").
+              </li>
+              <li>Unit toggle and servings stepper sit right above the ingredients.</li>
+              <li>Steps show a time pill. Tapping it starts a timer in cooking mode.</li>
+              <li>A sticky bar with one black action, <b>Start cooking</b>, plus Like.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="cook" style="margin-top: 40px">
+        <!-- M3 COOKING -->
+        <div class="col">
+          <div class="cap">3 · Cooking mode</div>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="topbar">
+                <span class="ib"
+                  ><svg class="i"><use href="#i-x" /></svg
+                ></span>
+                <div class="prog">
+                  <i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i>
+                </div>
+                <span class="meta" style="font-weight: 600; color: var(--rb-color-text)">3/7</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px">
+                <img class="stk tilt-l" style="--s: 64px" src="stk:coconut" alt="" />
+                <div>
+                  <b style="font-size: 15px">1 glass coconut milk</b>
+                  <div class="meta">≈ 200 ml</div>
+                </div>
+              </div>
+              <p
+                style="
+                  font-size: 29px;
+                  line-height: 1.3;
+                  font-weight: 500;
+                  letter-spacing: -0.02em;
+                  margin: 22px 0 0;
+                "
+              >
+                Pour in the coconut milk and simmer on low flame. <span class="soft">Don't let it boil.</span>
+              </p>
+              <div
+                class="card"
+                style="margin-top: 26px; display: flex; align-items: center; gap: 14px; padding: 16px"
+              >
+                <img class="stk" style="--s: 48px" src="stk:hourglass-not-done" alt="" />
+                <div style="flex: 1">
+                  <div style="font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1">
+                    10:00
+                  </div>
+                  <div class="meta" style="margin-top: 4px">Timer for this step</div>
+                </div>
+                <span class="send" style="width: 56px; height: 56px"
+                  ><svg class="i" style="width: 22px; height: 22px"><use href="#i-play" /></svg
+                ></span>
+              </div>
+              <div style="display: flex; justify-content: center; margin-top: 18px">
+                <span class="chip"
+                  ><svg class="i" style="width: 16px"><use href="#i-mic" /></svg>Say "next" or
+                  "അടുത്തത്"</span
+                >
+              </div>
+            </div>
+            <div class="actbar" style="background: transparent; box-shadow: none; padding: 0">
+              <span
+                class="cta light"
+                style="flex: 0 0 120px; height: 62px; background: var(--rb-color-surface)"
+                ><svg class="i"><use href="#i-left" /></svg>Back</span
+              ><span class="cta" style="height: 62px"
+                >Next step<svg class="i"><use href="#i-right" /></svg
+              ></span>
+            </div>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <!-- M4 ADD -->
+        <div class="col" id="add">
+          <div class="cap">4 · Add recipe, step 3 of 5: ingredients</div>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="topbar">
+                <span class="ib"
+                  ><svg class="i"><use href="#i-x" /></svg
+                ></span>
+                <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+                <span class="meta">Saved ✓</span>
+              </div>
+              <h1 class="hl">What goes in?<br /><span class="soft">Tap to add.</span></h1>
+              <div class="composer" style="margin-top: 16px; padding: 12px 14px">
+                <div class="ph-text typed" style="padding: 2px 0 10px">
+                  jeerak<span style="border-left: 2px solid var(--rb-color-text); margin-left: 1px"></span>
+                </div>
+                <div style="display: flex; gap: 8px">
+                  <span class="chip on"
+                    ><img src="stk:herb" alt="" /><span lang="ml">ജീരകം</span> · cumin</span
+                  ><span class="chip">Cumin powder</span>
+                </div>
+              </div>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(4, 1fr);
+                  gap: 8px;
+                  margin-top: 16px;
+                  text-align: center;
+                "
+              >
+                <div style="position: relative">
+                  <img class="stk" style="--s: 60px; margin: auto" src="stk:fish" alt="" /><span
+                    class="tick"
+                    style="right: 6px; top: 0"
+                    ><svg class="i"><use href="#i-check" /></svg
+                  ></span>
+                  <div class="meta" style="justify-content: center">Fish</div>
+                </div>
+                <div style="position: relative">
+                  <img class="stk" style="--s: 60px; margin: auto" src="stk:coconut" alt="" /><span
+                    class="tick"
+                    style="right: 6px; top: 0"
+                    ><svg class="i"><use href="#i-check" /></svg
+                  ></span>
+                  <div class="meta" style="justify-content: center">Coconut</div>
+                </div>
+                <div>
+                  <img class="stk" style="--s: 60px; margin: auto" src="stk:onion" alt="" />
+                  <div class="meta" style="justify-content: center">Onion</div>
+                </div>
+                <div>
+                  <img class="stk" style="--s: 60px; margin: auto" src="stk:garlic" alt="" />
+                  <div class="meta" style="justify-content: center">Garlic</div>
+                </div>
+                <div>
+                  <img class="stk" style="--s: 60px; margin: auto" src="stk:ginger-root" alt="" />
+                  <div class="meta" style="justify-content: center">Ginger</div>
+                </div>
+                <div>
+                  <img class="stk" style="--s: 60px; margin: auto" src="stk:hot-pepper" alt="" />
+                  <div class="meta" style="justify-content: center">Chilli</div>
+                </div>
+                <div>
+                  <img class="stk" style="--s: 60px; margin: auto" src="stk:tomato" alt="" />
+                  <div class="meta" style="justify-content: center">Tomato</div>
+                </div>
+                <div>
+                  <img class="stk" style="--s: 60px; margin: auto" src="stk:herb" alt="" />
+                  <div class="meta" style="justify-content: center">Curry leaf</div>
+                </div>
+              </div>
+              <div class="sec"><h3>In this recipe · 2</h3></div>
+              <div class="card" style="display: flex; align-items: center; gap: 10px; padding: 10px 12px">
+                <img class="stk" style="--s: 40px" src="stk:fish" alt="" /><b style="flex: 1; font-size: 15px"
+                  >Seer fish</b
+                ><span class="seg"
+                  ><span style="padding: 0 8px">−</span><span class="on">½</span
+                  ><span style="padding: 0 8px">+</span></span
+                ><span class="chip" style="height: 34px">kg</span>
+              </div>
+              <div
+                class="card"
+                style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin-top: 8px"
+              >
+                <img class="stk" style="--s: 40px" src="stk:coconut" alt="" /><b
+                  style="flex: 1; font-size: 15px"
+                  >Coconut milk</b
+                ><span class="seg"
+                  ><span style="padding: 0 8px">−</span><span class="on">1</span
+                  ><span style="padding: 0 8px">+</span></span
+                ><span class="chip" style="height: 34px">glass</span>
+              </div>
+            </div>
+            <div class="actbar" style="background: transparent; box-shadow: none; padding: 0">
+              <span class="cta light" style="flex: 0 0 110px; background: var(--rb-color-surface)">Back</span
+              ><span class="cta">Next: Steps</span>
+            </div>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <div class="col" style="max-width: 340px">
+          <div class="cap">Notes</div>
+          <div class="note">
+            <b>Cooking mode</b>
+            <ul>
+              <li>
+                The ingredient for this step is shown as a sticker with its amount, so there's no scrolling
+                back up.
+              </li>
+              <li>Huge step text, with the caution in soft grey.</li>
+              <li>
+                The timer card has one big play button. The two biggest buttons are Back and Next. The screen
+                stays on.
+              </li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>Add recipe</b>
+            <ul>
+              <li>
+                The ingredient step is a <b>sticker picker</b>. Search understands Manglish (jeerak → ജീരകം ·
+                cumin).
+              </li>
+              <li>Picked items get a stepper and a unit pill (glass, cup, pidi…).</li>
+              <li>
+                The progress bar and "Saved ✓" are always visible, and Back / Next always sit in the same
+                place.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="search" style="margin-top: 40px">
+        <!-- M5 SEARCH -->
+        <div class="col">
+          <div class="cap">5 · Search</div>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="topbar">
+                <span class="ib"
+                  ><svg class="i"><use href="#i-left" /></svg></span
+                ><span class="ib"
+                  ><svg class="i"><use href="#i-sliders" /></svg
+                ></span>
+              </div>
+              <div class="composer" style="padding: 12px 14px">
+                <div class="ph-text typed" style="padding: 2px 0 10px">jeerakam</div>
+                <div class="bar">
+                  <span class="meta"
+                    ><img class="stk" style="--s: 26px" src="stk:herb" alt="" />Showing
+                    <b style="color: var(--rb-color-text)">ജീരകം · cumin</b></span
+                  ><span class="send"
+                    ><svg class="i"><use href="#i-search" /></svg
+                  ></span>
+                </div>
+              </div>
+              <div class="chips scroll" style="margin-top: 12px">
+                <span class="chip on"><span class="diet v" style="color: #fff"></span>Veg</span
+                ><span class="chip">Under 30 min <span class="t">2</span></span
+                ><span class="chip">Breakfast</span><span class="chip">Malabar</span>
+              </div>
+              <p class="meta" style="margin: 16px 0 8px">24 recipes</p>
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <div class="card" style="display: flex; align-items: center; gap: 12px">
+                  <div
+                    class="pola"
+                    style="--w: 70px; transform: rotate(-4deg); padding: 4px; border-radius: 14px"
+                  >
+                    <div class="ph cream" style="border-radius: 10px">
+                      <img class="stk" src="stk:steaming-bowl" alt="" />
+                    </div>
+                  </div>
+                  <div style="flex: 1">
+                    <b style="font-size: 16px" lang="ml">ജീരകക്കഞ്ഞി</b>
+                    <div class="meta">Cumin rice gruel · 25 min</div>
+                  </div>
+                  <span class="diet v"></span>
+                </div>
+                <div class="card" style="display: flex; align-items: center; gap: 12px">
+                  <div style="display: flex; width: 78px">
+                    <img class="stk" style="--s: 42px" src="stk:potato" alt="" /><img
+                      class="stk"
+                      style="--s: 42px; margin-left: -14px"
+                      src="stk:herb"
+                      alt=""
+                    />
+                  </div>
+                  <div style="flex: 1">
+                    <b style="font-size: 16px">Jeera Aloo</b>
+                    <div class="meta">20 min · North Indian</div>
+                  </div>
+                  <span class="diet v"></span>
+                </div>
+                <div class="card" style="display: flex; align-items: center; gap: 12px">
+                  <div style="display: flex; width: 78px">
+                    <img class="stk" style="--s: 42px" src="stk:cooked-rice" alt="" /><img
+                      class="stk"
+                      style="--s: 42px; margin-left: -14px"
+                      src="stk:herb"
+                      alt=""
+                    />
+                  </div>
+                  <div style="flex: 1">
+                    <b style="font-size: 16px">Jeera Rice</b>
+                    <div class="meta">15 min · Rice</div>
+                  </div>
+                  <span class="diet v"></span>
+                </div>
+                <div class="card" style="display: flex; align-items: center; gap: 12px">
+                  <div style="display: flex; width: 78px">
+                    <img class="stk" style="--s: 42px" src="stk:glass-of-milk" alt="" /><img
+                      class="stk"
+                      style="--s: 42px; margin-left: -14px"
+                      src="stk:ginger-root"
+                      alt=""
+                    />
+                  </div>
+                  <div style="flex: 1">
+                    <b style="font-size: 16px">Sambharam</b>
+                    <div class="meta">5 min · Drinks</div>
+                  </div>
+                  <span class="diet v"></span>
+                </div>
+              </div>
+            </div>
+            <nav class="fnav">
+              <a
+                ><svg class="i"><use href="#i-home" /></svg>Home</a
+              ><a class="on"
+                ><svg class="i"><use href="#i-search" /></svg>Search</a
+              ><span class="plus"
+                ><svg class="i"><use href="#i-plus" /></svg></span
+              ><a
+                ><svg class="i"><use href="#i-bookmark" /></svg>Saved</a
+              ><a
+                ><svg class="i"><use href="#i-user" /></svg>Profile</a
+              >
+            </nav>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <!-- M6 COOKBOOK -->
+        <div class="col" id="cookbook">
+          <div class="cap">6 · Profile: your cookbook</div>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="topbar">
+                <span class="avatar">A</span
+                ><span class="ib"
+                  ><svg class="i"><use href="#i-sliders" /></svg
+                ></span>
+              </div>
+              <h1 class="hl">Ammini's cookbook.<br /><span class="soft">12 recipes, 3 variations.</span></h1>
+              <p class="meta" style="margin-top: 8px">@ammini_cooks · Ernakulam · Sadya every Onam</p>
+              <div class="chips" style="margin-top: 14px">
+                <span class="chip on">Recipes <span class="t">12</span></span
+                ><span class="chip">Variations</span><span class="chip">Cooked it</span
+                ><span class="chip">Drafts <span class="t">2</span></span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px">
+                <div class="card cookcard">
+                  <div class="top meta">
+                    <span
+                      ><svg class="i"><use href="#i-rotate" /></svg>1 day ago</span
+                    ><span>3 ingredients</span>
+                  </div>
+                  <div class="stkrow">
+                    <img class="stk" src="stk:banana" alt="" /><img
+                      class="stk"
+                      src="stk:glass-of-milk"
+                      alt=""
+                    /><img class="stk" src="stk:honey-pot" alt="" />
+                  </div>
+                  <h4>Banana Pancakes<small>Breakfast</small></h4>
+                </div>
+                <div class="card cookcard">
+                  <div class="top meta">
+                    <span
+                      ><svg class="i"><use href="#i-rotate" /></svg>3 days ago</span
+                    ><span>5 ingredients</span>
+                  </div>
+                  <div class="stkrow">
+                    <img class="stk" src="stk:cucumber" alt="" /><img
+                      class="stk"
+                      src="stk:tomato"
+                      alt=""
+                    /><img class="stk" src="stk:onion" alt="" /><img class="stk" src="stk:olive" alt="" /><img
+                      class="stk"
+                      src="stk:salt"
+                      alt=""
+                    />
+                  </div>
+                  <h4>Fresh Salad<small>Salads</small></h4>
+                </div>
+                <div class="card cookcard">
+                  <div class="top meta">
+                    <span
+                      ><svg class="i"><use href="#i-rotate" /></svg>1 week ago</span
+                    ><span>4 ingredients</span>
+                  </div>
+                  <div class="stkrow">
+                    <img class="stk" src="stk:custard" alt="" /><img
+                      class="stk"
+                      src="stk:coconut"
+                      alt=""
+                    /><img class="stk" src="stk:peanuts" alt="" />
+                  </div>
+                  <h4>Pal Payasam<small>Sweets · Onam</small></h4>
+                </div>
+              </div>
+            </div>
+            <nav class="fnav">
+              <a
+                ><svg class="i"><use href="#i-home" /></svg>Home</a
+              ><a
+                ><svg class="i"><use href="#i-search" /></svg>Search</a
+              ><span class="plus"
+                ><svg class="i"><use href="#i-plus" /></svg></span
+              ><a
+                ><svg class="i"><use href="#i-bookmark" /></svg>Saved</a
+              ><a class="on"
+                ><svg class="i"><use href="#i-user" /></svg>Profile</a
+              >
+            </nav>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <div class="col" style="max-width: 340px">
+          <div class="cap">Notes</div>
+          <div class="note">
+            <b>Search</b>
+            <ul>
+              <li>The same composer as Home. It shows what it understood: a sticker plus "ജീരകം · cumin".</li>
+              <li>Active filters are black chips. The sliders button opens all the filters.</li>
+              <li>
+                Each result shows the cook's photo as a small polaroid, or its main ingredients as overlapping
+                stickers.
+              </li>
+            </ul>
+          </div>
+          <div class="note">
+            <b>Profile</b>
+            <ul>
+              <li>"Ammini's cookbook." keeps the two-tone headline style.</li>
+              <li>Tabs are chips with counts. Drafts appear only on your own profile.</li>
+              <li>Cards use the same sticker-row pattern as Home.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="auth" style="margin-top: 40px">
+        <!-- M7 SIGN IN -->
+        <div class="col">
+          <div class="cap">7 · Sign in</div>
+          <div class="phone">
+            <div class="status">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="topbar">
+                <span class="ib"
+                  ><svg class="i"><use href="#i-left" /></svg></span
+                ><span></span>
+              </div>
+              <div style="position: relative; height: 150px">
+                <img
+                  class="stk tilt-l"
+                  style="--s: 78px; position: absolute; left: 30px; top: 20px"
+                  src="stk:pancakes"
+                  alt=""
+                />
+                <img
+                  class="stk tilt-r"
+                  style="--s: 90px; position: absolute; left: 126px; top: 0"
+                  src="stk:steaming-bowl"
+                  alt=""
+                />
+                <img
+                  class="stk tilt-s"
+                  style="--s: 74px; position: absolute; left: 232px; top: 40px"
+                  src="stk:teacup-without-handle"
+                  alt=""
+                />
+              </div>
+              <h1 class="hl">Welcome back.<br /><span class="soft">Sign in to save and share.</span></h1>
+              <div style="margin-top: 22px">
+                <span
+                  class="cta light"
+                  style="
+                    width: 100%;
+                    background: var(--rb-color-surface);
+                    border: 1.5px solid var(--rb-color-border);
+                    height: 54px;
+                  "
+                  ><b style="color: #4285f4">G</b>Continue with Google</span
+                >
+                <div class="divider">or</div>
+                <div class="field">
+                  <label>Email</label>
+                  <div class="input typed">ammini@example.com</div>
+                </div>
+                <div class="field">
+                  <label>Password</label>
+                  <div class="input typed">••••••••••</div>
+                </div>
+                <span class="cta" style="width: 100%; margin-top: 6px">Sign in</span>
+                <p class="meta" style="justify-content: space-between; margin-top: 14px">
+                  <span>Forgot password?</span
+                  ><span>New here? <b style="color: var(--rb-color-text)">Create account</b></span>
+                </p>
+              </div>
+            </div>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <!-- M8 MALAYALAM HOME -->
+        <div class="col" id="ml">
+          <div class="cap">8 · Home in Malayalam</div>
+          <div class="phone" lang="ml">
+            <div class="status" lang="en">
+              <span>9:41</span><span class="island"></span><span class="sig"><i></i><i></i></span>
+            </div>
+            <div class="scr">
+              <div class="topbar">
+                <span class="ib"
+                  ><svg class="i"><use href="#i-grid" /></svg></span
+                ><span class="avatar">A</span>
+              </div>
+              <h1 class="hl" style="font-size: 27px">
+                ശുഭസന്ധ്യ, അമ്മിണി.<br /><span class="soft">ഇന്ന് എന്താ പാചകം?</span>
+              </h1>
+              <div class="composer" style="margin-top: 16px">
+                <div class="ph-text">വിഭവമോ ചേരുവയോ തിരയൂ…</div>
+                <div class="bar">
+                  <span class="pillbtn"
+                    ><svg class="i"><use href="#i-camera" /></svg>സ്കാൻ <span class="badge">ഉടൻ</span></span
+                  ><span class="send"
+                    ><svg class="i"><use href="#i-up" /></svg
+                  ></span>
+                </div>
+              </div>
+              <div class="chips scroll" style="margin-top: 12px">
+                <span class="chip">15 മിനിറ്റ്</span><span class="chip">പ്രാതൽ</span
+                ><span class="chip">ഓണസദ്യ</span>
+              </div>
+              <div class="sec">
+                <h3>ഈ ആഴ്ച ജനപ്രിയം</h3>
+                <a href="#">എല്ലാം</a>
+              </div>
+              <div class="hscroll">
+                <div class="card cookcard" style="width: 210px; flex: none">
+                  <div class="top meta">
+                    <span
+                      ><svg class="i"><use href="#i-clock" /></svg>45 മിനിറ്റ്</span
+                    ><span class="diet n"></span>
+                  </div>
+                  <div class="stkrow">
+                    <img class="stk" style="--s: 48px" src="stk:fish" alt="" /><img
+                      class="stk"
+                      style="--s: 48px"
+                      src="stk:coconut"
+                      alt=""
+                    /><img class="stk" style="--s: 48px" src="stk:hot-pepper" alt="" />
+                  </div>
+                  <h4>മീൻ കറി<small lang="en">Kerala Fish Curry</small></h4>
+                </div>
+                <div class="card cookcard" style="width: 210px; flex: none">
+                  <div class="top meta">
+                    <span
+                      ><svg class="i"><use href="#i-clock" /></svg>20 മിനിറ്റ്</span
+                    ><span class="diet v"></span>
+                  </div>
+                  <div class="stkrow">
+                    <img class="stk" style="--s: 48px" src="stk:cooked-rice" alt="" /><img
+                      class="stk"
+                      style="--s: 48px"
+                      src="stk:banana"
+                      alt=""
+                    />
+                  </div>
+                  <h4>പുട്ടും പഴവും<small lang="en">Puttu &amp; Pazham</small></h4>
+                </div>
+              </div>
+            </div>
+            <nav class="fnav">
+              <a class="on"
+                ><svg class="i"><use href="#i-home" /></svg>ഹോം</a
+              ><a
+                ><svg class="i"><use href="#i-search" /></svg>തിരയുക</a
+              ><span class="plus"
+                ><svg class="i"><use href="#i-plus" /></svg></span
+              ><a
+                ><svg class="i"><use href="#i-bookmark" /></svg>സേവ്</a
+              ><a
+                ><svg class="i"><use href="#i-user" /></svg>പ്രൊഫൈൽ</a
+              >
+            </nav>
+            <span class="homebar"></span>
+          </div>
+        </div>
+        <div class="col" style="max-width: 340px">
+          <div class="cap">Notes</div>
+          <div class="note">
+            <b>Sign in</b> stays friendly: a few dish stickers, the two-tone headline, Google first, one black
+            button.
+          </div>
+          <div class="note">
+            <b>Malayalam</b> uses the same layout with taller line-heights and no letter-spacing. Both titles
+            show on each card, with the author's language first. The nav label "സേവ്" is shorter here than in
+            the current build. To be confirmed in the native-speaker review.
+          </div>
+          <div class="note">
+            <b>Dark mode:</b> use the Light / dark button at the top. The canvas goes near-black, the black
+            buttons become white, and the stickers keep their white border like real stickers.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════ DESKTOP ═══════════════════════ -->
+    <section class="block" id="desktop">
+      <h2>Desktop</h2>
+      <p class="lede">
+        The same language at 1280 px: a top bar with the search composer in the centre, wider sticker cards in
+        3–4 columns, and a two-column recipe page. Frames are scaled to fit your screen.
+      </p>
+
+      <div class="cap" style="margin-bottom: 10px">D1 · Home</div>
+      <div class="dwrap">
+        <div class="desk">
+          <div class="chrome"><i></i><i></i><i></i><span class="url">recipes.example.org</span></div>
+          <div class="dtop">
+            <span class="brand"><img src="stk:cooking" alt="" />Recipebook</span>
+            <div class="dsearch">
+              <svg class="i"><use href="#i-search" /></svg>Search a dish or ingredient…
+              <span class="soft">jeerakam, cumin, ജീരകം</span
+              ><span class="send"
+                ><svg class="i"><use href="#i-up" /></svg
+              ></span>
+            </div>
+            <nav class="dnav">
+              <a class="on"
+                ><svg class="i"><use href="#i-home" /></svg>Home</a
+              ><a
+                ><svg class="i"><use href="#i-bookmark" /></svg>Saved</a
+              >
+            </nav>
+            <span class="dbtn"
+              ><svg class="i"><use href="#i-plus" /></svg>Add recipe</span
+            ><span class="avatar">A</span>
+          </div>
+          <div class="dbody">
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1.15fr;
+                gap: 40px;
+                align-items: center;
+                margin-top: 6px;
+              "
+            >
+              <div>
+                <h1 class="hl-xl" style="font-size: 46px">
+                  Good evening, Ammini.<br /><span class="soft">What's cooking today?</span>
+                </h1>
+                <p class="sub" style="font-size: 17px; max-width: 46ch">
+                  Home recipes from Kerala and beyond. No ads, no life stories. Just the recipe.
+                </p>
+                <div class="chips" style="margin-top: 20px">
+                  <span class="chip">15-min recipes</span><span class="chip">Kerala breakfast</span
+                  ><span class="chip">Onam sadya</span><span class="chip">Tea-time snacks</span>
+                </div>
+              </div>
+              <div class="card" style="padding: 22px 24px; border-radius: 32px">
+                <div class="kitchen" style="height: 170px">
+                  <img
+                    class="stk tilt-l"
+                    style="--s: 84px; left: 30px; top: 30px"
+                    src="stk:cucumber"
+                    alt=""
+                  />
+                  <img class="stk tilt-r" style="--s: 96px; left: 130px; top: 6px" src="stk:tomato" alt="" />
+                  <img
+                    class="stk tilt-s picked"
+                    style="--s: 86px; left: 240px; top: 40px"
+                    src="stk:coconut"
+                    alt=""
+                  /><span class="tick" style="left: 306px; top: 40px"
+                    ><svg class="i"><use href="#i-check" /></svg
+                  ></span>
+                  <img
+                    class="stk tilt-r picked"
+                    style="--s: 80px; left: 352px; top: 12px"
+                    src="stk:onion"
+                    alt=""
+                  /><span class="tick" style="left: 414px; top: 10px"
+                    ><svg class="i"><use href="#i-check" /></svg
+                  ></span>
+                  <img
+                    class="stk tilt-l"
+                    style="--s: 76px; left: 450px; top: 70px"
+                    src="stk:hot-pepper"
+                    alt=""
+                  />
+                  <span class="add" style="left: 540px; top: 30px"
+                    ><svg class="i"><use href="#i-plus" /></svg
+                  ></span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px"
+                >
+                  <p style="margin: 0; font-size: 20px; font-weight: 500; letter-spacing: -0.02em">
+                    What's in your kitchen? <span class="soft">2 picked</span>
+                  </p>
+                  <span class="cta" style="flex: 0 0 auto; height: 46px; padding: 0 20px; font-size: 15px"
+                    >Find 18 recipes</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="sec" style="margin-top: 34px">
+              <h3 style="font-size: 20px">Popular this week</h3>
+              <a href="#">See all</a>
+            </div>
+            <div class="grid4">
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-clock" /></svg>45 min</span
+                  ><span class="diet n"></span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:fish" alt="" /><img class="stk" src="stk:coconut" alt="" /><img
+                    class="stk"
+                    src="stk:hot-pepper"
+                    alt=""
+                  /><span class="more">+4</span>
+                </div>
+                <h4>Kerala Fish Curry<small lang="ml">മീൻ കറി</small></h4>
+              </div>
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-clock" /></svg>20 min</span
+                  ><span class="diet v"></span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:cooked-rice" alt="" /><img
+                    class="stk"
+                    src="stk:coconut"
+                    alt=""
+                  /><img class="stk" src="stk:banana" alt="" />
+                </div>
+                <h4>Puttu &amp; Pazham<small lang="ml">പുട്ടും പഴവും</small></h4>
+              </div>
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-clock" /></svg>35 min</span
+                  ><span class="diet v"></span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:eggplant" alt="" /><img class="stk" src="stk:tomato" alt="" /><img
+                    class="stk"
+                    src="stk:onion"
+                    alt=""
+                  /><img class="stk" src="stk:herb" alt="" />
+                </div>
+                <h4>Brinjal Theeyal<small>Malabar · Curry</small></h4>
+              </div>
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-clock" /></svg>50 min</span
+                  ><span class="diet v"></span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:custard" alt="" /><img class="stk" src="stk:coconut" alt="" /><img
+                    class="stk"
+                    src="stk:peanuts"
+                    alt=""
+                  />
+                </div>
+                <h4>Pal Payasam<small>Sweets · Onam</small></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cap" style="margin: 30px 0 10px">D2 · Recipe</div>
+      <div class="dwrap">
+        <div class="desk">
+          <div class="chrome">
+            <i></i><i></i><i></i><span class="url">recipes.example.org/r/kerala-fish-curry</span>
+          </div>
+          <div class="dtop">
+            <span class="brand"><img src="stk:cooking" alt="" />Recipebook</span>
+            <div class="dsearch">
+              <svg class="i"><use href="#i-search" /></svg>Search a dish or ingredient…<span class="send"
+                ><svg class="i"><use href="#i-up" /></svg
+              ></span>
+            </div>
+            <nav class="dnav">
+              <a
+                ><svg class="i"><use href="#i-home" /></svg>Home</a
+              ><a
+                ><svg class="i"><use href="#i-bookmark" /></svg>Saved</a
+              >
+            </nav>
+            <span class="dbtn"
+              ><svg class="i"><use href="#i-plus" /></svg>Add recipe</span
+            ><span class="avatar">A</span>
+          </div>
+          <div class="dbody" style="display: grid; grid-template-columns: 440px 1fr; gap: 44px">
+            <div>
+              <div style="display: flex; gap: 22px; align-items: flex-start">
+                <div class="pola" style="--w: 170px; transform: rotate(-5deg)">
+                  <div class="ph warm"><img class="stk" src="stk:curry-rice" alt="" /></div>
+                </div>
+                <div style="padding-top: 10px">
+                  <div style="display: flex; gap: 8px">
+                    <span class="ib"
+                      ><svg class="i"><use href="#i-share" /></svg></span
+                    ><span class="ib"
+                      ><svg class="i"><use href="#i-bookmark" /></svg></span
+                    ><span class="ib"
+                      ><svg class="i"><use href="#i-heart" /></svg
+                    ></span>
+                  </div>
+                  <p class="meta" style="margin-top: 14px">
+                    <svg class="i"><use href="#i-clock" /></svg>45 min · Serves 4
+                  </p>
+                  <p class="meta"><span class="diet n"></span>Non-veg · Malabar</p>
+                </div>
+              </div>
+              <h1 class="hl-xl" style="margin-top: 22px">
+                Kerala Fish Curry<br /><span class="soft" lang="ml" style="font-size: 30px">മീൻ കറി</span>
+              </h1>
+              <p class="meta" style="margin-top: 10px">
+                <span class="avatar" style="width: 24px; height: 24px; font-size: 12px">A</span>by Ammini ·
+                Ernakulam
+              </p>
+              <div style="display: flex; gap: 8px; margin-top: 18px">
+                <span class="seg"><span class="on">Traditional</span><span>Metric</span></span
+                ><span class="seg"
+                  ><span style="padding: 0 10px">−</span><span class="on">4 people</span
+                  ><span style="padding: 0 10px">+</span></span
+                >
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px">
+                <div class="ing" style="width: auto">
+                  <img class="stk" src="stk:fish" alt="" /><b>Seer fish</b><span>½ kg</span>
+                </div>
+                <div class="ing" style="width: auto">
+                  <img class="stk" src="stk:coconut" alt="" /><b>Coconut milk</b><span>1 glass</span>
+                </div>
+                <div class="ing" style="width: auto">
+                  <img class="stk" src="stk:onion" alt="" /><b>Shallots</b><span>10</span>
+                </div>
+                <div class="ing" style="width: auto">
+                  <img class="stk" src="stk:hot-pepper" alt="" /><b>Chilli</b><span>1 tbsp</span>
+                </div>
+                <div class="ing" style="width: auto">
+                  <img class="stk" src="stk:ginger-root" alt="" /><b>Ginger</b><span>1 inch</span>
+                </div>
+                <div class="ing" style="width: auto">
+                  <img class="stk" src="stk:garlic" alt="" /><b>Garlic</b><span>6 cloves</span>
+                </div>
+                <div class="ing" style="width: auto">
+                  <img class="stk" src="stk:herb" alt="" /><b>Curry leaves</b><span>2 sprigs</span>
+                </div>
+                <div class="ing" style="width: auto">
+                  <img class="stk" src="stk:salt" alt="" /><b>Salt</b><span>to taste</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center">
+                <h3 style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.02em">Steps</h3>
+                <span class="cta" style="flex: 0 0 auto; height: 50px; padding: 0 24px"
+                  ><svg class="i"><use href="#i-play" /></svg>Start cooking</span
+                >
+              </div>
+              <div class="steps" style="margin-top: 8px">
+                <div class="step">
+                  <span class="n">1</span>
+                  <div>
+                    <p>Soak kudampuli in a little warm water for 10 minutes.</p>
+                    <span class="time"
+                      ><svg class="i"><use href="#i-clock" /></svg>10 min</span
+                    >
+                  </div>
+                </div>
+                <div class="step">
+                  <span class="n">2</span>
+                  <div>
+                    <p>Crush shallots, ginger and garlic. Sauté in coconut oil until golden and fragrant.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <span class="n">3</span>
+                  <div>
+                    <p>Add chilli and turmeric powder on low heat. Stir for a minute so it doesn't burn.</p>
+                    <span class="time"
+                      ><svg class="i"><use href="#i-clock" /></svg>1 min</span
+                    >
+                  </div>
+                </div>
+                <div class="step">
+                  <span class="n">4</span>
+                  <div>
+                    <p>Add the kudampuli with its water, salt and a glass of water. Bring to a boil.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <span class="n">5</span>
+                  <div>
+                    <p>Slide in the fish pieces. Cover and cook on medium heat.</p>
+                    <span class="time"
+                      ><svg class="i"><use href="#i-clock" /></svg>12 min</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="card"
+                style="
+                  background: var(--rb-color-accent-soft);
+                  box-shadow: none;
+                  display: flex;
+                  gap: 12px;
+                  align-items: center;
+                  margin-top: 10px;
+                "
+              >
+                <img class="stk" style="--s: 40px" src="stk:sparkles" alt="" />
+                <p style="margin: 0; font-size: 14px; color: var(--rb-color-on-accent-soft)">
+                  Tastes even better the next day. Make it in the morning for dinner.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cap" style="margin: 30px 0 10px">D3 · Cookbook (profile)</div>
+      <div class="dwrap">
+        <div class="desk">
+          <div class="chrome">
+            <i></i><i></i><i></i><span class="url">recipes.example.org/u/ammini_cooks</span>
+          </div>
+          <div class="dtop">
+            <span class="brand"><img src="stk:cooking" alt="" />Recipebook</span>
+            <div class="dsearch">
+              <svg class="i"><use href="#i-search" /></svg>Search a dish or ingredient…<span class="send"
+                ><svg class="i"><use href="#i-up" /></svg
+              ></span>
+            </div>
+            <nav class="dnav">
+              <a
+                ><svg class="i"><use href="#i-home" /></svg>Home</a
+              ><a
+                ><svg class="i"><use href="#i-bookmark" /></svg>Saved</a
+              >
+            </nav>
+            <span class="dbtn"
+              ><svg class="i"><use href="#i-plus" /></svg>Add recipe</span
+            ><span class="avatar">A</span>
+          </div>
+          <div class="dbody">
+            <div
+              style="display: flex; align-items: flex-end; justify-content: space-between; margin-top: 10px"
+            >
+              <div style="display: flex; gap: 22px; align-items: center">
+                <span class="avatar" style="width: 96px; height: 96px; font-size: 40px">A</span>
+                <div>
+                  <h1 class="hl-xl">
+                    Ammini's cookbook.<br /><span class="soft">12 recipes, 3 variations.</span>
+                  </h1>
+                  <p class="meta" style="margin-top: 10px">@ammini_cooks · Ernakulam · Sadya every Onam</p>
+                </div>
+              </div>
+              <span class="chip" style="height: 44px; padding: 0 18px">Edit profile</span>
+            </div>
+            <div class="chips" style="margin-top: 26px">
+              <span class="chip on">Recipes <span class="t">12</span></span
+              ><span class="chip">Variations <span class="t">3</span></span
+              ><span class="chip">Cooked it <span class="t">8</span></span
+              ><span class="chip">Drafts <span class="t">2</span></span>
+            </div>
+            <div class="grid3" style="margin-top: 18px">
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-rotate" /></svg>1 day ago</span
+                  ><span>3 ingredients</span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:banana" alt="" /><img
+                    class="stk"
+                    src="stk:glass-of-milk"
+                    alt=""
+                  /><img class="stk" src="stk:honey-pot" alt="" />
+                </div>
+                <h4>Banana Pancakes<small>Breakfast</small></h4>
+              </div>
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-rotate" /></svg>3 days ago</span
+                  ><span>5 ingredients</span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:cucumber" alt="" /><img class="stk" src="stk:tomato" alt="" /><img
+                    class="stk"
+                    src="stk:onion"
+                    alt=""
+                  /><img class="stk" src="stk:olive" alt="" /><img class="stk" src="stk:salt" alt="" />
+                </div>
+                <h4>Fresh Salad<small>Salads</small></h4>
+              </div>
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-rotate" /></svg>1 week ago</span
+                  ><span>4 ingredients</span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:custard" alt="" /><img class="stk" src="stk:coconut" alt="" /><img
+                    class="stk"
+                    src="stk:peanuts"
+                    alt=""
+                  />
+                </div>
+                <h4>Pal Payasam<small>Sweets · Onam</small></h4>
+              </div>
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-rotate" /></svg>2 weeks ago</span
+                  ><span>6 ingredients</span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:fish" alt="" /><img class="stk" src="stk:coconut" alt="" /><img
+                    class="stk"
+                    src="stk:hot-pepper"
+                    alt=""
+                  /><span class="more">+3</span>
+                </div>
+                <h4>Kerala Fish Curry<small>Curry · Malabar</small></h4>
+              </div>
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-rotate" /></svg>3 weeks ago</span
+                  ><span>4 ingredients</span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:rice-cracker" alt="" /><img
+                    class="stk"
+                    src="stk:tumbler-glass"
+                    alt=""
+                  />
+                </div>
+                <h4>Pappadam<small>Sides</small></h4>
+              </div>
+              <div class="card cookcard">
+                <div class="top meta">
+                  <span
+                    ><svg class="i"><use href="#i-rotate" /></svg>1 month ago</span
+                  ><span>5 ingredients</span>
+                </div>
+                <div class="stkrow">
+                  <img class="stk" src="stk:egg" alt="" /><img class="stk" src="stk:onion" alt="" /><img
+                    class="stk"
+                    src="stk:hot-pepper"
+                    alt=""
+                  /><img class="stk" src="stk:herb" alt="" />
+                </div>
+                <h4>Egg Roast<small>Curry · Travancore</small></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top: 24px; max-width: 780px">
+        <b>Desktop rules</b>
+        <ul>
+          <li>
+            No bottom nav on desktop. The top bar has the brand, the search composer, Home and Saved, the
+            black <b>Add recipe</b> button and your avatar.
+          </li>
+          <li>
+            Content max width is 1200 px. Card grids run 4 columns on Home and 3 on the cookbook. The recipe
+            page splits into ingredients on the left and steps on the right, with Start cooking always in
+            view.
+          </li>
+          <li>
+            Cooking mode on desktop or tablet: the step on the left, the ingredient checklist with stickers on
+            the right.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      Recipebook hi-fi design · 2026-10-17. Sticker art: Microsoft Fluent Emoji 3D (MIT licence), with our
+      white die-cut outline. Icons: Lucide (ISC). Dish "photos" here are placeholders; real cards show the
+      cook's own photo.
+    </footer>
+
+    <script>
+      // Scale the 1280px desktop frames to fit the page width.
+      function fit() {
+        document.querySelectorAll('.dwrap').forEach((w) => {
+          const d = w.querySelector('.desk');
+          const s = Math.min(1, w.clientWidth / 1280);
+          d.style.transform = `scale(${s})`;
+          w.style.height = `${800 * s}px`;
+        });
+      }
+      addEventListener('resize', fit);
+      fit();
+      function toggleTheme() {
+        const r = document.documentElement;
+        const dark =
+          r.dataset.theme === 'dark' ||
+          (!r.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+        r.dataset.theme = dark ? 'light' : 'dark';
+      }
+    </script>
+  </body>
+</html>

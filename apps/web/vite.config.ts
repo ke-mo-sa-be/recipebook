@@ -13,5 +13,11 @@ export default defineConfig({
     name: 'web',
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
+    // Dummy public config so modules that read env can load; tests never reach a real server.
+    env: {
+      VITE_SUPABASE_URL: 'http://localhost:54321',
+      VITE_SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_test_only_000000000',
+      VITE_SITE_URL: 'http://localhost:5173',
+    },
   },
 });

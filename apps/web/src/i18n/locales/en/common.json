@@ -1,6 +1,225 @@
 {
-  "app": {
-    "underConstruction": "We're setting up the kitchen. Recipes are coming soon.",
-    "switchLanguage": "മലയാളം"
+  "nav": {
+    "main": "Main",
+    "skip": "Skip to content",
+    "home": "Home",
+    "search": "Search",
+    "add": "Add",
+    "addRecipe": "Add a recipe",
+    "saved": "Saved",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "actions": {
+    "back": "Back",
+    "tryAgain": "Try again",
+    "save": "Save"
+  },
+  "form": {
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "network": "Couldn't reach the kitchen. Check your internet and try again.",
+    "generic": "Something went wrong. Please try again.",
+    "offline": "You're offline. Some things won't work until you're back online.",
+    "crashTitle": "Sorry, this page broke",
+    "crashBody": "It's not your fault. Reloading usually fixes it."
+  },
+  "toast": {
+    "passwordChanged": "Your password has been changed."
+  },
+  "auth": {
+    "google": "Continue with Google",
+    "or": "or",
+    "signOut": "Sign out",
+    "fields": {
+      "email": "Email",
+      "password": "Password",
+      "passwordHint": "At least 8 letters or numbers.",
+      "displayName": "Your name",
+      "displayNameHint": "Shown on your recipes. You can change it later."
+    },
+    "signIn": {
+      "title": "Sign in",
+      "intro": "Welcome back! Sign in to save and share recipes.",
+      "submit": "Sign in",
+      "forgot": "Forgot your password?",
+      "noAccount": "New here?"
+    },
+    "signUp": {
+      "title": "Create account",
+      "intro": "It's free, forever. No ads.",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?"
+    },
+    "checkEmail": {
+      "title": "Check your email",
+      "body": "We sent a link to {{email}}. Open it to finish creating your account.",
+      "notArrived": "Not there? Look in Spam or Promotions. If you already have an account, just sign in.",
+      "resend": "Send the email again",
+      "resendIn": "Send again in {{seconds}} s",
+      "resent": "Sent! Check your inbox again.",
+      "resendLink": "Send the email again",
+      "backToSignIn": "Back to sign in"
+    },
+    "forgot": {
+      "title": "Forgot password",
+      "intro": "Enter your email and we'll send you a link to set a new password.",
+      "submit": "Send link",
+      "sent": "If that email has an account, a link is on its way. Check your inbox."
+    },
+    "reset": {
+      "title": "Set a new password",
+      "newPassword": "New password",
+      "submit": "Save new password"
+    },
+    "callback": {
+      "working": "Signing you in…",
+      "confirmedTitle": "All done!",
+      "confirmedBody": "That link worked. Please sign in to continue.",
+      "failedTitle": "That link didn't work",
+      "failedBody": "It may have expired or already been used. Sign in, or ask for a new email."
+    },
+    "errors": {
+      "invalidCredentials": "That email and password don't match. Please check and try again.",
+      "emailNotConfirmed": "Please confirm your email first. Look for our email in your inbox.",
+      "userExists": "This email already has an account. Try signing in instead.",
+      "weakPassword": "Please choose a stronger password.",
+      "tooManyEmails": "We've sent several emails already. Please wait a few minutes.",
+      "tooManyRequests": "Too many tries. Please wait a minute and try again.",
+      "emailInvalid": "Please enter a valid email address.",
+      "samePassword": "That's your current password. Please choose a new one.",
+      "generic": "We couldn't do that right now. Please try again.",
+      "passwordShort": "Your password needs at least 8 characters.",
+      "passwordLong": "That password is too long (72 characters at most).",
+      "passwordRequired": "Please enter your password."
+    }
+  },
+  "profile": {
+    "edit": "Edit profile",
+    "saved": "Saved!",
+    "suspended": "This account is paused.",
+    "tabsLabel": "Profile sections",
+    "tabs": {
+      "recipes": "Recipes",
+      "variations": "Variations",
+      "cooked": "Cooked it"
+    },
+    "empty": {
+      "recipes": {
+        "title": "No recipes yet",
+        "mine": "Recipes you share will appear here. Adding recipes arrives soon.",
+        "theirs": "{{name}} hasn't shared any recipes yet."
+      },
+      "variations": {
+        "title": "No variations yet",
+        "mine": "When you make your own version of a recipe, it will appear here.",
+        "theirs": "{{name}} hasn't made any variations yet."
+      },
+      "cooked": {
+        "title": "No cooked-it photos yet",
+        "mine": "Photos of dishes you cooked will appear here.",
+        "theirs": "{{name}} hasn't posted any cooked-it photos yet."
+      }
+    },
+    "fields": {
+      "displayName": "Your name",
+      "handle": "Username",
+      "handleHint": "3–30 small letters, numbers or _. People find you at /u/username.",
+      "district": "District (optional)",
+      "districtNone": "Don't show",
+      "bio": "About you (optional)",
+      "bioHint": "A line about your cooking. Up to 280 characters."
+    },
+    "errors": {
+      "handle": "Use 3–30 small letters, numbers or _ only.",
+      "handleTaken": "That username is taken. Please try another.",
+      "nameRequired": "Please enter your name.",
+      "cannotEdit": "Your profile can't be changed right now."
+    }
+  },
+  "me": {
+    "signedOut": {
+      "title": "Join the kitchen",
+      "body": "Create a free account to share your recipes, save favourites and post what you cooked.",
+      "settings": "Language and text size"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "display": "Display",
+    "language": "Language",
+    "textSize": "Text size",
+    "sizes": {
+      "normal": "Normal",
+      "large": "Large",
+      "xl": "Extra large"
+    },
+    "theme": "Theme",
+    "themes": {
+      "auto": "Auto",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "profile": "Your profile",
+    "account": "Account",
+    "signedInAs": "Signed in as {{email}}",
+    "moreSoon": "Downloading your data and deleting your account are coming soon."
+  },
+  "onboarding": {
+    "title": "Welcome, {{name}}!",
+    "body": "Check your name and pick a username. You can change these later in Settings.",
+    "done": "Done"
+  },
+  "home": {
+    "soon": {
+      "title": "Recipes are coming soon",
+      "body": "We're setting up the kitchen. Soon you'll find home recipes from across Kerala and beyond.",
+      "action": "Add a recipe"
+    }
+  },
+  "search": {
+    "placeholder": "Search recipes or ingredients…",
+    "soon": {
+      "title": "Search is coming soon",
+      "body": "You'll be able to search in Malayalam, English or Manglish — like jeerakam, ജീരകം or cumin."
+    }
+  },
+  "saved": {
+    "empty": {
+      "title": "Nothing saved yet",
+      "body": "Tap Save on any recipe to keep it here — even offline."
+    }
+  },
+  "add": {
+    "title": "Add a recipe",
+    "soon": {
+      "title": "Coming soon",
+      "body": "A simple step-by-step way to add your recipes is on its way."
+    }
+  },
+  "notFound": {
+    "title": "We couldn't find that page",
+    "body": "The link may be old or mistyped.",
+    "home": "Go to Home"
+  },
+  "districts": {
+    "tvm": "Thiruvananthapuram",
+    "klm": "Kollam",
+    "pta": "Pathanamthitta",
+    "alp": "Alappuzha",
+    "ktm": "Kottayam",
+    "idk": "Idukki",
+    "ekm": "Ernakulam",
+    "tsr": "Thrissur",
+    "pkd": "Palakkad",
+    "mlp": "Malappuram",
+    "kkd": "Kozhikode",
+    "wyd": "Wayanad",
+    "knr": "Kannur",
+    "ksd": "Kasaragod",
+    "other": "Outside Kerala"
   }
 }

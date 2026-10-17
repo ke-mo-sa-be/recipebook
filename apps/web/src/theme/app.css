@@ -12,10 +12,12 @@
     font-size: var(--rb-text-body);
     line-height: var(--rb-leading-body);
     -webkit-tap-highlight-color: transparent;
+    overflow-wrap: break-word;
   }
-  /* Malayalam needs taller lines for stacked conjuncts and vowel signs. */
-  :lang(ml) {
-    line-height: var(--rb-leading-body-ml);
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
   }
   :focus-visible {
     outline: 3px solid var(--rb-color-focus);

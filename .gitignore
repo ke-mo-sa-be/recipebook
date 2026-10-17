@@ -24,3 +24,5 @@ deploy/local/*
 *.log
 .DS_Store
 .idea/
+
+e2e/.results/

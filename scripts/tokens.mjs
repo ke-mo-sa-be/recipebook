@@ -43,11 +43,24 @@ function staticVars() {
   return vars;
 }
 
+// Line-heights follow the content language: Malayalam needs taller lines for stacked conjuncts.
+// Utilities read --rb-leading-<size>, which these blocks switch per [lang] (nearest ancestor wins).
+function leadingVars(variant) {
+  const vars = {};
+  for (const [k, [, lh, lhMl]] of Object.entries(tokens.type)) {
+    if (k.startsWith('$')) continue;
+    vars[`--rb-leading-${k}`] = variant === 'ml' ? lhMl : lh;
+  }
+  return vars;
+}
+
 function buildTokensCss() {
   const s = tokens.textScale;
   return (
     HEADER +
     `:root {\n${block(staticVars())}\n}\n\n` +
+    `[lang='ml'] {\n${block(leadingVars('ml'))}\n}\n\n` +
+    `[lang='en'] {\n${block(leadingVars('en'))}\n}\n\n` +
     `:root,\n:root[data-theme='light'] {\n${block(themeVars('light'))}\n}\n\n` +
     `@media (prefers-color-scheme: dark) {\n  :root:not([data-theme='light']) {\n${block(themeVars('dark')).replace(/^/gm, '  ')}\n  }\n}\n\n` +
     `:root[data-theme='dark'] {\n${block(themeVars('dark'))}\n}\n\n` +

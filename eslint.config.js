@@ -7,7 +7,14 @@ import globals from 'globals';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/coverage/**', 'supabase/.temp/**', 'docs/wireframes/**', 'deploy/local/**'],
+    ignores: [
+      '**/dist/**',
+      '**/coverage/**',
+      'supabase/.temp/**',
+      'docs/wireframes/**',
+      'deploy/local/**',
+      'e2e/.results/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -23,7 +30,18 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       // Every user-visible string must come from the i18n files (ml + en).
-      'i18next/no-literal-string': ['error', { mode: 'jsx-only' }],
+      // Checks JSX text and the attributes people see or hear; other props (variant, type, …) are code.
+      'i18next/no-literal-string': [
+        'error',
+        {
+          mode: 'jsx-only',
+          'jsx-attributes': {
+            include: ['^(alt|title|placeholder|label|aria-label|aria-description|aria-placeholder)$'],
+            exclude: ['.*'],
+          },
+          'object-properties': { exclude: ['.*'] },
+        },
+      ],
     },
   },
   {

@@ -57,6 +57,28 @@
   --rb-weight-cook-step: 600;
 }
 
+[lang='ml'] {
+  --rb-leading-small: 1.65;
+  --rb-leading-body: 1.7;
+  --rb-leading-lead: 1.7;
+  --rb-leading-h3: 1.55;
+  --rb-leading-h2: 1.5;
+  --rb-leading-h1: 1.45;
+  --rb-leading-display: 1.4;
+  --rb-leading-cook-step: 1.6;
+}
+
+[lang='en'] {
+  --rb-leading-small: 1.45;
+  --rb-leading-body: 1.5;
+  --rb-leading-lead: 1.5;
+  --rb-leading-h3: 1.3;
+  --rb-leading-h2: 1.25;
+  --rb-leading-h1: 1.15;
+  --rb-leading-display: 1.1;
+  --rb-leading-cook-step: 1.4;
+}
+
 :root,
 :root[data-theme='light'] {
   --rb-color-bg: #FFF7EA;

@@ -11,7 +11,12 @@ const root = new URL('..', import.meta.url).pathname;
 const problems = [];
 
 // 1. Frontend must never mention the privileged key at all.
-const frontendForbidden = /service_role|SERVICE_ROLE|SUPABASE_SECRET_KEY|sb_secret_/;
+// Library code legitimately mentions the bare `sb_secret_` prefix (supabase-js checks key types), so
+// look for real values: a secret key, the env-var names, or a JWT whose payload says service_role
+// ("service_role" base64-encodes to one of these three strings depending on alignment).
+const secretValue =
+  /sb_secret_[A-Za-z0-9_-]{8,}|eyJ[A-Za-z0-9_-]*(c2VydmljZV9yb2xl|NlcnZpY2Vfcm9sZ|zZXJ2aWNlX3JvbG)/;
+const secretName = /SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY/;
 function walk(dir) {
   if (!existsSync(dir)) return [];
   return readdirSync(dir).flatMap((name) => {
@@ -22,8 +27,12 @@ function walk(dir) {
 }
 for (const file of [...walk(join(root, 'apps/web/src')), ...walk(join(root, 'apps/web/dist'))]) {
   if (!/\.(ts|tsx|js|mjs|json|html|css|map)$/.test(file)) continue;
-  if (frontendForbidden.test(readFileSync(file, 'utf8')))
-    problems.push(`frontend references a server secret: ${file}`);
+  const text = readFileSync(file, 'utf8');
+  // Source maps embed library doc comments that name the env var in examples; check them for values only.
+  const forbidden = file.endsWith('.map')
+    ? secretValue.test(text)
+    : secretValue.test(text) || secretName.test(text);
+  if (forbidden) problems.push(`frontend references a server secret: ${file}`);
 }
 
 // 2. Committable files must not contain real-looking credentials.

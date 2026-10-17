@@ -6,11 +6,11 @@
 export function normalizeName(input: string): string {
   return input
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '') // accents
-    .replace(/[‌‍]/g, '') // Malayalam ZWNJ / ZWJ
+    .replace(/[\u0300-\u036f]/g, '') // accents
+    .replace(/\u200c|\u200d/g, '') // Malayalam ZWNJ / ZWJ (alternation, not a class: lint-safe)
     .normalize('NFC')
     .toLowerCase()
-    .replace(/[^a-z0-9ഀ-ൿ ]+/g, ' ')
+    .replace(/[^a-z0-9\p{Script=Malayalam} ]+/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }

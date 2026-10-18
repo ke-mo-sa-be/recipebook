@@ -58,6 +58,7 @@ All notable changes to this project are documented here. The format follows [Kee
   Unit 82, pgTAP 62, E2E 17: all pass locally.
 
 - **Staging** is now public at `paachakam.<staging domain>` with no Authelia in front. Demo account passwords were rotated before it opened.
+- **Real email** is configured entirely from `supabase/.env`: `SMTP_ENABLED`, host, port, user, password, sender. The committed config holds no account details, and CI runs with `SMTP_ENABLED=false`. The auth email rate limit went from 2 to 30 an hour, because 2 would block a second sign-up within the hour.
 
 **Not yet verified / known gaps**
 

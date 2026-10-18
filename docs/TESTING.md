@@ -101,4 +101,6 @@ docker run --rm --network host --ipc host -u "$(id -u):$(id -g)" -e HOME=/tmp -e
 
 The tests read auth emails from Mailpit and rewrite the link host to the local gateway, so they also work when the stack is configured for a staging hostname. Each run creates uniquely named test accounts. `recipe.spec.ts` creates its cook through the auth admin API, so it needs the **local** stack's service key (`supabase status`) and skips without it. Never point it at a shared server.
 
+The auth tests read confirmation and reset emails from Mailpit, so run E2E with `SMTP_ENABLED=false` in `supabase/.env`. With real SMTP on, sign-ups would send real emails to `example.com` addresses.
+
 Run the container rather than Playwright on the host: the host is missing Chromium's system libraries.

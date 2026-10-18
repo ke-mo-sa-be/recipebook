@@ -17,7 +17,7 @@
   - `/s/*` → gateway, rewritten to `/functions/v1/share-page/*`
   - everything else → frontend
   - **Never route the gateway's `/` (Studio) or `/pg` publicly.**
-- **Email:** any SMTP provider, configured through env vars.
+- **Email:** any SMTP provider, configured with the `SMTP_*` variables in `supabase/.env` (see `.env.example`). `SMTP_ENABLED=false` sends auth mail to the local test inbox instead. The auth email rate limit is 30 an hour (`[auth.rate_limit] email_sent` in `supabase/config.toml`), so keep it within your provider's quota. A personal Gmail account works for a small preview: use port 587 with a Google app password. Consumer Gmail sends at most about 500 emails a day.
 - **Media clean-up:** until the `pg_cron` schedule lands in M8, run the `media-gc` function nightly from host cron. It needs the service key, so keep that command on the server only:
 
   ```bash

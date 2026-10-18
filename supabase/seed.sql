@@ -122,6 +122,8 @@ on conflict (id) do nothing;
 insert into public.recipe_tags (recipe_id, tag_id) values ('8ad31825-cd32-4f18-837e-467e0eb80ab3', 8) on conflict do nothing;
 update public.recipes set status = 'published' where id = '8ad31825-cd32-4f18-837e-467e0eb80ab3';
 
+update public.recipes set featured_at = now() - interval '84 hours' where id = '8ad31825-cd32-4f18-837e-467e0eb80ab3';
+
 -- Puttu
 insert into public.recipes (id, author_id, title_ml, title_en, description, content_lang, category_id, region_id, diet,
   prep_minutes, cook_minutes, servings, tips, status, published_at)
@@ -277,6 +279,8 @@ on conflict (id) do nothing;
 insert into public.recipe_tags (recipe_id, tag_id) values ('56a5645a-9dc4-4e25-8566-716e58a01be2', 4) on conflict do nothing;
 insert into public.recipe_tags (recipe_id, tag_id) values ('56a5645a-9dc4-4e25-8566-716e58a01be2', 6) on conflict do nothing;
 update public.recipes set status = 'published' where id = '56a5645a-9dc4-4e25-8566-716e58a01be2';
+
+update public.recipes set featured_at = now() - interval '63 hours' where id = '56a5645a-9dc4-4e25-8566-716e58a01be2';
 
 -- Kerala Chicken Stew
 insert into public.recipes (id, author_id, title_ml, title_en, description, content_lang, category_id, region_id, diet,
@@ -562,6 +566,8 @@ on conflict (id) do nothing;
 insert into public.recipe_tags (recipe_id, tag_id) values ('a462a208-56c1-45ca-87df-10be68fd1f2d', 2) on conflict do nothing;
 insert into public.recipe_tags (recipe_id, tag_id) values ('a462a208-56c1-45ca-87df-10be68fd1f2d', 3) on conflict do nothing;
 update public.recipes set status = 'published' where id = 'a462a208-56c1-45ca-87df-10be68fd1f2d';
+
+update public.recipes set featured_at = now() - interval '35 hours' where id = 'a462a208-56c1-45ca-87df-10be68fd1f2d';
 
 -- Beef Ularthiyathu
 insert into public.recipes (id, author_id, title_ml, title_en, description, content_lang, category_id, region_id, diet,

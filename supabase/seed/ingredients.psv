@@ -129,11 +129,11 @@ mutton|Mutton|മട്ടൺ|aattirachi;goat meat|meat|cut-of-meat
 duck|Duck|താറാവ്|tharavu|meat|poultry-leg
 pork|Pork|പോർക്ക്|panni irachi|meat|cut-of-meat
 fish|Fish|മീൻ|meen|seafood|fish
-sardine|Sardine|മത്തി|mathi;chaala|seafood|fish
-mackerel|Mackerel|അയല|ayala|seafood|fish
-seer-fish|Seer fish|നെയ്മീൻ|neymeen;king fish;surmai|seafood|fish
-pearl-spot|Pearl spot|കരിമീൻ|karimeen|seafood|fish
-anchovy|Anchovy|നെത്തോലി|netholi;kozhuva|seafood|fish
+sardine|Sardine|മത്തി|mathi;chaala;meen;മീൻ;fish|seafood|fish
+mackerel|Mackerel|അയല|ayala;meen;മീൻ;fish|seafood|fish
+seer-fish|Seer fish|നെയ്മീൻ|neymeen;king fish;surmai;meen;മീൻ;fish|seafood|fish
+pearl-spot|Pearl spot|കരിമീൻ|karimeen;meen;മീൻ;fish|seafood|fish
+anchovy|Anchovy|നെത്തോലി|netholi;kozhuva;meen;മീൻ;fish|seafood|fish
 prawns|Prawns|ചെമ്മീൻ|chemmeen;shrimp;konju|seafood|shrimp
 crab|Crab|ഞണ്ട്|njandu|seafood|
 squid|Squid|കണവ|kanava;koonthal|seafood|

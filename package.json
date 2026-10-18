@@ -28,6 +28,7 @@
     "stickers": "node scripts/stickers.mjs",
     "icons": "node scripts/icons.mjs",
     "intro:fonts": "node scripts/intro-fonts.ts",
+    "bench:search": "docker exec -i supabase_db_recipebook psql -U postgres -q < scripts/search-bench.sql",
     "seed:build": "node scripts/build-seed.ts",
     "seed:check": "node scripts/build-seed.ts --check"
   },

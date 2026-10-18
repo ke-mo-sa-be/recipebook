@@ -11,6 +11,14 @@ export const APP_VERSION = __APP_VERSION__;
 
 export const RELEASES: Release[] = [
   {
+    version: '0.2.2',
+    date: '2026-10-18',
+    notes: {
+      en: ['A smoother welcome: പാ · ച · കം roll through eight Indian scripts and lock into Malayalam.'],
+      ml: ['കൂടുതൽ സുഗമമായ സ്വാഗതം: പാ · ച · കം എട്ട് ഇന്ത്യൻ ലിപികളിലൂടെ കറങ്ങി മലയാളത്തിൽ നിൽക്കുന്നു.'],
+    },
+  },
+  {
     version: '0.2.1',
     date: '2026-10-18',
     notes: {
@@ -19,7 +27,7 @@ export const RELEASES: Release[] = [
         'Switch between light and dark with the sun / moon button at the top.',
         'Recipes now say which language they are written in.',
         'Install Paachakam on your home screen, like an app.',
-        'A short welcome that says “cooking” in many Indian languages.',
+        'A short welcome animation.',
         'This page, so you can see what has changed.',
       ],
       ml: [
@@ -27,7 +35,7 @@ export const RELEASES: Release[] = [
         'മുകളിലെ സൂര്യൻ / ചന്ദ്രൻ ബട്ടൺ കൊണ്ട് ലൈറ്റ്, ഡാർക്ക് നിറങ്ങൾ മാറ്റാം.',
         'റെസിപ്പി ഏതു ഭാഷയിൽ എഴുതിയതാണെന്ന് ഇനി കാണിക്കും.',
         'ഒരു ആപ്പ് പോലെ പാചകം ഹോം സ്ക്രീനിൽ ഇൻസ്റ്റാൾ ചെയ്യാം.',
-        'പല ഇന്ത്യൻ ഭാഷകളിൽ “പാചകം” എന്നു പറയുന്ന ഒരു ചെറിയ സ്വാഗതം.',
+        'ഒരു ചെറിയ സ്വാഗത ആനിമേഷൻ.',
         'എന്തൊക്കെ മാറി എന്ന് കാണാൻ ഈ പേജ്.',
       ],
     },

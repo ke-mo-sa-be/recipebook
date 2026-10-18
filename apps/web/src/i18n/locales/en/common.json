@@ -538,15 +538,6 @@
   },
   "intro": {
     "skip": "Skip",
-    "languages": {
-      "ta": "Tamil",
-      "te": "Telugu",
-      "kn": "Kannada",
-      "hi": "Hindi",
-      "bn": "Bengali",
-      "mr": "Marathi",
-      "gu": "Gujarati",
-      "or": "Odia"
-    }
+    "tagline": "One word, nine scripts."
   }
 }

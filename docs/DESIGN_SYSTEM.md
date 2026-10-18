@@ -145,10 +145,12 @@ The v1 rules are unchanged:
 
 ## 12. Motion
 
-**Welcome animation (M2.1):**
+**Welcome animation (v0.2.2, replacing v0.2.1's word flip, which jittered):**
 
-- The app icon, then the word for "cooking" in eight Indian languages flipping past (150 ms each), landing on **പാചകം / Paachakam** while three stickers pop in. About two seconds.
+- പാ · ച · കം are three **reels**. Each rolls through the same syllable in Tamil, Telugu, Kannada, Devanagari, Bengali, Gujarati, Odia and Gurmukhi, because the word sounds the same in every Brahmic script.
+- The reels lock into Malayalam left to right (1.0 / 1.2 / 1.4 s, slowing down, with a small overshoot "click"), then close up into one word. "Paachakam · One word, nine scripts" fades in below. About 2.5 s.
+- Only transform and opacity animate, on a stage whose size never changes. Each reel is as wide as its widest syllable. `e2e/intro.spec.ts` samples the reels every frame and fails if they move or resize.
 - It plays once per browser session, only when a visit lands on Home, and a tap skips it.
-- The words use Noto Sans subsets cut down to only their glyphs (about 13 KB in total, `pnpm intro:fonts`). They are checked pixel by pixel against the full fonts.
+- Fonts are Noto Sans subsets cut down to only these syllables (16 KB, `pnpm intro:fonts`). They are checked pixel by pixel against the full fonts.
 
 120 ms press (scale 0.98) and 200 ms sheets and toasts, with `ease-out`. Stickers get a 150 ms "lift" (shadow grows and they tilt back to 0°) when picked. Everything switches off under reduced motion, including the welcome animation.

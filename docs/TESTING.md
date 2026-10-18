@@ -101,7 +101,7 @@ docker run --rm --network host --ipc host -u "$(id -u):$(id -g)" -e HOME=/tmp -e
 
 The tests read auth emails from Mailpit and rewrite the link host to the local gateway, so they also work when the stack is configured for a staging hostname. Each run creates uniquely named test accounts. `recipe.spec.ts` creates its cook through the auth admin API, so it needs the **local** stack's service key (`supabase status`) and skips without it. Never point it at a shared server.
 
-Playwright runs with `reducedMotion: 'reduce'`, so the welcome animation stays out of the way. `intro.spec.ts` turns motion back on and records each word the animation shows, because each is on screen for only 150 ms.
+Playwright runs with `reducedMotion: 'reduce'`, so the welcome animation stays out of the way. `intro.spec.ts` turns motion back on. It checks the reels hold all nine scripts and land on പാ · ച · കം, and it samples the reels' boxes on every frame to prove nothing moves or resizes while they spin.
 
 The auth tests read confirmation and reset emails from Mailpit, so run E2E with `SMTP_ENABLED=false` in `supabase/.env`. On the staging server that means running `paachakam-smtp.sh --off` first, or leaving out `auth.spec.ts`. With real SMTP on, sign-ups would send real emails to `example.com` addresses.
 

@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-10-18
+
+- **Welcome animation rebuilt** after Adrian found v0.2.1's jittery. പാ · ച · കം are now three slot-machine reels. Each rolls through the same syllable in eight other Indian scripts (Tamil, Telugu, Kannada, Devanagari, Bengali, Gujarati, Odia, Gurmukhi) and locks into Malayalam left to right. The reels then close up into the word, with "Paachakam · One word, nine scripts" below.
+- **Why the old one jittered:**
+  - every word had different metrics, so the stage resized and the caption jumped,
+  - 150 ms per word strobed,
+  - each word mounted with a 75° flip.
+- **The fix:** only transform and opacity animate, on a fixed-size stage, and the reels slow down as they lock. An E2E check samples the reels every frame and fails on any movement or resize.
+- Font subsets updated to the syllables, adding Gurmukhi (16 KB in total). They are still pixel-identical to the full fonts.
+
 ## [0.2.1] - 2026-10-18
 
 M2.1 polish, from Adrian's first round of phone feedback.
@@ -224,6 +234,7 @@ The first tagged release. It covers the M0 design gate, the M1 foundation and au
 - The JS bundle is 225 KB gzipped against the 170 KB M7 budget. Route-level code splitting is planned.
 - E2E runs locally in the Playwright container. It joins CI in M2.
 
-[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/ke-mo-sa-be/recipebook/releases/tag/v0.2.0

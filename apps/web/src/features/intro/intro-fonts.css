@@ -4,47 +4,54 @@
   font-weight: 700;
   font-display: block;
   src: url('/fonts/intro/noto-sans-tamil.woff2') format('woff2');
-  unicode-range: U+b9a, U+bae-baf, U+bb2, U+bc8, U+bcd;
+  unicode-range: U+b95, U+b9a, U+baa, U+bae, U+bbe, U+bcd;
 }
 @font-face {
   font-family: 'PK Intro Telugu';
   font-weight: 700;
   font-display: block;
   src: url('/fonts/intro/noto-sans-telugu.woff2') format('woff2');
-  unicode-range: U+c02, U+c1f, U+c35;
+  unicode-range: U+c02, U+c15, U+c1a, U+c2a, U+c3e;
 }
 @font-face {
   font-family: 'PK Intro Kannada';
   font-weight: 700;
   font-display: block;
   src: url('/fonts/intro/noto-sans-kannada.woff2') format('woff2');
-  unicode-range: U+c85, U+c97, U+ca1, U+cc1, U+cc6;
+  unicode-range: U+c82, U+c95, U+c9a, U+caa, U+cbe;
 }
 @font-face {
   font-family: 'PK Intro Devanagari';
   font-weight: 700;
   font-display: block;
   src: url('/fonts/intro/noto-sans-devanagari.woff2') format('woff2');
-  unicode-range: U+902, U+908, U+915, U+92a, U+92f-930, U+935, U+938, U+93e, U+94b, U+94d;
+  unicode-range: U+915, U+91a, U+92a, U+92e, U+93e, U+94d;
 }
 @font-face {
   font-family: 'PK Intro Bengali';
   font-weight: 700;
   font-display: block;
   src: url('/fonts/intro/noto-sans-bengali.woff2') format('woff2');
-  unicode-range: U+9a8, U+9b0, U+9be, U+9cd;
+  unicode-range: U+995, U+99a, U+9aa, U+9ae, U+9be, U+9cd;
 }
 @font-face {
   font-family: 'PK Intro Gujarati';
   font-weight: 700;
   font-display: block;
   src: url('/fonts/intro/noto-sans-gujarati.woff2') format('woff2');
-  unicode-range: U+a82, U+aa3, U+aa7, U+ab0, U+abe;
+  unicode-range: U+a95, U+a9a, U+aaa, U+aae, U+abe, U+acd;
 }
 @font-face {
   font-family: 'PK Intro Oriya';
   font-weight: 700;
   font-display: block;
   src: url('/fonts/intro/noto-sans-oriya.woff2') format('woff2');
-  unicode-range: U+b07, U+b30, U+b37, U+b3e, U+b47, U+b4b;
+  unicode-range: U+b15, U+b1a, U+b2a, U+b2e, U+b3e, U+b4d;
+}
+@font-face {
+  font-family: 'PK Intro Gurmukhi';
+  font-weight: 700;
+  font-display: block;
+  src: url('/fonts/intro/noto-sans-gurmukhi.woff2') format('woff2');
+  unicode-range: U+a15, U+a1a, U+a2a, U+a2e, U+a3e;
 }

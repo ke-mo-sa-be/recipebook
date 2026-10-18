@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-// Fetches tiny Noto Sans subsets (OFL-1.1) holding only the glyphs of the welcome-animation words
-// (apps/web/src/features/intro/words.ts), so phones download a few KB instead of whole fonts.
+// Fetches tiny Noto Sans subsets (OFL-1.1) holding only the glyphs of the welcome-animation syllables
+// (apps/web/src/features/intro/syllables.ts), so phones download a few KB instead of whole fonts.
 // Writes apps/web/public/fonts/intro/*.woff2 and apps/web/src/features/intro/intro-fonts.css.
-// Usage: pnpm intro:fonts   (outputs are committed; rerun after changing the words)
+// Usage: pnpm intro:fonts   (outputs are committed; rerun after changing the syllables)
 // Google's subsetter keeps the glyphs that conjuncts and vowel signs need, so the browser shapes the
-// words exactly as with the full font (checked by the screenshot comparison in docs/TESTING.md).
+// syllables exactly as with the full font (checked by the screenshot comparison in docs/TESTING.md).
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { INTRO_WORDS, introFamily } from '../apps/web/src/features/intro/words.ts';
+import { REEL_SCRIPTS, introFamily } from '../apps/web/src/features/intro/syllables.ts';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = join(root, 'apps/web/public/fonts/intro');
@@ -19,7 +19,7 @@ const UA =
 const WEIGHT = 700;
 
 const byFamily = new Map<string, string>();
-for (const w of INTRO_WORDS) byFamily.set(w.family, (byFamily.get(w.family) ?? '') + w.word);
+for (const r of REEL_SCRIPTS) byFamily.set(r.family, (byFamily.get(r.family) ?? '') + r.syllables.join(''));
 
 mkdirSync(outDir, { recursive: true });
 const rules: string[] = [];

@@ -4,6 +4,80 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### M2, recipes (built and tested; waiting for phone acceptance)
+
+- **Name:** the product is **Paachakam / പാചകം** (`apps/web/src/brand/brand.ts`).
+- **Core logic** (`packages/core`, unit-tested):
+  - a units table with Kerala measures and approximate metric values (glass ≈ 200 ml, cup 240 ml, tea cup 150 ml, ladle 60 ml, pidi ≈ 30 g), shared with the database through the seed generator,
+  - a servings scaler: "to taste" never scales, pinches stay whole, counts round to halves,
+  - fraction formatting (½, ¼, ¾),
+  - timer detection in step text, in English and Malayalam ("half an hour", "10 മിനിറ്റ്"),
+  - Manglish name matching, so "jeeragam", "jeerakam", "ജീരകം" and "cumin" all find cumin,
+  - a WebP metadata stripper.
+- **Database:**
+  - recipes, ingredients, steps, tags and lookups, with RLS on every table,
+  - a publish check whose errors are i18n keys,
+  - the `save_recipe_items` autosave RPC, which keeps row ids when you reorder,
+  - photo columns that only the pipeline can set, and a media trash queue,
+  - `incoming` (private, own folder only) and `public-media` (public, service-only, WebP) buckets.
+
+  pgTAP has 37 new assertions (62 in total), including "another user can't see your draft".
+
+- **Seed:** `scripts/build-seed.ts` generates two things from `supabase/seed/`:
+  - the reference data migration: 16 units, 12 categories, 7 regions, 9 tags and a 154-ingredient bilingual dictionary,
+  - the dev seed: 4 fictional cooks and 12 original bilingual recipes.
+
+  `pnpm seed:check` in `pnpm check` fails when the outputs are stale.
+
+- **Photo pipeline:**
+  - the phone resizes the photo to WebP and uploads it to `incoming/<uid>/`,
+  - the `process-image` function checks ownership, renders 400/800/1600 px through imgproxy, strips any EXIF or XMP, writes to `public-media`, sets the row and always deletes the original,
+  - `media-gc` empties the trash queue and removes abandoned uploads.
+
+  Contracts are in `docs/API.md`. Avatars use the same pipeline (Settings → Profile photo).
+
+- **Add wizard** (`/add`, then `/edit/:id/:step`):
+  - name and language first, then Basics, Photo, Ingredients, Steps and Review,
+  - autosaves as you type, with a Saved / Saving indicator, so a reload or closed tab loses nothing,
+  - dictionary search with stickers and sensible default units,
+  - an amount stepper,
+  - steps with automatic timers you can dismiss, and step photos,
+  - a review checklist, publish, and a drafts list.
+- **Recipe page** (`/r/:id/:slug`):
+  - a polaroid cover, the author and diet mark,
+  - a servings scaler and a Traditional / Metric toggle (e.g. "1 tsp ≈ 5 ml"),
+  - grouped ingredients with stickers, steps with timer pills and photos, and tips,
+  - Edit / Delete / Unpublish for the owner,
+  - "Start cooking" is shown, marked Soon (M5).
+- **Home** shows "Fresh from the community". The **cookbook** tabs now list published recipes, and your own drafts.
+- **Fixes found by the extended layout test:** at 360 px the cookbook tabs scrolled sideways, which hid "Cooked it", so they now wrap. The Malayalam cookbook title clipped at XL text, so headlines now break long words.
+- **Tests:**
+  - E2E `recipe.spec.ts` drives the full wizard to publish on a Pixel 7 profile, including a GPS-tagged photo whose public copy is byte-checked for EXIF, XMP and camera data,
+  - the layout check now also covers a cookbook and a recipe page.
+
+  Unit 82, pgTAP 62, E2E 17: all pass locally.
+
+- **Staging** is now public at `paachakam.<staging domain>` with no Authelia in front. Demo account passwords were rotated before it opened.
+
+**Not yet verified / known gaps**
+
+- The Malayalam strings, dictionary names and measure values still need a family review.
+- `media-gc` isn't scheduled yet. Run it from host cron (`SELF_HOSTING.md`) until `pg_cron` arrives in M8.
+- E2E isn't in CI yet, because it needs the full local stack with storage and functions.
+- Upload limits per user arrive with rate limiting in M6.
+
+**Test on your phone**
+
+1. Open the staging site and sign up (or sign in).
+2. Tap the black **+**, type a recipe name, and tap Start.
+3. Pick a category, food type and servings. Watch "Saved" appear.
+4. Add a photo from your camera. It should appear within a few seconds.
+5. Search "jeeragam" and "kudampuli", add both, and change an amount with − / +.
+6. Write a step containing "10 minutes" and check that a 10 min timer appears.
+7. Close the tab, reopen the site, open Profile → Drafts, and check that everything is still there.
+8. Review → Publish. On the recipe page, change servings 4 → 8 and switch to Metric.
+9. Open the recipe in a private window (signed out). It should show with no Edit button.
+
 ### Design v2 (approved 2026-10-17) and app screens rebuilt on it
 
 - New direction after review of the M1 build: a neutral canvas, white cards, one black action per screen, two-tone headlines, and **die-cut ingredient stickers** as the signature element. `docs/DESIGN_SYSTEM.md` has been rewritten as v2.

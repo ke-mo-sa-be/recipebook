@@ -18,15 +18,17 @@ The functionality that matters most, in order:
 
 - **Unit:** pure logic in `packages/core` (schemas, scaler, measures, timer detection, Manglish normaliser, schema.org mapping) and React components with Testing Library.
 - **Database / integration:** pgTAP tests in `supabase/tests/database/`, run against the real local Supabase stack. **Every table has policy tests** from the viewpoints of anon, another user, the owner, a moderator and a suspended user. They include the expected denials (`throws_ok … '42501'`, or 0 rows affected). `01_rls_coverage.test.sql` fails if any `public` table lacks RLS, any `private` table is readable by API roles, or a `security definer` function in `public` doesn't pin its `search_path`.
-- **End-to-end:** Playwright against a built app and the local dev stack (`e2e/`). Implemented in M1: the auth journey and a no-clipping layout check. To be added from M2:
-  - sign up and verify through the Mailpit API,
-  - sign in,
-  - create and publish a recipe,
+- **End-to-end:** Playwright against a built app and the local dev stack (`e2e/`). Implemented:
+  - M1: sign up and verify through the Mailpit API, sign in, password reset, and a no-clipping layout check (Home, Settings, auth pages, Me, a cookbook and a recipe page; ml and en; three text sizes; 360 and 412 px),
+  - M2 (`recipe.spec.ts`): the whole Add wizard to Publish, with a GPS-tagged photo, Manglish ingredient search, step timer detection, the draft surviving a reload, the scaler (4 → 8 doubles), metric mode, a byte check that the public photo has no EXIF/XMP or camera data, and a signed-out visitor seeing the recipe without an Edit button.
+
+  To be added:
   - search,
   - cook,
   - share (checking the Open Graph HTML),
   - report and moderate,
   - export and delete the account.
+
 - **Manual phone check:** each milestone's CHANGELOG entry includes a "test on your phone" list, run on a mid-range Android phone in Chrome on 4G.
 
 ## 3. Testing tools
@@ -47,7 +49,7 @@ The functionality that matters most, in order:
 packages/core/src/**/*.test.ts       unit
 apps/web/src/**/*.test.tsx           component
 supabase/tests/database/*.test.sql   pgTAP (shared helpers: _helpers.inc, included with \ir)
-e2e/                                 Playwright: auth.spec.ts, layout.spec.ts
+e2e/                                 Playwright: auth.spec.ts, layout.spec.ts, recipe.spec.ts
 ```
 
 ## 5. Critical user flows
@@ -56,7 +58,7 @@ e2e/                                 Playwright: auth.spec.ts, layout.spec.ts
 | ----------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Sign up with email (M1)**   | 1. Sign up with name, email and password. 2. Try to sign in. 3. Open the verification email. 4. Sign in. | Sign-in before verifying is refused (`email_not_confirmed`). After verifying, sign-in works, a profile exists with the handle derived from the name, and the JWT has `user_role = user`. _Verified manually on 2026-10-16 against the local stack._ |
 | **Privilege escalation (M1)** | Signed in, `PATCH /rest/v1/profiles` with `{"role":"admin"}`.                                            | `42501 permission denied`. _Verified on 2026-10-16._                                                                                                                                                                                                |
-| Create recipe (M2)            | Wizard to Publish.                                                                                       | The recipe is visible to anon. The draft was never visible to others.                                                                                                                                                                               |
+| **Create recipe (M2)**        | Wizard to Publish.                                                                                       | The recipe is visible to anon. The draft was never visible to others. _Automated: `e2e/recipe.spec.ts` and pgTAP `20_recipes`._                                                                                                                     |
 | Delete account (M6)           | Settings → Delete → confirm.                                                                             | No rows remain for that user in any table, and no files under their storage prefixes.                                                                                                                                                               |
 
 ## 6. Coverage
@@ -94,7 +96,9 @@ Needs the local stack (`pnpm db:start`), a build pointed at it, and the preview 
 ```bash
 VITE_SUPABASE_URL=http://127.0.0.1:54321 VITE_SITE_URL=http://localhost:4173 VITE_SUPABASE_PUBLISHABLE_KEY=<from supabase status> pnpm --filter @recipebook/web build
 pnpm --filter @recipebook/web preview --port 4173
-docker run --rm --network host --ipc host -u "$(id -u):$(id -g)" -e HOME=/tmp -e E2E_PUBLISHABLE_KEY=<key> -v "$PWD:$PWD" -w "$PWD" mcr.microsoft.com/playwright:v1.63.0-noble ./node_modules/.bin/playwright test
+docker run --rm --network host --ipc host -u "$(id -u):$(id -g)" -e HOME=/tmp -e E2E_PUBLISHABLE_KEY=<key> -e E2E_SERVICE_KEY=<local service_role key> -v "$PWD:$PWD" -w "$PWD" mcr.microsoft.com/playwright:v1.63.0-noble ./node_modules/.bin/playwright test
 ```
 
-The tests read auth emails from Mailpit and rewrite the link host to the local gateway, so they also work when the stack is configured for a staging hostname. Each run creates a uniquely named test account.
+The tests read auth emails from Mailpit and rewrite the link host to the local gateway, so they also work when the stack is configured for a staging hostname. Each run creates uniquely named test accounts. `recipe.spec.ts` creates its cook through the auth admin API, so it needs the **local** stack's service key (`supabase status`) and skips without it. Never point it at a shared server.
+
+Run the container rather than Playwright on the host: the host is missing Chromium's system libraries.

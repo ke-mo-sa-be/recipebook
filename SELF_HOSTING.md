@@ -18,6 +18,13 @@
   - everything else → frontend
   - **Never route the gateway's `/` (Studio) or `/pg` publicly.**
 - **Email:** any SMTP provider, configured through env vars.
+- **Media clean-up:** until the `pg_cron` schedule lands in M8, run the `media-gc` function nightly from host cron. It needs the service key, so keep that command on the server only:
+
+  ```bash
+  curl -fsS -X POST -H "Authorization: Bearer $SERVICE_ROLE_KEY" https://<your-host>/functions/v1/media-gc
+  ```
+
+- **Image transforms:** photo processing needs Storage image transformation (imgproxy) enabled. The self-hosted compose includes it.
 - **Backups:** a nightly `pg_dump` plus the storage volume, with retention and a documented, tested restore.
 
 ## Running on Supabase Cloud instead

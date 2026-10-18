@@ -8,7 +8,7 @@ v1 scope is defined in [docs/PRD.md](docs/PRD.md). This file tracks the mileston
 | --- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | M0  | Design gate: design system and low-fi wireframes                                            | **Approved 2026-10-17**                                                      |
 | M1  | Foundation: monorepo, local Supabase, profiles and roles, auth, i18n, theme, app shell, CI  | **In progress**: built and tested; staging, Google and SMTP wait on accounts |
-| M2  | Recipes: schema, wizard, photo pipeline, recipe page, scaler, measures, drafts              | Planned                                                                      |
+| M2  | Recipes: schema, wizard, photo pipeline, recipe page, scaler, measures, drafts              | **Built and tested**: waiting for phone acceptance                           |
 | M3  | Discovery: home feed, categories, search, filters                                           | Planned                                                                      |
 | M4  | Community: comments, likes, saves, cooked-it, variations, WhatsApp share card               | Planned                                                                      |
 | M5  | Cooking mode: steps, wake lock, timers, checklist, voice                                    | Planned                                                                      |
@@ -62,7 +62,7 @@ _The non-UI half of M1 proceeds while M0 is in review._
 ### M2 — Recipes
 
 - Recipe schema and RLS. Lookups: categories, regions, tags, the **units/measures table** and the **starter dictionary of about 150 ingredients**, reviewed by native Malayalam speakers from a spreadsheet.
-- Image pipeline ([docs/API.md → Storage](docs/API.md#storage-planned-m2)) and avatar upload.
+- Image pipeline ([docs/API.md → Storage](docs/API.md#storage-m2)) and avatar upload.
 - Add wizard (basics → photo → ingredients → steps → review):
   - autosaves the draft as you go,
   - ingredient autocomplete from the dictionary in ml, en and Manglish,

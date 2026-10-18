@@ -4,14 +4,16 @@ The source of truth for the data model. **Every schema change is a migration** i
 
 ## 0. Status
 
-| Area                                                                                                 | Status               | Migration                       |
-| ---------------------------------------------------------------------------------------------------- | -------------------- | ------------------------------- |
-| Schemas (`private`), extensions (`pg_trgm`, `unaccent`), enums `user_role`, `account_status`, `lang` | **Implemented (M1)** | `20261016080000_foundation.sql` |
-| `profiles`, column grants, RLS, new-user trigger, role helpers, access-token hook                    | **Implemented (M1)** | `20261016080100_profiles.sql`   |
-| Recipes, ingredients, steps, lookups, units, dictionary, storage buckets                             | Planned (M2)         | —                               |
-| Search document, `search_recipes` RPC                                                                | Planned (M3)         | —                               |
-| Likes, saves, comments, cooked posts, variations, collections                                        | Planned (M4)         | —                               |
-| Reports, moderation actions, rate limits, posting passes, media trash                                | Planned (M6)         | —                               |
+| Area                                                                                                 | Status               | Migration                           |
+| ---------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------- |
+| Schemas (`private`), extensions (`pg_trgm`, `unaccent`), enums `user_role`, `account_status`, `lang` | **Implemented (M1)** | `20261016080000_foundation.sql`     |
+| `profiles`, column grants, RLS, new-user trigger, role helpers, access-token hook                    | **Implemented (M1)** | `20261016080100_profiles.sql`       |
+| Recipes, ingredients, steps, lookups, units, storage buckets, media trash                            | **Implemented (M2)** | `20261017090000_recipes.sql`        |
+| Reference data: 16 units, 12 categories, 7 regions, 9 tags, 154-ingredient dictionary (generated)    | **Implemented (M2)** | `20261017090100_reference_data.sql` |
+| `claim_media_trash`, `stale_incoming_objects` (service role only, for `media-gc`)                    | **Implemented (M2)** | `20261017090200_media_gc.sql`       |
+| Search document, `search_recipes` RPC                                                                | Planned (M3)         | —                                   |
+| Likes, saves, comments, cooked posts, variations, collections                                        | Planned (M4)         | —                                   |
+| Reports, moderation actions, rate limits, posting passes                                             | Planned (M6)         | —                                   |
 
 Everything from §2 on shows the **approved design**. Sections not yet implemented are marked _(planned)_.
 
@@ -29,8 +31,17 @@ Everything from §2 on shows the **approved design**. Sections not yet implement
   - `is_active()`, `has_role(min_role)`, `is_mod()` and `is_admin()` are `security definer` and `stable`. Policies call them as `(select private.…())`.
   - `is_active()` is true for `status = 'active'`, or for a suspension whose `suspended_until` has passed.
 - The access-token hook is `private.custom_access_token_hook`. It is executable only by `supabase_auth_admin`. It adds `user_role` and `account_status` claims, which are **for the UI only**.
-- Profile updates are limited by column grants to `handle`, `display_name`, `avatar_path`, `bio`, `district`, `preferred_lang`, `text_size` and `onboarded_at`.
+- Profile updates are limited by column grants to `handle`, `display_name`, `bio`, `district`, `preferred_lang`, `text_size` and `onboarded_at`. Since M2, `avatar_path` is set only by the `process-image` function.
 - The first admin is set on the server with `deploy/scripts/promote-admin.sh <handle> admin`.
+
+**Implemented M2 specifics** (the migrations differ from the outline in §4 in these ways):
+
+- `units` columns are `ml`, `g`, `traditional` and `whole` (a pinch never becomes 1.5 pinches). Values come from `packages/core/src/measures.ts` through `scripts/build-seed.ts`, so the app and the database share one table.
+- `categories` and `ingredients` carry a `sticker` name instead of an icon.
+- `recipe_ingredients` and `recipe_steps` have **deferrable** unique `(recipe_id, position)`, so `save_recipe_items` can reorder in one statement.
+- The `recipes_before_write` trigger makes the slug (from the English title), runs the publish check (i18n error keys) and sets `published_at`.
+- `cover_path`, `photo_path` and `avatar_path` aren't granted to users. `trash_replaced_media` triggers queue the old base path in `private.media_trash` when a photo is replaced or its row deleted.
+- Storage buckets and their `storage.objects` policies are created in the same migration (see `docs/API.md → Storage`).
 
 ## 2. Conventions
 
@@ -106,7 +117,7 @@ grant select on profiles to anon, authenticated;
 grant update (handle, display_name, avatar_path, bio, district, preferred_lang, text_size, onboarded_at)
   on profiles to authenticated;
 
--- PLANNED (M2+) from here on
+-- M2 tables below are implemented (see §0 and the M2 specifics in §1); M3+ is planned
 -- ── lookups (seeded; ingredients admin-managed) ───────
 create table categories (id smallint primary key, slug text unique not null, sort smallint not null, icon text);
 create table regions    (id smallint primary key, slug text unique not null, grp text not null check (grp in ('kerala','india','world')));

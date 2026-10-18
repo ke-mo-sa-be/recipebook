@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { LogOut } from 'lucide-react';
+import { LogOut, Sparkles } from 'lucide-react';
 import type { Lang } from '@recipebook/core';
-import { Button } from '../../components/ui/Button.tsx';
+import { Button, buttonClass } from '../../components/ui/Button.tsx';
 import { ChoiceGroup } from '../../components/ui/ChoiceGroup.tsx';
 import { PageHeader } from '../../components/ui/PageHeader.tsx';
 import { Skeleton } from '../../components/ui/States.tsx';
@@ -14,6 +14,8 @@ import { signOut } from '../auth/api.ts';
 import { useMyProfile, useUpdateProfile } from '../profile/api.ts';
 import { ProfileFields } from '../profile/ProfileFields.tsx';
 import { ProfilePhoto } from '../profile/ProfilePhoto.tsx';
+import { APP_VERSION } from '../about/releases.ts';
+import { brand } from '../../brand/brand.ts';
 
 export function SettingsPage() {
   const { t, i18n } = useTranslation();
@@ -63,6 +65,7 @@ export function SettingsPage() {
           value={prefs.textSize}
           onChange={chooseSize}
           choices={[
+            { value: 'small', label: t('settings.sizes.small'), className: 'text-[0.9rem]' },
             { value: 'normal', label: t('settings.sizes.normal'), className: 'text-[1rem]' },
             { value: 'large', label: t('settings.sizes.large'), className: 'text-[1.12rem]' },
             { value: 'xl', label: t('settings.sizes.xl'), className: 'text-[1.25rem]' },
@@ -95,6 +98,19 @@ export function SettingsPage() {
           )}
         </section>
       )}
+
+      <section aria-labelledby="about" className="card flex flex-col gap-3 p-5">
+        <h2 id="about" className="text-h3">
+          {t('about.title')}
+        </h2>
+        <p className="text-text-muted">
+          {brand.name[lang]} · {t('about.version', { version: APP_VERSION })}
+        </p>
+        <Link to="/whats-new" className={buttonClass('secondary')}>
+          <Sparkles aria-hidden />
+          <span>{t('whatsNew.title')}</span>
+        </Link>
+      </section>
 
       {session && (
         <section aria-labelledby="account" className="card flex flex-col gap-4 p-5">

@@ -34,12 +34,14 @@ pnpm dev                                  # http://localhost:5173
 
 Useful commands:
 
-| Command         | What it does                                                     |
-| --------------- | ---------------------------------------------------------------- |
-| `pnpm check`    | format, lint, typecheck, unit tests, contrast check, secret scan |
-| `pnpm test:db`  | pgTAP row-level-security tests against the local database        |
-| `pnpm db:reset` | Re-apply all migrations and the seed data                        |
-| `pnpm tokens`   | Regenerate theme CSS from `apps/web/src/theme/tokens.json`       |
+| Command            | What it does                                                        |
+| ------------------ | ------------------------------------------------------------------- |
+| `pnpm check`       | format, lint, typecheck, unit tests, contrast check, secret scan    |
+| `pnpm test:db`     | pgTAP row-level-security tests against the local database           |
+| `pnpm db:reset`    | Re-apply all migrations and the seed data                           |
+| `pnpm tokens`      | Regenerate theme CSS from `apps/web/src/theme/tokens.json`          |
+| `pnpm icons`       | Rebuild the favicon and app icons from `src/brand/icon-art.svg`     |
+| `pnpm intro:fonts` | Re-fetch the welcome-animation font subsets after editing its words |
 
 Test emails (verification and reset) appear in the local Mailpit inbox. Its URL is printed by `supabase status`.
 

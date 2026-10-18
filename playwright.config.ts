@@ -12,6 +12,8 @@ export default defineConfig({
     baseURL: process.env.E2E_BASE_URL ?? 'http://localhost:4173',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
+    // Skips the welcome animation so tests start on the page itself; intro.spec.ts turns motion back on.
+    reducedMotion: 'reduce',
   },
   projects: [
     {

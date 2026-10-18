@@ -12,7 +12,7 @@ export type Profile = {
   bio: string | null;
   district: District | null;
   preferred_lang: Lang;
-  text_size: 'normal' | 'large' | 'xl';
+  text_size: 'small' | 'normal' | 'large' | 'xl';
   onboarded_at: string | null;
   role: 'user' | 'moderator' | 'admin';
   status: 'active' | 'suspended';

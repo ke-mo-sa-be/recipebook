@@ -25,7 +25,8 @@
     "increase": "More {{what}}",
     "edit": "Edit",
     "delete": "Delete",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "dismiss": "Dismiss"
   },
   "form": {
     "showPassword": "Show password",
@@ -190,6 +191,7 @@
     "language": "Language",
     "textSize": "Text size",
     "sizes": {
+      "small": "Small",
       "normal": "Normal",
       "large": "Large",
       "xl": "Extra large"
@@ -498,7 +500,11 @@
     "draftBanner": "This is a draft. Only you can see it.",
     "unpublish": "Unpublish (back to draft)",
     "deleteTitle": "Delete this recipe?",
-    "deleteBody": "Its photos go too. This can't be undone."
+    "deleteBody": "Its photos go too. This can't be undone.",
+    "writtenIn": {
+      "ml": "Written in Malayalam",
+      "en": "Written in English"
+    }
   },
   "time": {
     "h_one": "{{count}} h",
@@ -507,5 +513,40 @@
     "min_other": "{{count}} min",
     "s_one": "{{count}} s",
     "s_other": "{{count}} s"
+  },
+  "theme": {
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme"
+  },
+  "about": {
+    "title": "About",
+    "version": "Version {{version}}"
+  },
+  "whatsNew": {
+    "title": "What's new",
+    "updated": "Paachakam was updated to version {{version}}.",
+    "see": "See what's new"
+  },
+  "install": {
+    "title": "Put Paachakam on your home screen",
+    "body": "Open it like an app, full screen, in one tap.",
+    "cta": "Install",
+    "notNow": "Not now",
+    "share": "Share",
+    "addToHome": "Add to Home Screen",
+    "ios": "Tap <share/> Share, then <plus/> <b>Add to Home Screen</b>."
+  },
+  "intro": {
+    "skip": "Skip",
+    "languages": {
+      "ta": "Tamil",
+      "te": "Telugu",
+      "kn": "Kannada",
+      "hi": "Hindi",
+      "bn": "Bengali",
+      "mr": "Marathi",
+      "gu": "Gujarati",
+      "or": "Odia"
+    }
   }
 }

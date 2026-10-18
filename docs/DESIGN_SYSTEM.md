@@ -24,12 +24,12 @@ Tokens live in [`apps/web/src/theme/tokens.json`](../apps/web/src/theme/tokens.j
 
 ## 2. Brand
 
-|                  |                                                                                                                                                                       |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Brand name       | **Paachakam / പാചകം** (decided 2026-10-17), defined only in `apps/web/src/brand/brand.ts`.                                                                            |
-| Logo             | Placeholder: the "cooking" pan sticker plus the wordmark in Inter Semibold. To be replaced when the final name is chosen.                                             |
-| Voice            | Like a kind neighbour who cooks well. Short sentences. Uses "you". Never says "invalid", "error occurred" or "failed to".                                             |
-| Headline pattern | **Two-tone:** a statement in black, then a soft-grey continuation. "Good evening, Ammini. / What's cooking today?" · "Ammini's cookbook. / 12 recipes, 3 variations." |
+|                  |                                                                                                                                                                                                                                                                                               |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Brand name       | **Paachakam / പാചകം** (decided 2026-10-17), defined only in `apps/web/src/brand/brand.ts`.                                                                                                                                                                                                    |
+| Logo / app icon  | A steaming **uruli** of red curry with a curry-leaf sprig, die-cut with a white outline like the stickers, on the near-black `primary` (M2.1). The source is `apps/web/src/brand/icon-art.svg`, drawn inside the maskable safe circle. `pnpm icons` builds the favicon and the PNG app icons. |
+| Voice            | Like a kind neighbour who cooks well. Short sentences. Uses "you". Never says "invalid", "error occurred" or "failed to".                                                                                                                                                                     |
+| Headline pattern | **Two-tone:** a statement in black, then a soft-grey continuation. "Good evening, Ammini. / What's cooking today?" · "Ammini's cookbook. / 12 recipes, 3 variations."                                                                                                                         |
 
 ## 3. Colour
 
@@ -145,4 +145,10 @@ The v1 rules are unchanged:
 
 ## 12. Motion
 
-120 ms press (scale 0.98) and 200 ms sheets and toasts, with `ease-out`. Stickers get a 150 ms "lift" (shadow grows and they tilt back to 0°) when picked. Everything switches off under reduced motion.
+**Welcome animation (M2.1):**
+
+- The app icon, then the word for "cooking" in eight Indian languages flipping past (150 ms each), landing on **പാചകം / Paachakam** while three stickers pop in. About two seconds.
+- It plays once per browser session, only when a visit lands on Home, and a tap skips it.
+- The words use Noto Sans subsets cut down to only their glyphs (about 13 KB in total, `pnpm intro:fonts`). They are checked pixel by pixel against the full fonts.
+
+120 ms press (scale 0.98) and 200 ms sheets and toasts, with `ease-out`. Stickers get a 150 ms "lift" (shadow grows and they tilt back to 0°) when picked. Everything switches off under reduced motion, including the welcome animation.

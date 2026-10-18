@@ -6,6 +6,8 @@ import { Composer } from '../../components/ui/Composer.tsx';
 import { Chip } from '../../components/ui/Chip.tsx';
 import { EmptyState } from '../../components/ui/States.tsx';
 import { IconLink } from '../../components/ui/IconButton.tsx';
+import { HomeNotice } from './HomeNotice.tsx';
+import { ThemeToggle } from '../../components/ui/ThemeToggle.tsx';
 import { Avatar } from '../../components/ui/Avatar.tsx';
 import { useAuth } from '../auth/AuthProvider.tsx';
 import { useMyProfile } from '../profile/api.ts';
@@ -35,14 +37,19 @@ export function HomePage() {
       {/* Phone/tablet top row; desktop has the top bar instead. */}
       <div className="flex items-center justify-between lg:hidden">
         <IconLink to="/settings" label={t('nav.settings')} icon={<Settings aria-hidden />} />
-        {session ? (
-          <Link to="/me" aria-label={t('nav.profile')} className="rounded-pill">
-            <Avatar name={name ?? '?'} path={profile.data?.avatar_path} />
-          </Link>
-        ) : (
-          <IconLink to="/me" label={t('nav.profile')} icon={<UserRound aria-hidden />} />
-        )}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          {session ? (
+            <Link to="/me" aria-label={t('nav.profile')} className="rounded-pill">
+              <Avatar name={name ?? '?'} path={profile.data?.avatar_path} />
+            </Link>
+          ) : (
+            <IconLink to="/me" label={t('nav.profile')} icon={<UserRound aria-hidden />} />
+          )}
+        </div>
       </div>
+
+      <HomeNotice />
 
       {/* minmax(0,…): without it the chip row's natural width stretches the column past the screen. */}
       <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center lg:gap-10">

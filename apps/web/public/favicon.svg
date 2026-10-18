@@ -1,1 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#C2361C"/><path d="M20 44c0-14 10-24 24-26-2 14-10 24-24 26z" fill="#F4B728"/><path d="M20 44l14-14" stroke="#FFF7EA" stroke-width="3" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#151413"/>
+  <!-- Paachakam app icon art: a steaming uruli of curry with a curry-leaf sprig, die-cut like the
+       app's ingredient stickers. Everything stays inside the maskable safe circle (r = 205). -->
+  <defs>
+    <linearGradient id="copper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0A04B"/>
+      <stop offset="0.45" stop-color="#C8662A"/>
+      <stop offset="1" stop-color="#7C3311"/>
+    </linearGradient>
+    <linearGradient id="copperRim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B85A22"/>
+      <stop offset="0.5" stop-color="#FFC27A"/>
+      <stop offset="1" stop-color="#B85A22"/>
+    </linearGradient>
+    <radialGradient id="curry" cx="0.42" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#F0662F"/>
+      <stop offset="0.6" stop-color="#C83A16"/>
+      <stop offset="1" stop-color="#8E230B"/>
+    </radialGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7BD36F"/>
+      <stop offset="1" stop-color="#2E7D32"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.55" r="0.5">
+      <stop offset="0" stop-color="#3A3633"/>
+      <stop offset="1" stop-color="#151413" stop-opacity="0"/>
+    </radialGradient>
+    <path id="cl" d="M0 0 C 13 -12, 36 -12, 50 0 C 36 12, 13 12, 0 0 Z"/>
+    <g id="sprig">
+      <use href="#cl" transform="translate(312 236) rotate(-115)"/>
+      <use href="#cl" transform="translate(312 236) rotate(-10)"/>
+      <use href="#cl" transform="translate(328 208) rotate(-118)"/>
+      <use href="#cl" transform="translate(328 208) rotate(-8)"/>
+      <use href="#cl" transform="translate(344 180) rotate(-64)"/>
+    </g>
+  </defs>
+
+  <circle cx="256" cy="290" r="200" fill="url(#glow)"/>
+
+  <!-- steam -->
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-width="20">
+    <path d="M196 222 C 172 198, 220 186, 196 160 C 180 142, 204 128, 196 112"/>
+    <path d="M256 214 C 230 186, 282 172, 256 140 C 240 120, 266 104, 256 86"/>
+    <path d="M316 222 C 292 198, 340 186, 316 160 C 300 142, 324 128, 316 112"/>
+  </g>
+
+  <!-- white die-cut outline -->
+  <g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26" stroke-linejoin="round">
+    <path d="M110 268 C 110 356, 178 408, 256 408 C 334 408, 402 356, 402 268 Z"/>
+    <ellipse cx="256" cy="268" rx="150" ry="36"/>
+    <circle cx="98" cy="282" r="22"/>
+    <circle cx="414" cy="282" r="22"/>
+    <path d="M298 264 L 346 180" stroke-width="34" stroke-linecap="round"/>
+    <use href="#sprig" stroke-width="16"/>
+  </g>
+
+  <!-- handles -->
+  <g fill="none" stroke="url(#copper)" stroke-width="12">
+    <circle cx="98" cy="282" r="15"/>
+    <circle cx="414" cy="282" r="15"/>
+  </g>
+
+  <!-- bowl -->
+  <path d="M110 268 C 110 356, 178 408, 256 408 C 334 408, 402 356, 402 268 Z" fill="url(#copper)"/>
+  <path d="M146 300 C 160 350, 200 376, 240 384" fill="none" stroke="#FFD49A" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
+  <ellipse cx="256" cy="268" rx="150" ry="36" fill="url(#copperRim)"/>
+
+  <path d="M150 256 C 190 238, 250 234, 300 236" fill="none" stroke="#FFE2B8" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- curry -->
+  <ellipse cx="256" cy="268" rx="134" ry="26" fill="url(#curry)"/>
+  <circle cx="214" cy="264" r="7" fill="#FFB347" opacity="0.9"/>
+  <circle cx="276" cy="274" r="5" fill="#FFB347" opacity="0.8"/>
+  <circle cx="236" cy="278" r="4" fill="#FFD27A" opacity="0.8"/>
+
+  <!-- curry-leaf sprig: small pointed leaves in pairs -->
+  <path d="M298 264 L 346 180" stroke="#2E6B2F" stroke-width="7" stroke-linecap="round"/>
+  <use href="#sprig" fill="url(#leaf)"/>
+  <g fill="none" stroke="#1F5A23" stroke-width="2.5" stroke-linecap="round" opacity="0.6">
+    <path d="M312 236 l -10 -20"/><path d="M312 236 l 22 -4"/><path d="M328 208 l -10 -21"/><path d="M328 208 l 22 -3"/><path d="M344 180 l 11 -20"/>
+  </g>
+</svg>

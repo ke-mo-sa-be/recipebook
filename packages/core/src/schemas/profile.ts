@@ -4,7 +4,7 @@ import { DISTRICTS } from '../districts.ts';
 
 // Limits mirror the CHECK constraints on public.profiles — keep them in sync (see docs/DATABASE.md).
 export const HANDLE_PATTERN = /^[a-z0-9_]{3,30}$/;
-export const TEXT_SIZES = ['normal', 'large', 'xl'] as const;
+export const TEXT_SIZES = ['small', 'normal', 'large', 'xl'] as const;
 
 export const handleSchema = z
   .string()

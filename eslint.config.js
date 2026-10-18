@@ -50,6 +50,10 @@ export default tseslint.config(
     rules: { 'i18next/no-literal-string': 'off' },
   },
   {
+    files: ['apps/web/public/sw.js'],
+    languageOptions: { globals: globals.serviceworker },
+  },
+  {
     files: ['supabase/functions/**/*.ts'],
     languageOptions: { globals: { Deno: 'readonly' } },
   },

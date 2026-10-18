@@ -2,12 +2,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import { readFileSync } from 'node:fs';
+
+// The app version shown in Settings → About and on the What's new page (features/about).
+const { version } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as {
+  version: string;
+};
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   // Env vars exposed to the browser must start with VITE_. Never put a secret in one.
   envPrefix: 'VITE_',
   envDir: '../..',
+  define: { __APP_VERSION__: JSON.stringify(version) },
   build: { target: 'es2022', sourcemap: true },
   test: {
     name: 'web',

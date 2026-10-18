@@ -26,6 +26,8 @@
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && pnpm seed:check && node scripts/check-no-secrets.mjs",
     "test:e2e": "playwright test",
     "stickers": "node scripts/stickers.mjs",
+    "icons": "node scripts/icons.mjs",
+    "intro:fonts": "node scripts/intro-fonts.ts",
     "seed:build": "node scripts/build-seed.ts",
     "seed:check": "node scripts/build-seed.ts --check"
   },

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, Clock, Lightbulb, Pencil, Play, Timer, Trash2, Users } from 'lucide-react';
+import { ChevronLeft, Clock, Languages, Lightbulb, Pencil, Play, Timer, Trash2, Users } from 'lucide-react';
 import { Avatar } from '../../components/ui/Avatar.tsx';
 import { Button, buttonClass } from '../../components/ui/Button.tsx';
 import { IconButton } from '../../components/ui/IconButton.tsx';
+import { ThemeToggle } from '../../components/ui/ThemeToggle.tsx';
 import { Polaroid } from '../../components/ui/Polaroid.tsx';
 import { Sticker } from '../../components/ui/Sticker.tsx';
 import { Stepper } from '../../components/ui/Stepper.tsx';
@@ -66,19 +67,24 @@ export function RecipePage() {
           icon={<ChevronLeft aria-hidden />}
           onClick={() => navigate(-1)}
         />
-        {isOwner && (
-          <div className="flex gap-2">
-            <Link to={`/edit/${r.id}/basics`} className={cx(buttonClass('secondary'), 'min-h-[44px]')}>
-              <Pencil aria-hidden />
-              <span>{t('actions.edit')}</span>
-            </Link>
-            <IconButton
-              label={t('actions.delete')}
-              icon={<Trash2 aria-hidden />}
-              onClick={() => setConfirmDelete(true)}
-            />
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          {isOwner && (
+            <>
+              <Link to={`/edit/${r.id}/basics`} className={cx(buttonClass('secondary'), 'min-h-[44px]')}>
+                <Pencil aria-hidden />
+                <span>{t('actions.edit')}</span>
+              </Link>
+              <IconButton
+                label={t('actions.delete')}
+                icon={<Trash2 aria-hidden />}
+                onClick={() => setConfirmDelete(true)}
+              />
+            </>
+          )}
+          <span className="lg:hidden">
+            <ThemeToggle />
+          </span>
+        </div>
       </div>
 
       {r.status === 'draft' && (
@@ -125,6 +131,13 @@ export function RecipePage() {
             {r.diet && <DietMark diet={r.diet} showLabel />}
             {category && <span>{t(`categories.${category.slug}`)}</span>}
             {region && <span>{t(`regions.${region.slug}`)}</span>}
+            {/* Recipe text is what the cook wrote; say so when it isn't in the reader's language. */}
+            {r.content_lang !== lang && (
+              <span className="inline-flex items-center gap-1 rounded-pill bg-surface-sunken px-2.5 py-0.5">
+                <Languages aria-hidden className="size-4" />
+                {t(`recipe.writtenIn.${r.content_lang}`)}
+              </span>
+            )}
           </div>
           {r.description && <p className="text-lead">{r.description}</p>}
 

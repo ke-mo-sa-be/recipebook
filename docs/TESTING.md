@@ -49,7 +49,7 @@ The functionality that matters most, in order:
 packages/core/src/**/*.test.ts       unit
 apps/web/src/**/*.test.tsx           component
 supabase/tests/database/*.test.sql   pgTAP (shared helpers: _helpers.inc, included with \ir)
-e2e/                                 Playwright: auth.spec.ts, layout.spec.ts, recipe.spec.ts
+e2e/                                 Playwright: auth.spec.ts, layout.spec.ts, recipe.spec.ts, intro.spec.ts
 ```
 
 ## 5. Critical user flows
@@ -101,6 +101,8 @@ docker run --rm --network host --ipc host -u "$(id -u):$(id -g)" -e HOME=/tmp -e
 
 The tests read auth emails from Mailpit and rewrite the link host to the local gateway, so they also work when the stack is configured for a staging hostname. Each run creates uniquely named test accounts. `recipe.spec.ts` creates its cook through the auth admin API, so it needs the **local** stack's service key (`supabase status`) and skips without it. Never point it at a shared server.
 
-The auth tests read confirmation and reset emails from Mailpit, so run E2E with `SMTP_ENABLED=false` in `supabase/.env`. With real SMTP on, sign-ups would send real emails to `example.com` addresses.
+Playwright runs with `reducedMotion: 'reduce'`, so the welcome animation stays out of the way. `intro.spec.ts` turns motion back on and records each word the animation shows, because each is on screen for only 150 ms.
+
+The auth tests read confirmation and reset emails from Mailpit, so run E2E with `SMTP_ENABLED=false` in `supabase/.env`. On the staging server that means running `paachakam-smtp.sh --off` first, or leaving out `auth.spec.ts`. With real SMTP on, sign-ups would send real emails to `example.com` addresses.
 
 Run the container rather than Playwright on the host: the host is missing Chromium's system libraries.

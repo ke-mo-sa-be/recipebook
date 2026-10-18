@@ -67,6 +67,7 @@ function buildTokensCss() {
     `@media (prefers-color-scheme: dark) {\n  :root:not([data-theme='light']) {\n${block(themeVars('dark')).replace(/^/gm, '  ')}\n  }\n}\n\n` +
     `:root[data-theme='dark'] {\n${block(themeVars('dark'))}\n}\n\n` +
     `html { font-size: ${s.normal}; }\n` +
+    `html[data-text-size='small'] { font-size: ${s.small}; }\n` +
     `html[data-text-size='large'] { font-size: ${s.large}; }\n` +
     `html[data-text-size='xl'] { font-size: ${s.xl}; }\n`
   );

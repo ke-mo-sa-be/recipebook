@@ -1,6 +1,6 @@
 begin;
 \ir _helpers.inc
-select plan(20);
+select plan(22);
 
 -- ── setup ─────────────────────────────────────────────
 select tests.create_user('amma@example.com', '{"display_name":"Amma","lang":"ml"}') as amma \gset
@@ -26,6 +26,8 @@ select throws_ok($$ insert into public.profiles (id, handle, display_name) value
 -- ── a signed-in user ──────────────────────────────────
 select tests.act_as(:'amma');
 select lives_ok($$ update public.profiles set bio = 'I cook sadya' where id = auth.uid() $$, 'user can update own bio');
+select lives_ok($$ update public.profiles set text_size = 'small' where id = auth.uid() $$, 'user can pick the small text size');
+select throws_ok($$ update public.profiles set text_size = 'huge' where id = auth.uid() $$, '23514', null, 'unknown text sizes are refused');
 select is((select bio from public.profiles where id = :'amma'), 'I cook sadya', 'own bio was saved');
 
 update public.profiles set bio = 'hacked' where id = :'appu';

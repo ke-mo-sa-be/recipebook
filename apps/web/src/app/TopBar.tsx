@@ -5,6 +5,7 @@ import { brand } from '../brand/brand.ts';
 import { currentLang } from '../i18n/index.ts';
 import { buttonClass } from '../components/ui/Button.tsx';
 import { Avatar } from '../components/ui/Avatar.tsx';
+import { ThemeToggle } from '../components/ui/ThemeToggle.tsx';
 import { Sticker } from '../components/ui/Sticker.tsx';
 import { cx } from '../components/ui/cx.ts';
 import { useAuth } from '../features/auth/AuthProvider.tsx';
@@ -76,6 +77,7 @@ export function TopBar() {
             </NavLink>
           </li>
         </ul>
+        <ThemeToggle />
         <Link to="/add" className={cx(buttonClass('primary'), 'min-h-[44px] px-5 whitespace-nowrap')}>
           <Plus aria-hidden />
           <span>{t('nav.addRecipe')}</span>

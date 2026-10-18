@@ -233,5 +233,6 @@
 }
 
 html { font-size: 106.25%; }
+html[data-text-size='small'] { font-size: 93.75%; }
 html[data-text-size='large'] { font-size: 118.75%; }
 html[data-text-size='xl'] { font-size: 131.25%; }

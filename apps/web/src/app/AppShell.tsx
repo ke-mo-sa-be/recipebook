@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Outlet, ScrollRestoration, useLocation, useSearchParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { WifiOff } from 'lucide-react';
@@ -11,6 +11,8 @@ import { OnboardingSheet } from '../features/onboarding/OnboardingSheet.tsx';
 import { LanguageChooser } from '../features/onboarding/LanguageChooser.tsx';
 import { FloatingNav } from './FloatingNav.tsx';
 import { TopBar } from './TopBar.tsx';
+import { Intro } from '../features/intro/Intro.tsx';
+import { playIntroOnStart } from '../features/intro/gate.ts';
 
 function useOnline() {
   return useSyncExternalStore(
@@ -70,6 +72,8 @@ export function AppShell() {
   const profile = useProfilePrefsSync();
   // The wizard has its own Back / Next bar where the nav would be.
   const inWizard = useLocation().pathname.startsWith('/edit/');
+  const [intro, setIntro] = useState(playIntroOnStart);
+  const endIntro = useCallback(() => setIntro(false), []);
 
   return (
     <>
@@ -99,6 +103,7 @@ export function AppShell() {
       <QueryToast />
       <ScrollRestoration />
       <LanguageChooser />
+      {intro && <Intro onDone={endIntro} />}
       {profile && !profile.onboarded_at && <OnboardingSheet profile={profile} />}
     </>
   );

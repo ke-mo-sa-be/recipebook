@@ -127,7 +127,7 @@ _The non-UI half of M1 proceeds while M0 is in review._
 ### M7 — Polish
 
 - Full Malayalam pass, reviewed by native speakers.
-- PWA: install prompt, app-shell caching, offline saved recipes and cooking mode.
+- PWA: app-shell caching, offline saved recipes and cooking mode. (The manifest, icons, install prompt and offline page shipped early, in v0.2.1.)
 - Performance budget: Lighthouse mobile ≥ 90 on Home, Recipe and Search, and initial JS ≤ 170 KB gzipped.
 - Accessibility audit: axe clean, keyboard navigation, TalkBack spot check.
 - URL import via the `import-recipe` function: JSON-LD only, SSRF protection (no private IPs, 5 s timeout, 2 MB cap), and source link kept.
@@ -168,7 +168,10 @@ The data model already has room for these (see [docs/DATABASE.md §6](docs/DATAB
 
 ## Later / ideas
 
-- Followers and notifications.
+- Followers.
+- **Push notifications** (asked for in M2 feedback). They're planned with M4, when there is something to notify about: comments, likes, "someone cooked your recipe". This needs web push (VAPID keys), a sender function and a permission prompt that shows only after the person does something that warrants it. On iPhone it works only for the installed app.
+- **More languages** (asked for in M2 feedback). Each needs about 400 interface strings with native review, a font, dictionary names and a `lang` enum value for recipe content. This comes after the Malayalam family review, in an order Adrian picks.
+- **Recipe translation:** a "Translate" button for steps written in another language. It needs an outside service and has a running cost. For now recipes show "Written in Malayalam / English".
 - Native apps, if the PWA isn't enough.
 - **Mealie import:** bring recipes from an existing self-hosted Mealie instance.
 - Image pipeline fallback (wasm encoder) for Supabase Cloud free tier (decision D5).

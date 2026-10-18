@@ -6,6 +6,7 @@ import { buttonClass } from '../../components/ui/Button.tsx';
 import { Avatar } from '../../components/ui/Avatar.tsx';
 import { Headline } from '../../components/ui/Headline.tsx';
 import { IconButton, IconLink } from '../../components/ui/IconButton.tsx';
+import { ThemeToggle } from '../../components/ui/ThemeToggle.tsx';
 import { EmptyState, ErrorState, Skeleton } from '../../components/ui/States.tsx';
 import { useUserId } from '../auth/AuthProvider.tsx';
 import { useProfileByHandle } from './api.ts';
@@ -60,7 +61,12 @@ export function ProfilePage() {
             onClick={() => navigate(-1)}
           />
         )}
-        {isMe && <IconLink to="/settings" label={t('nav.settings')} icon={<Settings aria-hidden />} />}
+        <div className="flex items-center gap-2">
+          <span className="lg:hidden">
+            <ThemeToggle />
+          </span>
+          {isMe && <IconLink to="/settings" label={t('nav.settings')} icon={<Settings aria-hidden />} />}
+        </div>
       </div>
 
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">

@@ -82,7 +82,7 @@ export function TopBar() {
         </Link>
         {session ? (
           <Link to="/me" aria-label={t('nav.profile')} title={t('nav.profile')} className="rounded-pill">
-            <Avatar name={profile.data?.display_name ?? '?'} />
+            <Avatar name={profile.data?.display_name ?? '?'} path={profile.data?.avatar_path} />
           </Link>
         ) : (
           <Link

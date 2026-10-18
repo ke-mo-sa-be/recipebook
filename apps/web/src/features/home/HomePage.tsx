@@ -10,6 +10,8 @@ import { Avatar } from '../../components/ui/Avatar.tsx';
 import { useAuth } from '../auth/AuthProvider.tsx';
 import { useMyProfile } from '../profile/api.ts';
 import { KitchenPicker } from './KitchenPicker.tsx';
+import { useLatestRecipes } from '../recipes/api.ts';
+import { RecipeCard } from '../recipes/RecipeCard.tsx';
 
 const QUICK = ['quick', 'breakfast', 'onam', 'snacks'] as const;
 
@@ -25,6 +27,7 @@ export function HomePage() {
   const { session } = useAuth();
   const profile = useMyProfile();
   const name = profile.data?.display_name;
+  const latest = useLatestRecipes();
   const search = (q: string) => navigate(q ? `/search?q=${encodeURIComponent(q)}` : '/search');
 
   return (
@@ -34,7 +37,7 @@ export function HomePage() {
         <IconLink to="/settings" label={t('nav.settings')} icon={<Settings aria-hidden />} />
         {session ? (
           <Link to="/me" aria-label={t('nav.profile')} className="rounded-pill">
-            <Avatar name={name ?? '?'} />
+            <Avatar name={name ?? '?'} path={profile.data?.avatar_path} />
           </Link>
         ) : (
           <IconLink to="/me" label={t('nav.profile')} icon={<UserRound aria-hidden />} />
@@ -79,11 +82,24 @@ export function HomePage() {
         <KitchenPicker />
       </div>
 
-      <EmptyState
-        stickers={['pancakes', 'curry-rice', 'steaming-bowl']}
-        title={t('home.soon.title')}
-        body={t('home.soon.body')}
-      />
+      {latest.data && latest.data.length > 0 ? (
+        <section aria-labelledby="latest-h" className="flex flex-col gap-3">
+          <h2 id="latest-h" className="text-h2">
+            {t('home.latest')}
+          </h2>
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {latest.data.map((r) => (
+              <RecipeCard key={r.id} recipe={r} />
+            ))}
+          </div>
+        </section>
+      ) : (
+        <EmptyState
+          stickers={['pancakes', 'curry-rice', 'steaming-bowl']}
+          title={t('home.soon.title')}
+          body={t('home.soon.body')}
+        />
+      )}
     </div>
   );
 }

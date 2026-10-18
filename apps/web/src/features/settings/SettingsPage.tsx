@@ -13,6 +13,7 @@ import { useAuth } from '../auth/AuthProvider.tsx';
 import { signOut } from '../auth/api.ts';
 import { useMyProfile, useUpdateProfile } from '../profile/api.ts';
 import { ProfileFields } from '../profile/ProfileFields.tsx';
+import { ProfilePhoto } from '../profile/ProfilePhoto.tsx';
 
 export function SettingsPage() {
   const { t, i18n } = useTranslation();
@@ -85,7 +86,10 @@ export function SettingsPage() {
             {t('settings.profile')}
           </h2>
           {profile.data ? (
-            <ProfileFields profile={profile.data} submitLabel={t('actions.save')} />
+            <>
+              <ProfilePhoto profile={profile.data} />
+              <ProfileFields profile={profile.data} submitLabel={t('actions.save')} />
+            </>
           ) : (
             <Skeleton className="h-64 w-full" />
           )}

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Outlet, ScrollRestoration, useSearchParams } from 'react-router';
+import { Outlet, ScrollRestoration, useLocation, useSearchParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { WifiOff } from 'lucide-react';
 import { useSyncExternalStore } from 'react';
@@ -39,7 +39,7 @@ function QueryToast() {
     }, 4000);
     return () => clearTimeout(id);
   }, [key, params, setParams]);
-  if (!key || !['passwordChanged'].includes(key)) return null;
+  if (!key || !['passwordChanged', 'recipePublished', 'recipeUpdated'].includes(key)) return null;
   return (
     <div
       role="status"
@@ -68,6 +68,8 @@ export function AppShell() {
   const { t } = useTranslation();
   const online = useOnline();
   const profile = useProfilePrefsSync();
+  // The wizard has its own Back / Next bar where the nav would be.
+  const inWizard = useLocation().pathname.startsWith('/edit/');
 
   return (
     <>
@@ -93,7 +95,7 @@ export function AppShell() {
       >
         <Outlet />
       </main>
-      <FloatingNav />
+      {!inWizard && <FloatingNav />}
       <QueryToast />
       <ScrollRestoration />
       <LanguageChooser />

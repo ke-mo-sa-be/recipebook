@@ -20,7 +20,12 @@
   "actions": {
     "back": "Back",
     "tryAgain": "Try again",
-    "save": "Save"
+    "save": "Save",
+    "decrease": "Less {{what}}",
+    "increase": "More {{what}}",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel"
   },
   "form": {
     "showPassword": "Show password",
@@ -32,10 +37,15 @@
     "generic": "Something went wrong. Please try again.",
     "offline": "You're offline. Some things won't work until you're back online.",
     "crashTitle": "Sorry, this page broke",
-    "crashBody": "It's not your fault. Reloading usually fixes it."
+    "crashBody": "It's not your fault. Reloading usually fixes it.",
+    "forbidden": "You can't change that.",
+    "signInRequired": "Please sign in first.",
+    "notFound": "We couldn't find that."
   },
   "toast": {
-    "passwordChanged": "Your password has been changed."
+    "passwordChanged": "Your password has been changed.",
+    "recipePublished": "Published! Everyone can see your recipe now.",
+    "recipeUpdated": "Changes saved."
   },
   "auth": {
     "google": "Continue with Google",
@@ -117,12 +127,13 @@
     "tabs": {
       "recipes": "Recipes",
       "variations": "Variations",
-      "cooked": "Cooked it"
+      "cooked": "Cooked it",
+      "drafts": "Drafts"
     },
     "empty": {
       "recipes": {
         "title": "No recipes yet",
-        "mine": "Recipes you share will appear here. Adding recipes arrives soon.",
+        "mine": "Recipes you share will appear here. Tap + to add your first.",
         "theirs": "{{name}} hasn't shared any recipes yet."
       },
       "variations": {
@@ -134,6 +145,11 @@
         "title": "No cooked-it photos yet",
         "mine": "Photos of dishes you cooked will appear here.",
         "theirs": "{{name}} hasn't posted any cooked-it photos yet."
+      },
+      "drafts": {
+        "title": "No drafts",
+        "mine": "Recipes you start but haven't published appear here.",
+        "theirs": "Drafts are private."
       }
     },
     "fields": {
@@ -153,7 +169,12 @@
     },
     "cookbookTitle": "{{name}}'s cookbook.",
     "cookbookCounts": "{{recipes}} recipes, {{variations}} variations.",
-    "cookbookEmpty": "First recipe coming soon."
+    "cookbookEmpty": "First recipe coming soon.",
+    "photo": {
+      "add": "Add a photo",
+      "change": "Change photo",
+      "remove": "Remove"
+    }
   },
   "me": {
     "signedOut": {
@@ -219,7 +240,8 @@
       "picked_zero": "Nothing picked yet",
       "picked_one": "1 picked",
       "picked_other": "{{count}} picked"
-    }
+    },
+    "latest": "Fresh from the community"
   },
   "search": {
     "placeholder": "Search recipes or ingredients…",
@@ -283,5 +305,207 @@
     "fish": "Fish",
     "garlic": "Garlic",
     "ginger-root": "Ginger"
+  },
+  "media": {
+    "uploading": "Uploading…",
+    "errors": {
+      "uploadFailed": "Couldn't upload the photo. Check your internet and try again.",
+      "processFailed": "We couldn't use that photo. Try a different one."
+    }
+  },
+  "categories": {
+    "breakfast": "Breakfast",
+    "curry": "Curry",
+    "rice": "Rice",
+    "meat": "Meat",
+    "seafood": "Seafood",
+    "sides": "Sides",
+    "snacks": "Snacks",
+    "sweets": "Sweets & payasam",
+    "drinks": "Drinks",
+    "pickles": "Pickles",
+    "bakes": "Bakes",
+    "other": "Other"
+  },
+  "regions": {
+    "malabar": "Malabar",
+    "central-kerala": "Central Kerala",
+    "travancore": "Travancore",
+    "kerala": "Kerala",
+    "south-india": "South India",
+    "north-india": "North India",
+    "world": "World"
+  },
+  "diet": {
+    "veg": "Veg",
+    "egg": "Egg",
+    "nonveg": "Non-veg",
+    "vegan": "Vegan"
+  },
+  "units": {
+    "glass_one": "glass",
+    "glass_other": "glasses",
+    "cup_one": "cup",
+    "cup_other": "cups",
+    "tea_cup_one": "tea cup",
+    "tea_cup_other": "tea cups",
+    "ladle_one": "ladle",
+    "ladle_other": "ladles",
+    "tbsp_one": "tbsp",
+    "tbsp_other": "tbsp",
+    "tsp_one": "tsp",
+    "tsp_other": "tsp",
+    "pidi_one": "pidi (handful)",
+    "pidi_other": "pidi (handfuls)",
+    "pinch_one": "pinch",
+    "pinch_other": "pinches",
+    "g_one": "g",
+    "g_other": "g",
+    "kg_one": "kg",
+    "kg_other": "kg",
+    "ml_one": "ml",
+    "ml_other": "ml",
+    "l_one": "litre",
+    "l_other": "litres",
+    "piece_one": "piece",
+    "piece_other": "pieces",
+    "sprig_one": "sprig",
+    "sprig_other": "sprigs",
+    "inch_one": "inch",
+    "inch_other": "inches",
+    "to_taste": "to taste",
+    "none": "no unit"
+  },
+  "wizard": {
+    "optional": "(optional)",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next: {{step}}",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "saveError": "Not saved yet. Check your internet.",
+    "progressLabel": "Recipe steps",
+    "progress": "Step {{n}} of {{total}}: {{name}}",
+    "stepNames": {
+      "basics": "Basics",
+      "photo": "Photo",
+      "ingredients": "Ingredients",
+      "steps": "Steps",
+      "review": "Review"
+    },
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "remove": "Remove",
+    "new": {
+      "title": "What are you cooking?",
+      "soft": "Start with its name.",
+      "writingIn": "I'm writing in",
+      "nameLabel": "Recipe name",
+      "placeholderMl": "e.g. മീൻ കറി",
+      "placeholderEn": "e.g. Fish curry",
+      "start": "Start",
+      "drafts": "Continue a draft"
+    },
+    "basics": {
+      "title": "The basics.",
+      "soft": "Name, type and time.",
+      "titleMl": "Name in Malayalam",
+      "titleEn": "Name in English",
+      "description": "Short description",
+      "category": "Category",
+      "diet": "Food type",
+      "prep": "Prep time",
+      "cook": "Cook time",
+      "servings": "Serves",
+      "minShort": "min",
+      "region": "Region",
+      "regionNone": "Not specified"
+    },
+    "photo": {
+      "title": "Add a photo.",
+      "soft": "Or skip it, a sticker works too.",
+      "add": "Take or choose a photo",
+      "change": "Change photo",
+      "remove": "Remove photo",
+      "privacy": "Photos are made smaller on your phone, and location and camera details are removed before anyone sees them.",
+      "skip": "No photo? We'll show a {{category}} sticker instead."
+    },
+    "ingredients": {
+      "title": "What goes in?",
+      "soft": "Search and tap to add.",
+      "searchLabel": "Search an ingredient",
+      "search": "Search… jeerakam, cumin, ജീരകം",
+      "useAsTyped": "Add “{{text}}”",
+      "emptyTitle": "No ingredients yet",
+      "empty": "Search above, or type any ingredient and add it.",
+      "name": "Ingredient name",
+      "amount": "Amount",
+      "unit": "Unit",
+      "note": "Note",
+      "notePlaceholder": "Add a note, e.g. finely chopped"
+    },
+    "steps": {
+      "title": "How do you make it?",
+      "soft": "One step at a time.",
+      "stepN": "Step {{n}}",
+      "placeholder": "Describe this step…",
+      "timer": "Timer: {{time}}",
+      "timerRemove": "Remove timer",
+      "photo": "Add photo",
+      "add": "Add a step",
+      "tips": "Tips",
+      "tipsPlaceholder": "Anything that helps…"
+    },
+    "review": {
+      "title": "Ready to share?",
+      "soft": "Check, then publish.",
+      "softPublished": "Your changes are saved.",
+      "checkTitle": "Name",
+      "checkBasics": "Category, food type and servings",
+      "checkIngredients_one": "1 ingredient",
+      "checkIngredients_other": "{{count}} ingredients",
+      "checkSteps_one": "1 step",
+      "checkSteps_other": "{{count}} steps",
+      "checkPhoto": "Photo",
+      "noPhoto": "No photo (that's OK)",
+      "fix": "Fix",
+      "add": "Add",
+      "done": "done",
+      "missing": "missing",
+      "publish": "Publish recipe",
+      "update": "Done",
+      "guidelines": "When you publish, everyone can see and cook your recipe."
+    }
+  },
+  "recipe": {
+    "errors": {
+      "titleRequired": "Add a name for your recipe.",
+      "basicsRequired": "Choose a category, food type and servings.",
+      "ingredientsRequired": "Add at least one ingredient.",
+      "stepsRequired": "Add at least one step."
+    },
+    "minutes_one": "{{count}} min",
+    "minutes_other": "{{count}} min",
+    "noTime": "Time not set",
+    "untitled": "Untitled recipe",
+    "ingredients": "Ingredients",
+    "steps": "Steps",
+    "servings": "Servings",
+    "units": "Measures",
+    "traditional": "Traditional",
+    "metric": "Metric",
+    "startCooking": "Start cooking",
+    "draftBanner": "This is a draft. Only you can see it.",
+    "unpublish": "Unpublish (back to draft)",
+    "deleteTitle": "Delete this recipe?",
+    "deleteBody": "Its photos go too. This can't be undone."
+  },
+  "time": {
+    "h_one": "{{count}} h",
+    "h_other": "{{count}} h",
+    "min_one": "{{count}} min",
+    "min_other": "{{count}} min",
+    "s_one": "{{count}} s",
+    "s_other": "{{count}} s"
   }
 }

@@ -9,13 +9,17 @@ import { IconButton, IconLink } from '../../components/ui/IconButton.tsx';
 import { EmptyState, ErrorState, Skeleton } from '../../components/ui/States.tsx';
 import { useUserId } from '../auth/AuthProvider.tsx';
 import { useProfileByHandle } from './api.ts';
+import { useRecipesByAuthor } from '../recipes/api.ts';
+import { RecipeCard } from '../recipes/RecipeCard.tsx';
 import { NotFoundPage } from '../../app/NotFoundPage.tsx';
 
-const TABS = ['recipes', 'variations', 'cooked'] as const;
-const EMPTY_STICKERS: Record<(typeof TABS)[number], string[]> = {
+const TABS = ['recipes', 'variations', 'cooked', 'drafts'] as const;
+type Tab = (typeof TABS)[number];
+const EMPTY_STICKERS: Record<Tab, string[]> = {
   recipes: ['cooking', 'curry-rice', 'pancakes'],
   variations: ['shrimp', 'fish'],
   cooked: ['camera', 'steaming-bowl'],
+  drafts: ['kitchen-knife', 'cooking'],
 };
 
 /** "Ammini's cookbook." Public profile; your own adds Edit profile and Settings. */
@@ -25,21 +29,30 @@ export function ProfilePage() {
   const navigate = useNavigate();
   const uid = useUserId();
   const query = useProfileByHandle(handle);
-  const [tab, setTab] = useState<(typeof TABS)[number]>('recipes');
+  const [tab, setTab] = useState<Tab>('recipes');
+  const published = useRecipesByAuthor(query.data?.id, 'published');
+  const drafts = useRecipesByAuthor(query.data && query.data.id === uid ? uid : undefined, 'draft');
 
   if (query.isPending) return <Skeleton className="h-48 w-full" />;
   if (query.isError) return <ErrorState onRetry={() => void query.refetch()} />;
   const p = query.data;
   if (!p) return <NotFoundPage />;
   const isMe = p.id === uid;
-  // Counts are 0 until recipes exist (M2); the copy already handles both.
-  const counts = { recipes: 0, variations: 0, cooked: 0 };
+  // Variations and cooked-it posts arrive in M4.
+  const counts: Record<Tab, number> = {
+    recipes: published.data?.length ?? 0,
+    variations: 0,
+    cooked: 0,
+    drafts: drafts.data?.length ?? 0,
+  };
+  const tabs = TABS.filter((k) => k !== 'drafts' || isMe);
+  const list = tab === 'recipes' ? published.data : tab === 'drafts' ? drafts.data : [];
 
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
         {isMe ? (
-          <Avatar name={p.display_name} />
+          <Avatar name={p.display_name} path={p.avatar_path} />
         ) : (
           <IconButton
             label={t('actions.back')}
@@ -51,11 +64,11 @@ export function ProfilePage() {
       </div>
 
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div className="flex items-center gap-5">
-          <span className="hidden lg:block">
-            <Avatar name={p.display_name} size={88} />
+        <div className="flex min-w-0 items-center gap-5">
+          <span className="hidden shrink-0 lg:block">
+            <Avatar name={p.display_name} path={p.avatar_path} size={88} />
           </span>
-          <div>
+          <div className="min-w-0">
             <Headline
               size="display"
               soft={
@@ -87,9 +100,10 @@ export function ProfilePage() {
       <div
         role="tablist"
         aria-label={t('profile.tabsLabel')}
-        className="-mx-5 flex gap-2 overflow-x-auto px-5 lg:mx-0 lg:px-0"
+        // Wraps instead of scrolling sideways, so no tab hides off-screen on a small phone.
+        className="flex flex-wrap gap-2"
       >
-        {TABS.map((key) => (
+        {tabs.map((key) => (
           <button
             key={key}
             role="tab"
@@ -110,13 +124,23 @@ export function ProfilePage() {
         ))}
       </div>
       <div role="tabpanel">
-        <EmptyState
-          stickers={EMPTY_STICKERS[tab]}
-          title={t(`profile.empty.${tab}.title`)}
-          body={
-            isMe ? t(`profile.empty.${tab}.mine`) : t(`profile.empty.${tab}.theirs`, { name: p.display_name })
-          }
-        />
+        {list && list.length > 0 ? (
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {list.map((r) => (
+              <RecipeCard key={r.id} recipe={r} to={tab === 'drafts' ? `/edit/${r.id}/basics` : undefined} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            stickers={EMPTY_STICKERS[tab]}
+            title={t(`profile.empty.${tab}.title`)}
+            body={
+              isMe
+                ? t(`profile.empty.${tab}.mine`)
+                : t(`profile.empty.${tab}.theirs`, { name: p.display_name })
+            }
+          />
+        )}
       </div>
     </div>
   );

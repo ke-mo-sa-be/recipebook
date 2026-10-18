@@ -5,7 +5,9 @@ import { RouteError } from './RouteError.tsx';
 import { HomePage } from '../features/home/HomePage.tsx';
 import { SearchPage } from '../features/search/SearchPage.tsx';
 import { SavedPage } from '../features/saved/SavedPage.tsx';
-import { AddPage } from '../features/add/AddPage.tsx';
+import { NewRecipePage } from '../features/editor/NewRecipePage.tsx';
+import { EditorPage } from '../features/editor/EditorPage.tsx';
+import { RecipePage } from '../features/recipes/RecipePage.tsx';
 import { MePage } from '../features/profile/MePage.tsx';
 import { ProfilePage } from '../features/profile/ProfilePage.tsx';
 import { SettingsPage } from '../features/settings/SettingsPage.tsx';
@@ -37,10 +39,19 @@ export const routes: RouteObject[] = [
         path: 'add',
         element: (
           <RequireAuth>
-            <AddPage />
+            <NewRecipePage />
           </RequireAuth>
         ),
       },
+      {
+        path: 'edit/:id/:step?',
+        element: (
+          <RequireAuth>
+            <EditorPage />
+          </RequireAuth>
+        ),
+      },
+      { path: 'r/:id/:slug?', element: <RecipePage /> },
       { path: 'me', element: <MePage /> },
       { path: 'u/:handle', element: <ProfilePage /> },
       { path: 'settings', element: <SettingsPage /> },

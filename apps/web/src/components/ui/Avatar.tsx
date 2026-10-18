@@ -1,7 +1,31 @@
 import { cx } from './cx.ts';
+import { photoUrl } from '../../features/media/api.ts';
 
-/** Initial in a turmeric circle. Photo avatars arrive with the image pipeline (M2). */
-export function Avatar({ name, size = 44, className }: { name: string; size?: number; className?: string }) {
+/** Profile photo, or the person's initial in a turmeric circle. */
+export function Avatar({
+  name,
+  path,
+  size = 44,
+  className,
+}: {
+  name: string;
+  path?: string | null;
+  size?: number;
+  className?: string;
+}) {
+  if (path) {
+    return (
+      <img
+        src={photoUrl(path, size > 120 ? 800 : 400)}
+        alt=""
+        width={size}
+        height={size}
+        loading="lazy"
+        className={cx('shrink-0 rounded-pill object-cover', className)}
+        style={{ width: size, height: size }}
+      />
+    );
+  }
   return (
     <span
       aria-hidden

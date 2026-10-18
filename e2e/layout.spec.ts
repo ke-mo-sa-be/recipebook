@@ -12,11 +12,16 @@ for (const lang of ['ml', 'en'] as const) {
         },
         [lang, size],
       );
-      for (const path of ['/', '/settings', '/auth/sign-in', '/auth/sign-up', '/me']) {
+      for (const path of ['/', '/settings', '/auth/sign-in', '/auth/sign-up', '/me', '/u/ammini']) {
         await page.goto(path);
         await page.locator('main h1, main h2').first().waitFor();
         await expectNoClipping(page);
       }
+      // A seeded recipe page: long bilingual titles, ingredient rows, the scaler and step timers.
+      await page.goto('/');
+      await page.locator('main a[href^="/r/"]').first().click();
+      await page.locator('main h1').first().waitFor();
+      await expectNoClipping(page);
     });
   }
 }

@@ -21,7 +21,10 @@ export function Headline({
   id?: string;
 }) {
   return (
-    <Tag id={id} className={cx(size === 'display' ? 'text-h1 md:text-display' : 'text-h1', className)}>
+    <Tag
+      id={id} // Long Malayalam compounds at XL text can be wider than a 360px phone: break them rather than clip.
+      className={cx(size === 'display' ? 'text-h1 md:text-display' : 'text-h1', 'wrap-break-word', className)}
+    >
       <span className="block">{children}</span>
       {soft && <span className="block text-text-soft">{soft}</span>}
     </Tag>

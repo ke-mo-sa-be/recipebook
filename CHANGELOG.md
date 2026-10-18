@@ -4,7 +4,11 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
-### M2, recipes (built and tested; waiting for phone acceptance)
+## [0.2.0] - 2026-10-18
+
+The first tagged release. It covers the M0 design gate, the M1 foundation and auth, design v2, and M2 recipes. Adrian accepted it on a phone on 2026-10-18, on the public staging site with real email.
+
+### M2, recipes (accepted 2026-10-18)
 
 - **Name:** the product is **Paachakam / പാചകം** (`apps/web/src/brand/brand.ts`).
 - **Core logic** (`packages/core`, unit-tested):
@@ -187,7 +191,10 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Known gaps
 
 - Google sign-in end to end: needs the Google Cloud OAuth client.
-- Real email: staging uses the local test inbox until SMTP (Brevo) is set up.
-- Staging is live behind SSO, with the design mockups at `/design/`.
+- Real email: staging used the local test inbox until 2026-10-18. It now sends real email (see M2).
+- Staging went live behind SSO, with the design mockups at `/design/`. Since M2 it's public.
 - The JS bundle is 225 KB gzipped against the 170 KB M7 budget. Route-level code splitting is planned.
 - E2E runs locally in the Playwright container. It joins CI in M2.
+
+[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ke-mo-sa-be/recipebook/releases/tag/v0.2.0

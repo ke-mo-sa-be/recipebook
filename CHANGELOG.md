@@ -4,6 +4,34 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-18
+
+M2.1 polish, from Adrian's first round of phone feedback.
+
+- **Small text size** (15 px root), alongside Normal, Large and Extra large. A migration widens the `profiles.text_size` check, and pgTAP covers it.
+- **Theme button**: a sun / moon button flips light and dark. It sits in the desktop top bar and in the top row of the phone screens (Home, recipe, cookbook, Search, Saved, Settings). Settings still offers Auto.
+- **"Written in Malayalam / English"** on a recipe whose text isn't in your interface language. Recipe text is what the cook wrote, so it doesn't switch with the interface (option (a) of three; translation is on the "Later" list).
+- **Version and What's new:**
+  - Settings → About shows the version, which comes from `apps/web/package.json` at build time.
+  - `/whats-new` lists plain-language notes for cooks in both languages (`features/about/releases.ts`). A test fails if the current version has no notes.
+  - After an update, Home shows a one-time "Paachakam was updated" card.
+- **Installable app (PWA):**
+  - a web manifest, plus a service worker that only adds an offline page, so deploys are picked up on the next visit,
+  - an install card on Home: an Install button where the browser offers one, and Share → Add to Home Screen steps on iPhone,
+  - "Not now" hides the card for 30 days, and Home shows at most one card at a time.
+- **App icon:** a steaming uruli of curry with a curry-leaf sprig, die-cut like the stickers, on the near-black primary. One SVG source builds the favicon, the 192 / 512 px and maskable PNGs and the Apple touch icon (`pnpm icons`).
+- **Welcome animation:**
+  - "Cooking" in Tamil, Telugu, Kannada, Hindi, Bengali, Marathi, Gujarati and Odia flips past, landing on പാചകം / Paachakam with stickers,
+  - about 2 s, once per session, only when a visit lands on Home, and skippable,
+  - off under reduced motion,
+  - fonts are 13 KB of Noto subsets, rendering pixel-identical to the full fonts.
+- **Tests:** unit 87, pgTAP 64, E2E 16 (layout, recipe, intro). `auth.spec.ts` was left out of this run because staging now sends real email.
+
+**Not yet verified / known gaps**
+
+- The eight words and the new Malayalam strings need a native speaker's check.
+- The install card and the installed app were tested in Chromium and with an iPhone user agent, not yet on a real iPhone or Android phone.
+
 ## [0.2.0] - 2026-10-18
 
 The first tagged release. It covers the M0 design gate, the M1 foundation and auth, design v2, and M2 recipes. Adrian accepted it on a phone on 2026-10-18, on the public staging site with real email.
@@ -196,5 +224,6 @@ The first tagged release. It covers the M0 design gate, the M1 foundation and au
 - The JS bundle is 225 KB gzipped against the 170 KB M7 budget. Route-level code splitting is planned.
 - E2E runs locally in the Playwright container. It joins CI in M2.
 
-[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/ke-mo-sa-be/recipebook/releases/tag/v0.2.0

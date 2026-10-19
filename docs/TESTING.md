@@ -22,8 +22,9 @@ The functionality that matters most, in order:
   - M1: sign up and verify through the Mailpit API, sign in, password reset, and a no-clipping layout check (Home, Settings, auth pages, Me, a cookbook and a recipe page; ml and en; three text sizes; 360 and 412 px),
   - M2 (`recipe.spec.ts`): the whole Add wizard to Publish, with a GPS-tagged photo, Manglish ingredient search, step timer detection, the draft surviving a reload, the scaler (4 → 8 doubles), metric mode, a byte check that the public photo has no EXIF/XMP or camera data, and a signed-out visitor seeing the recipe without an Edit button.
 
+  - M3 (`search.spec.ts`): jeerakam / jeeragam / ജീരകം / cumin find the cumin recipes, kudampuli finds the fish curry, filters combine and survive a reload, an empty state that clears filters, the kitchen picker, category pages with counts, and Home's featured and quick rows. The layout check gained a 1024 px desktop project plus the search, filters, category and What's new pages.
+
   To be added:
-  - search,
   - cook,
   - share (checking the Open Graph HTML),
   - report and moderate,
@@ -49,7 +50,8 @@ The functionality that matters most, in order:
 packages/core/src/**/*.test.ts       unit
 apps/web/src/**/*.test.tsx           component
 supabase/tests/database/*.test.sql   pgTAP (shared helpers: _helpers.inc, included with \ir)
-e2e/                                 Playwright: auth.spec.ts, layout.spec.ts, recipe.spec.ts, intro.spec.ts
+e2e/                                 Playwright: auth, layout, recipe, intro, search (*.spec.ts)
+scripts/search-bench.sql             search speed check (pnpm bench:search), rolls back
 ```
 
 ## 5. Critical user flows

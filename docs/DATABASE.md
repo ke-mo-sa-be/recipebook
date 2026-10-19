@@ -4,16 +4,17 @@ The source of truth for the data model. **Every schema change is a migration** i
 
 ## 0. Status
 
-| Area                                                                                                 | Status               | Migration                           |
-| ---------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------- |
-| Schemas (`private`), extensions (`pg_trgm`, `unaccent`), enums `user_role`, `account_status`, `lang` | **Implemented (M1)** | `20261016080000_foundation.sql`     |
-| `profiles`, column grants, RLS, new-user trigger, role helpers, access-token hook                    | **Implemented (M1)** | `20261016080100_profiles.sql`       |
-| Recipes, ingredients, steps, lookups, units, storage buckets, media trash                            | **Implemented (M2)** | `20261017090000_recipes.sql`        |
-| Reference data: 16 units, 12 categories, 7 regions, 9 tags, 154-ingredient dictionary (generated)    | **Implemented (M2)** | `20261017090100_reference_data.sql` |
-| `claim_media_trash`, `stale_incoming_objects` (service role only, for `media-gc`)                    | **Implemented (M2)** | `20261017090200_media_gc.sql`       |
-| Search document, `search_recipes` RPC                                                                | Planned (M3)         | —                                   |
-| Likes, saves, comments, cooked posts, variations, collections                                        | Planned (M4)         | —                                   |
-| Reports, moderation actions, rate limits, posting passes                                             | Planned (M6)         | —                                   |
+| Area                                                                                                                        | Status               | Migration                              |
+| --------------------------------------------------------------------------------------------------------------------------- | -------------------- | -------------------------------------- |
+| Schemas (`private`), extensions (`pg_trgm`, `unaccent`), enums `user_role`, `account_status`, `lang`                        | **Implemented (M1)** | `20261016080000_foundation.sql`        |
+| `profiles`, column grants, RLS, new-user trigger, role helpers, access-token hook                                           | **Implemented (M1)** | `20261016080100_profiles.sql`          |
+| Recipes, ingredients, steps, lookups, units, storage buckets, media trash                                                   | **Implemented (M2)** | `20261017090000_recipes.sql`           |
+| Reference data: 16 units, 12 categories, 7 regions, 9 tags, 154-ingredient dictionary (generated)                           | **Implemented (M2)** | `20261017090100_reference_data.sql`    |
+| `claim_media_trash`, `stale_incoming_objects` (service role only, for `media-gc`)                                           | **Implemented (M2)** | `20261017090200_media_gc.sql`          |
+| Search: `private.recipe_search`, `private.search_vocab`, `manglish_key`, `search_recipes`, `category_counts`, `featured_at` | **Implemented (M3)** | `20261019090000_search.sql`            |
+| Reference data v2: "meen / മീൻ / fish" aliases on fish types (full idempotent upsert)                                       | **Implemented (M3)** | `20261019090100_reference_data_v2.sql` |
+| Likes, saves, comments, cooked posts, variations, collections                                                               | Planned (M4)         | —                                      |
+| Reports, moderation actions, rate limits, posting passes                                                                    | Planned (M6)         | —                                      |
 
 Everything from §2 on shows the **approved design**. Sections not yet implemented are marked _(planned)_.
 
@@ -117,7 +118,8 @@ grant select on profiles to anon, authenticated;
 grant update (handle, display_name, avatar_path, bio, district, preferred_lang, text_size, onboarded_at)
   on profiles to authenticated;
 
--- M2 tables below are implemented (see §0 and the M2 specifics in §1); M3+ is planned
+-- M2 tables below are implemented (see §0 and the M2 specifics in §1). The M3 search index lives in
+-- private.recipe_search / private.search_vocab instead of the search_vector/search_text columns sketched here (§7).
 -- ── lookups (seeded; ingredients admin-managed) ───────
 create table categories (id smallint primary key, slug text unique not null, sort smallint not null, icon text);
 create table regions    (id smallint primary key, slug text unique not null, grp text not null check (grp in ('kerala','india','world')));
@@ -340,18 +342,21 @@ Sign-up and auth emails are limited by GoTrue's own `GOTRUE_RATE_LIMIT_*` settin
 | Meal planner               | new `meal_plans` / `meal_plan_items` tables                                                                                       |
 | Variation change history   | new `recipe_revisions` table                                                                                                      |
 
-## 7. How search works (planned, M3)
+## 7. How search works (M3)
 
-1. Normalise the query with `manglish_norm(unaccent(lower(q)))`.
-2. Match dictionary ingredients with trigram `word_similarity` ≥ 0.4 on `ingredients.search_text`. This catches "jeeragam", "jeerakam", "ജീരകം" and "cumin".
-3. Find recipes that match either way:
-   - `search_vector @@ websearch_to_tsquery(...)`, **or**
-   - trigram similarity on `search_text`, **or**
-   - an ingredient matched in step 2.
-4. Rank by FTS rank, plus trigram score, plus a bonus for ingredient matches, plus a small boost for popularity.
-5. Apply the filters as plain `where` clauses. Page with a keyset cursor.
+1. **One normaliser on both sides.** `private.manglish_key()` is the SQL twin of `manglishKey()` in `packages/core`. It lower-cases, strips accents and Malayalam joiners, then folds Manglish spelling variants: zh→l, aspirates, sh→s, ph→f, long vowels, g→k, d→t, b→p, doubled letters. So "jeeragam" and "jeerakam" both become `jirakam`. pgTAP parity cases keep the two identical.
+2. **A private index, kept in sync by triggers.** `private.recipe_search` holds each recipe's `title_key` and `doc`: titles, description, ingredient lines, their dictionary names and aliases, and tag slugs. It is rebuilt per statement when ingredients or tags change, per row when titles or the description change, and for every affected recipe when an admin edits a dictionary entry. It lives off the `recipes` row because updating a published recipe re-runs its publish check. `private.search_vocab` collects every word, for typo correction.
+3. **Every query word must match**, and its best match scores:
+   - 3 for the start of a title word,
+   - 2 for a dictionary ingredient the recipe uses,
+   - 1 for the start of any word in the recipe.
 
-Target: p95 under 200 ms on the seed data scaled to about 1,200 recipes.
+   A word of 5+ letters is also expanded to up to five vocabulary words with trigram similarity of at least 0.5, scored by closeness. Word-start matches use regexes that the trigram GIN indexes answer.
+
+4. **Rank:** kitchen-group hits, then the summed score, then featured, then newest. Filters are plain `where` clauses. Paging is limit/offset, which is fine at this scale. Revisit keyset paging past ~50k recipes.
+5. **Planning:** the body is dynamic SQL run with `EXECUTE … USING`. A SQL-language body was planned with placeholders, skipped the indexes and ran about 40× slower.
+
+Measured with `pnpm bench:search` on 1,212 recipes (2026-10-19): p95 at most 17 ms for every query type, against a 200 ms target. There is no popularity boost yet; likes and saves arrive in M4.
 
 ---
 

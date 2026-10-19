@@ -4,6 +4,49 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-19
+
+### M3, discovery (built and tested; waiting for phone acceptance)
+
+- **Spelling-proof search** (`search_recipes`):
+  - Every query word must match a title word, a dictionary ingredient the recipe uses, or any recipe text. Malayalam, English and Manglish are folded together by `private.manglish_key`, the SQL twin of the core `manglishKey()` with pgTAP parity cases.
+  - "jeerakam", "jeeragam", "ജീരകം" and "cumin" find the same recipes. "kudampuli" finds the fish curry, and so does "meen curry": fish types gained "meen / മീൻ / fish" aliases in reference data v2.
+  - Words of 5+ letters also match close spellings from a vocabulary of recipe words, so typos like "kudampuly" still work.
+- **Search page:**
+  - results are kept in the URL, so Back and shared links work,
+  - a Filters sheet for category, food type (Veg includes vegan), time, region and occasion,
+  - removable filter chips, a result count, "Show more", skeleton cards, and an empty state that offers to clear filters.
+- **Kitchen picker** on Home now works. Each sticker maps to a group of dictionary ingredients (coconut = every coconut form), and recipes covering more of your picks rank first.
+- **Category pages** (`/c/:slug`) have food-type and time chips. Home gains "Picked for you" (admin-featured), "Ready in 30 minutes" and "Browse by category" with counts. The Home chips are now real filters.
+- **Speed:**
+  - The search index lives in `private.recipe_search`, kept in sync by triggers, with trigram GIN indexes.
+  - The RPC runs dynamic SQL, so each call is planned with its real values. The first version, a SQL-language body, was planned with placeholders and ran 40× slower.
+  - `pnpm bench:search` (1,212 cloned recipes): p95 at most 17 ms, against a 200 ms target.
+- **Layout fixes:**
+  - the desktop top bar no longer overflows in Malayalam at 1024–1366 px: Home and Saved go icon-only below 1280 px, and the search field shrinks first,
+  - the category grid uses 4 columns on desktop, so Malayalam words don't break,
+  - the Filters footer stacks on phones.
+- **Tests:**
+  - pgTAP 99, including 35 for search,
+  - unit 90,
+  - E2E 32: `search.spec.ts`, a 1024 px desktop layout project, and the new pages in the layout check.
+  - Schema lint is clean. `manglish_key` is marked stable, because `unaccent` is.
+
+**Not yet verified / known gaps**
+
+- "Popular this week" waits for likes and saves (M4). There is no popularity boost in ranking yet.
+- The new Malayalam strings and the meen aliases need a native speaker's check.
+- `auth.spec.ts` wasn't run this round, because staging sends real email.
+
+**Test on your phone**
+
+1. Search "jeeragam", then "ജീരകം": both should find Dal Tadka and Avial.
+2. Search "meen curry" and "kudampuly" (with the typo): both should find Kerala Fish Curry.
+3. Tap Filters, choose Veg and Under 30 min, then Show recipes: you should get Sulaimani, Pazham Pori and Puttu. Tap a chip to remove it.
+4. On Home, pick Coconut and Shallots in "What's in your kitchen?", then tap Find recipes.
+5. Scroll Home: you should see Picked for you, Ready in 30 minutes, and Browse by category. Open Curry and tap Non-veg.
+6. On a laptop, check that the top bar fits in Malayalam.
+
 ## [0.2.2] - 2026-10-18
 
 - **Welcome animation rebuilt** after Adrian found v0.2.1's jittery. പാ · ച · കം are now three slot-machine reels. Each rolls through the same syllable in eight other Indian scripts (Tamil, Telugu, Kannada, Devanagari, Bengali, Gujarati, Odia, Gurmukhi) and locks into Malayalam left to right. The reels then close up into the word, with "Paachakam · One word, nine scripts" below.
@@ -234,7 +277,8 @@ The first tagged release. It covers the M0 design gate, the M1 foundation and au
 - The JS bundle is 225 KB gzipped against the 170 KB M7 budget. Route-level code splitting is planned.
 - E2E runs locally in the Playwright container. It joins CI in M2.
 
-[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.2...v0.3.0
 [0.2.2]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/ke-mo-sa-be/recipebook/releases/tag/v0.2.0

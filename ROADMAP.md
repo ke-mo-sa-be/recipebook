@@ -4,17 +4,17 @@ v1 scope is defined in [docs/PRD.md](docs/PRD.md). This file tracks the mileston
 
 ## v1 milestones
 
-|     | Milestone                                                                                   | Status                                                     |
-| --- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| M0  | Design gate: design system and low-fi wireframes                                            | **Approved 2026-10-17**                                    |
-| M1  | Foundation: monorepo, local Supabase, profiles and roles, auth, i18n, theme, app shell, CI  | **Done** (v0.2.0). Google sign-in waits on an OAuth client |
-| M2  | Recipes: schema, wizard, photo pipeline, recipe page, scaler, measures, drafts              | **Accepted 2026-10-18** (v0.2.0)                           |
-| M3  | Discovery: home feed, categories, search, filters                                           | Planned                                                    |
-| M4  | Community: comments, likes, saves, cooked-it, variations, WhatsApp share card               | Planned                                                    |
-| M5  | Cooking mode: steps, wake lock, timers, checklist, voice                                    | Planned                                                    |
-| M6  | Trust: reports, admin panel, rate limits, Turnstile, legal pages, export and delete account | Planned                                                    |
-| M7  | Polish: Malayalam pass, PWA/offline, performance, accessibility, URL import                 | Planned                                                    |
-| M8  | Go-live: production compose, Traefik and Cloudflare examples, backups, monitoring           | Planned                                                    |
+|     | Milestone                                                                                   | Status                                                      |
+| --- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| M0  | Design gate: design system and low-fi wireframes                                            | **Approved 2026-10-17**                                     |
+| M1  | Foundation: monorepo, local Supabase, profiles and roles, auth, i18n, theme, app shell, CI  | **Done** (v0.2.0). Google sign-in waits on an OAuth client  |
+| M2  | Recipes: schema, wizard, photo pipeline, recipe page, scaler, measures, drafts              | **Accepted 2026-10-18** (v0.2.0)                            |
+| M3  | Discovery: home feed, categories, search, filters                                           | **Built and tested** (v0.3.0): waiting for phone acceptance |
+| M4  | Community: comments, likes, saves, cooked-it, variations, WhatsApp share card               | Planned                                                     |
+| M5  | Cooking mode: steps, wake lock, timers, checklist, voice                                    | Planned                                                     |
+| M6  | Trust: reports, admin panel, rate limits, Turnstile, legal pages, export and delete account | Planned                                                     |
+| M7  | Polish: Malayalam pass, PWA/offline, performance, accessibility, URL import                 | Planned                                                     |
+| M8  | Go-live: production compose, Traefik and Cloudflare examples, backups, monitoring           | Planned                                                     |
 
 ## Milestone acceptance criteria
 
@@ -81,7 +81,7 @@ _The non-UI half of M1 proceeds while M0 is in review._
 
 ### M3 — Discovery
 
-- Home feed: featured row, popular this week, latest, categories.
+- Home feed: featured row, popular this week, latest, categories. ("Popular this week" waits for likes and saves in M4; v0.3.0 shows "Ready in 30 minutes" instead.)
 - Category pages. The `search_recipes` RPC. Filters for category, diet, total time and region.
 - **AC:**
   - "jeerakam", "jeeragam", "ജീരകം" and "cumin" all find the seed recipes that use cumin.

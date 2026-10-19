@@ -107,12 +107,40 @@ Turns an uploaded photo into public, metadata-free WebP and attaches it.
 - **Response:** `200 { removedPublic, removedIncoming }`.
 - **Schedule:** run it by hand or from host cron for now (see `SELF_HOSTING.md`). A `pg_cron` schedule arrives in M8.
 
+## Implemented endpoints (M3)
+
+### `POST /rest/v1/rpc/search_recipes`
+
+Search, category pages and the kitchen picker all use this one call.
+
+- **Permission:** anyone (anon and authenticated). It only ever returns `published`, `visible` recipes. It runs as its owner so it can read the private search index (`private.recipe_search`, `private.search_vocab`).
+- **Body** (every field optional):
+
+  | Field                       | Meaning                                                                                                                                                                                                                                                                                                                                    |
+  | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+  | `q`                         | Free text in Malayalam, English or Manglish. Every word must match one of: the start of a title word (strongest), a dictionary ingredient the recipe uses (jeeragam / jeerakam / ജീരകം / cumin all name cumin), or the start of a word anywhere in the recipe. Words of 5+ letters also match close spellings from the vocabulary (typos). |
+  | `category`, `region`, `tag` | Slugs (`seafood`, `central-kerala`, `onam`).                                                                                                                                                                                                                                                                                               |
+  | `diet`                      | `veg` also includes `vegan`. The others match exactly.                                                                                                                                                                                                                                                                                     |
+  | `max_minutes`               | Total time limit. Recipes without a time are left out.                                                                                                                                                                                                                                                                                     |
+  | `with_groups`               | `[[ingredient ids], …]`. A recipe must use something from at least one group, and ranks higher the more groups it covers. The kitchen picker sends one group per sticker, e.g. "coconut" = all coconut forms.                                                                                                                              |
+
+- **Response:** recipe rows ordered by kitchen-group hits, then relevance, then featured, then newest. Because it returns `setof recipes`, PostgREST embeds work (`?select=…,author:profiles(…),ingredients:recipe_ingredients(…)`). Page with `limit`/`offset` (supabase-js `.range()`), and ask for `count: 'exact'` for the total.
+- **Speed:** each call is planned with its real values (dynamic SQL; the values are passed as parameters, never spliced into the text). `pnpm bench:search` clones the seed to 1,212 recipes and times typical queries: p95 is at most 17 ms (2026-10-19).
+- **Tests:** `supabase/tests/database/30_search.test.sql` and `e2e/search.spec.ts`.
+
+### `POST /rest/v1/rpc/category_counts`
+
+Returns `[{ category_id, recipes }]` for published, visible recipes. Anyone can call it. It feeds the Home category grid.
+
+### Featured recipes
+
+`recipes.featured_at` is set by admins: by SQL until the M6 admin panel, and by the seed for 3 recipes in dev. Users can't write it. Home reads `recipes?featured_at=not.is.null&order=featured_at.desc&limit=3`.
+
 ## Planned endpoints
 
 | Endpoint                                                                          | Milestone | Purpose                                                                               |
 | --------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------- |
 | `rpc/make_variation(source_id)`                                                   | M4        | Copy a recipe into the caller's drafts, linked to the original                        |
-| `rpc/search_recipes(q, category, diet, max_minutes, region, limit, cursor)`       | M3        | Ranked search: FTS + trigram + dictionary                                             |
 | `rpc/mod_set_state`, `rpc/mod_suspend`, `rpc/admin_set_role`, `rpc/admin_feature` | M6        | Moderation. Each checks the role and writes to `moderation_actions`.                  |
 | `functions/v1/share-page/:id` (public path `/s/:id`)                              | M4        | Open Graph HTML, then a redirect to `/r/:id`                                          |
 | `functions/v1/share-card/:id`                                                     | M4        | 1200×630 PNG card (decision D4)                                                       |

@@ -10,6 +10,7 @@ import { EditorPage } from '../features/editor/EditorPage.tsx';
 import { RecipePage } from '../features/recipes/RecipePage.tsx';
 import { MePage } from '../features/profile/MePage.tsx';
 import { ProfilePage } from '../features/profile/ProfilePage.tsx';
+import { CategoryPage } from '../features/search/CategoryPage.tsx';
 import { WhatsNewPage } from '../features/about/WhatsNewPage.tsx';
 import { SettingsPage } from '../features/settings/SettingsPage.tsx';
 import { RequireAuth } from '../features/auth/RequireAuth.tsx';
@@ -53,6 +54,7 @@ export const routes: RouteObject[] = [
         ),
       },
       { path: 'r/:id/:slug?', element: <RecipePage /> },
+      { path: 'c/:slug', element: <CategoryPage /> },
       { path: 'me', element: <MePage /> },
       { path: 'u/:handle', element: <ProfilePage /> },
       { path: 'settings', element: <SettingsPage /> },

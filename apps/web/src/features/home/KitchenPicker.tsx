@@ -9,7 +9,7 @@ import { KITCHEN_ITEMS, type KitchenItem } from './kitchen.ts';
 
 const TILTS = [-8, 6, -3, 7, -6, 4, -5, 8];
 
-/** Tap the ingredients you have; "Find recipes" searches for recipes that use them (search lands in M3). */
+/** Tap the ingredients you have; "Find recipes" lists recipes that use them, most matches first. */
 export function KitchenPicker() {
   const { t } = useTranslation();
   const navigate = useNavigate();

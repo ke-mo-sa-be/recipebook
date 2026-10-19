@@ -18,6 +18,8 @@ export async function expectNoClipping(page: Page) {
       const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
       for (let node = walker.nextNode(); node; node = walker.nextNode()) {
         if (!node.textContent?.trim()) continue;
+        // Screen-reader-only text sits in a 1px box on purpose.
+        if (node.parentElement?.closest('.sr-only')) continue;
         const range = document.createRange();
         range.selectNodeContents(node);
         const r = range.getBoundingClientRect();

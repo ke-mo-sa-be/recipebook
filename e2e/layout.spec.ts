@@ -12,15 +12,33 @@ for (const lang of ['ml', 'en'] as const) {
         },
         [lang, size],
       );
-      for (const path of ['/', '/settings', '/auth/sign-in', '/auth/sign-up', '/me', '/u/ammini']) {
+      for (const path of [
+        '/',
+        '/settings',
+        '/auth/sign-in',
+        '/auth/sign-up',
+        '/me',
+        '/u/ammini',
+        '/search?q=curry&diet=veg&time=60',
+        '/search?with=coconut,onion,herb',
+        '/c/sweets',
+        '/whats-new',
+      ]) {
         await page.goto(path);
         await page.locator('main h1, main h2').first().waitFor();
+        await page.waitForLoadState('networkidle'); // results and Home rows have arrived
         await expectNoClipping(page);
       }
       // A seeded recipe page: long bilingual titles, ingredient rows, the scaler and step timers.
       await page.goto('/');
       await page.locator('main a[href^="/r/"]').first().click();
       await page.locator('main h1').first().waitFor();
+      await expectNoClipping(page);
+      // The filters sheet: every chip label in both languages.
+      await page.goto('/search');
+      await page.locator('main h1').first().waitFor();
+      await page.getByRole('button', { name: /Filters|ഫിൽട്ടറുകൾ/ }).click();
+      await page.getByRole('dialog').waitFor();
       await expectNoClipping(page);
     });
   }

@@ -78,7 +78,7 @@ const DETAIL = `id, author_id, slug, title_ml, title_en, description, content_la
   ingredients:recipe_ingredients(id, position, group_label, amount, amount_max, unit_code, ingredient_id, item_text, note),
   steps:recipe_steps(id, position, body, photo_path, timer_seconds)`;
 
-const CARD = `id, slug, title_ml, title_en, content_lang, category_id, diet, total_minutes, servings, cover_path, status,
+export const CARD = `id, slug, title_ml, title_en, content_lang, category_id, diet, total_minutes, servings, cover_path, status,
   published_at, updated_at, author:profiles!recipes_author_id_fkey(handle, display_name, avatar_path, district),
   ingredients:recipe_ingredients(ingredient_id, position)`;
 

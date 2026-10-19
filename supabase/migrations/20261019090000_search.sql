@@ -10,7 +10,7 @@
 create function private.manglish_key(input text)
 returns text
 language plpgsql
-immutable
+stable -- unaccent() is stable, so this is too; nothing indexes on it
 parallel safe
 set search_path = ''
 as $$
@@ -190,6 +190,7 @@ create index recipes_featured on public.recipes (featured_at desc)
 --                recipe. Words of 5+ letters also match close spellings from private.search_vocab
 --                (pg_trgm similarity ≥ 0.5, best five), scored by how close they are.
 --   category, region, tag   slugs
+--   diet         'veg' includes vegan recipes; the others match exactly
 --   max_minutes  total time
 --   with_groups  [[ingredient ids], ...]: a recipe must use something from at least one group and
 --                ranks higher the more groups it covers (kitchen picker: "coconut" = all coconut forms)
@@ -271,7 +272,7 @@ begin
         and (not exists (select 1 from groups) or gh.recipe_id is not null)
         and ($2 is null
              or r.category_id = (select c.id from public.categories c where c.slug = $2))
-        and ($3 is null or r.diet = $3)
+        and ($3 is null or r.diet = $3 or ($3 = 'veg' and r.diet = 'vegan')) -- vegan food is veg too
         and ($4 is null
              or (r.total_minutes > 0 and r.total_minutes <= $4))
         and ($5 is null

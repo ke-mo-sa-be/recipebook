@@ -1,6 +1,6 @@
 begin;
 \ir _helpers.inc
-select plan(34);
+select plan(35);
 
 -- ── Manglish key: the SQL mirrors packages/core manglishKey() exactly ──
 -- Expected values are manglishKey()'s output for the same inputs.
@@ -68,6 +68,13 @@ select is((select count(*)::int from hits where q = 'zqx molee'), 1, 'every word
 -- filters combine
 select set_eq(format($$ select id from public.search_recipes(q => 'zqx', diet => 'veg', max_minutes => 20) $$),
   format($$ values (%L::uuid) $$, :'jeera'), 'diet + time filters combine');
+select tests.act_as(:'cook');
+update public.recipes set diet = 'vegan' where id = :'jeera';
+select tests.act_as(null);
+select ok(exists (select 1 from public.search_recipes(q => 'zqx', diet => 'veg') where id = :'jeera'), 'the veg filter includes vegan recipes');
+select tests.act_as(:'cook');
+update public.recipes set diet = 'veg' where id = :'jeera';
+select tests.act_as(null);
 select set_eq(format($$ select id from public.search_recipes(q => 'zqx', category => 'seafood') $$),
   format($$ values (%L::uuid), (%L::uuid) $$, :'molee', :'both_r'), 'category filter by slug');
 select set_eq(format($$ select id from public.search_recipes(q => 'zqx', tag => 'monsoon') $$),

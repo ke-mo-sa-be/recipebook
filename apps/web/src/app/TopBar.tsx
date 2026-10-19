@@ -29,13 +29,13 @@ export function TopBar() {
         aria-label={t('nav.main')}
         className="mx-auto flex h-[76px] max-w-(--rb-size-content-max) items-center gap-4 px-10"
       >
-        <Link to="/" className="flex min-h-tap items-center gap-2.5 text-h3 font-semibold">
+        <Link to="/" className="flex min-h-tap shrink-0 items-center gap-2.5 text-h3 font-semibold">
           <Sticker slug="cooking" size={34} />
           <span>{brand.name[currentLang()]}</span>
         </Link>
         <form
           role="search"
-          className="mx-auto flex h-[50px] w-full max-w-[540px] items-center gap-2.5 rounded-pill bg-surface pr-1.5 pl-4 shadow-sm"
+          className="mx-auto flex h-[50px] w-full max-w-[540px] min-w-0 flex-1 items-center gap-2.5 rounded-pill bg-surface pr-1.5 pl-4 shadow-sm"
           onSubmit={(e) => {
             e.preventDefault();
             const q = String(new FormData(e.currentTarget).get('q') ?? '').trim();
@@ -63,33 +63,43 @@ export function TopBar() {
             <Search aria-hidden className="size-4" />
           </button>
         </form>
-        <ul className="flex items-center gap-1">
+        <ul className="flex shrink-0 items-center gap-1">
           <li>
-            <NavLink to="/" end className={pill}>
+            <NavLink to="/" end className={pill} title={t('nav.home')}>
               <Home aria-hidden />
-              <span>{t('nav.home')}</span>
+              <span className="sr-only xl:not-sr-only">{t('nav.home')}</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/saved" className={pill}>
+            <NavLink to="/saved" className={pill} title={t('nav.saved')}>
               <Bookmark aria-hidden />
-              <span>{t('nav.saved')}</span>
+              <span className="sr-only xl:not-sr-only">{t('nav.saved')}</span>
             </NavLink>
           </li>
         </ul>
-        <ThemeToggle />
-        <Link to="/add" className={cx(buttonClass('primary'), 'min-h-[44px] px-5 whitespace-nowrap')}>
+        <span className="shrink-0">
+          <ThemeToggle />
+        </span>
+        <Link
+          to="/add"
+          className={cx(buttonClass('primary'), 'min-h-[44px] shrink-0 px-5 whitespace-nowrap')}
+        >
           <Plus aria-hidden />
           <span>{t('nav.addRecipe')}</span>
         </Link>
         {session ? (
-          <Link to="/me" aria-label={t('nav.profile')} title={t('nav.profile')} className="rounded-pill">
+          <Link
+            to="/me"
+            aria-label={t('nav.profile')}
+            title={t('nav.profile')}
+            className="shrink-0 rounded-pill"
+          >
             <Avatar name={profile.data?.display_name ?? '?'} path={profile.data?.avatar_path} />
           </Link>
         ) : (
           <Link
             to="/auth/sign-in"
-            className={cx(buttonClass('secondary'), 'min-h-[44px] px-5 whitespace-nowrap')}
+            className={cx(buttonClass('secondary'), 'min-h-[44px] shrink-0 px-5 whitespace-nowrap')}
           >
             {t('auth.signIn.title')}
           </Link>

@@ -12,10 +12,17 @@ import { Avatar } from '../../components/ui/Avatar.tsx';
 import { useAuth } from '../auth/AuthProvider.tsx';
 import { useMyProfile } from '../profile/api.ts';
 import { KitchenPicker } from './KitchenPicker.tsx';
+import { CategorySection, FeaturedSection, QuickSection } from './HomeSections.tsx';
 import { useLatestRecipes } from '../recipes/api.ts';
 import { RecipeCard } from '../recipes/RecipeCard.tsx';
 
-const QUICK = ['quick', 'breakfast', 'onam', 'snacks'] as const;
+// Quick picks are real filters, not text searches.
+const QUICK = {
+  quick: '/search?time=15',
+  breakfast: '/c/breakfast',
+  onam: '/search?tag=onam',
+  snacks: '/search?tag=tea-time',
+} as const;
 
 function greetingKey(hour = new Date().getHours()) {
   if (hour < 12) return 'home.greeting.morning';
@@ -79,8 +86,8 @@ export function HomePage() {
             }
           />
           <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 lg:mx-0 lg:flex-wrap lg:px-0">
-            {QUICK.map((k) => (
-              <Chip key={k} to={`/search?q=${encodeURIComponent(t(`home.chips.${k}`))}`}>
+            {(Object.keys(QUICK) as Array<keyof typeof QUICK>).map((k) => (
+              <Chip key={k} to={QUICK[k]}>
                 {t(`home.chips.${k}`)}
               </Chip>
             ))}
@@ -88,6 +95,10 @@ export function HomePage() {
         </div>
         <KitchenPicker />
       </div>
+
+      <FeaturedSection />
+      <QuickSection />
+      <CategorySection />
 
       {latest.data && latest.data.length > 0 ? (
         <section aria-labelledby="latest-h" className="flex flex-col gap-3">

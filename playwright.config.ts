@@ -26,5 +26,11 @@ export default defineConfig({
       testMatch: 'layout.spec.ts',
       use: { ...devices['Pixel 7'], viewport: { width: 360, height: 740 }, locale: 'en-IN' },
     },
+    {
+      // The narrowest desktop layout (top bar instead of the floating nav); layout checks only.
+      name: 'desktop',
+      testMatch: 'layout.spec.ts',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1024, height: 800 }, locale: 'en-IN' },
+    },
   ],
 });

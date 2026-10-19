@@ -11,6 +11,24 @@ export const APP_VERSION = __APP_VERSION__;
 
 export const RELEASES: Release[] = [
   {
+    version: '0.3.0',
+    date: '2026-10-19',
+    notes: {
+      en: [
+        'Search that understands you: jeerakam, jeeragam, ജീരകം and cumin all find the same recipes, and small typos still work.',
+        'Filters for category, food type (Veg includes vegan), time, region and occasion, which you can combine.',
+        '“What’s in your kitchen?” on Home now works: tap what you have and see the recipes that use the most of it.',
+        'Category pages, plus new Home rows: Picked for you, Ready in 30 minutes, and Browse by category.',
+      ],
+      ml: [
+        'നിങ്ങളെ മനസ്സിലാക്കുന്ന തിരയൽ: jeerakam, jeeragam, ജീരകം, cumin — എല്ലാം ഒരേ റെസിപ്പികൾ കണ്ടെത്തും; ചെറിയ അക്ഷരത്തെറ്റുകളും പ്രശ്നമല്ല.',
+        'വിഭാഗം, ഭക്ഷണ തരം (വെജിൽ വീഗനും), സമയം, പ്രദേശം, അവസരം എന്നിങ്ങനെ ഫിൽട്ടറുകൾ, ഒരുമിച്ചും ഉപയോഗിക്കാം.',
+        'ഹോമിലെ “അടുക്കളയിൽ എന്തൊക്കെയുണ്ട്?” ഇനി പ്രവർത്തിക്കും: ഉള്ളത് തൊട്ടാൽ അവ കൂടുതൽ ഉപയോഗിക്കുന്ന റെസിപ്പികൾ കാണാം.',
+        'വിഭാഗ പേജുകളും ഹോമിൽ പുതിയ നിരകളും: നിങ്ങൾക്കായി, 30 മിനിറ്റിൽ റെഡി, വിഭാഗങ്ങൾ.',
+      ],
+    },
+  },
+  {
     version: '0.2.2',
     date: '2026-10-18',
     notes: {

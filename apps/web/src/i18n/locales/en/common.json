@@ -243,19 +243,49 @@
       "picked_one": "1 picked",
       "picked_other": "{{count}} picked"
     },
-    "latest": "Fresh from the community"
+    "latest": "Fresh from the community",
+    "seeAll": "See all",
+    "featured": {
+      "title": "Picked for you",
+      "soft": "Cooks' favourites."
+    },
+    "quick": {
+      "title": "Ready in 30 minutes",
+      "soft": "For busy evenings."
+    },
+    "categories": {
+      "title": "Browse by category",
+      "soft": "From breakfast to payasam."
+    }
   },
   "search": {
     "placeholder": "Search recipes or ingredients…",
-    "soon": {
-      "title": "Search is coming soon",
-      "body": "You'll be able to search in Malayalam, English or Manglish — like jeerakam, ജീരകം or cumin.",
-      "bodyQuery": "Results for “{{q}}” will show here once recipes arrive."
-    },
     "title": "Search",
     "soft": "Malayalam, English or Manglish.",
     "hint": "Try jeerakam or ജീരകം",
-    "withLabel": "Your ingredients"
+    "withLabel": "Your ingredients",
+    "remove": "(remove)",
+    "filters": "Filters",
+    "filter": {
+      "category": "Category",
+      "diet": "Food type",
+      "time": "Time",
+      "region": "Region",
+      "tag": "Occasion"
+    },
+    "underMinutes_one": "Under {{count}} min",
+    "underMinutes_other": "Under {{count}} min",
+    "results_one": "{{count}} recipe",
+    "results_other": "{{count}} recipes",
+    "more": "Show more",
+    "loading": "Loading recipes",
+    "clearAll": "Clear all",
+    "show": "Show recipes",
+    "empty": {
+      "title": "Nothing matches yet",
+      "body": "Try fewer words or another spelling: jeerakam, ജീരകം and cumin all work.",
+      "filters": "Try removing a filter or two."
+    }
   },
   "saved": {
     "empty": {
@@ -539,5 +569,20 @@
   "intro": {
     "skip": "Skip",
     "tagline": "One word, nine scripts."
+  },
+  "category": {
+    "count_one": "{{count}} recipe",
+    "count_other": "{{count}} recipes"
+  },
+  "tags": {
+    "quick": "Quick",
+    "onam": "Onam",
+    "vishu": "Vishu",
+    "christmas": "Christmas",
+    "ramadan": "Ramadan",
+    "easter": "Easter",
+    "kids": "For kids",
+    "monsoon": "Monsoon",
+    "tea-time": "Tea time"
   }
 }

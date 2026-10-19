@@ -6,6 +6,7 @@ import { Sticker } from '../../components/ui/Sticker.tsx';
 import { useLookups } from '../recipes/api.ts';
 import { RecipeCard } from '../recipes/RecipeCard.tsx';
 import { useCategoryCounts, useFeatured, useRecipeSearch } from '../search/api.ts';
+import { usePopular } from '../community/api.ts';
 import { CardSkeletons, GRID } from '../search/SearchResults.tsx';
 
 function SectionHead({ id, title, soft, more }: { id: string; title: string; soft?: string; more?: string }) {
@@ -35,6 +36,23 @@ export function FeaturedSection() {
       <SectionHead id="featured-h" title={t('home.featured.title')} soft={t('home.featured.soft')} />
       <div className={GRID}>
         {featured.data.map((r) => (
+          <RecipeCard key={r.id} recipe={r} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/** Most liked and saved in the last week; hidden until there are some. */
+export function PopularSection() {
+  const { t } = useTranslation();
+  const popular = usePopular(4);
+  if (!popular.data?.length) return null;
+  return (
+    <section aria-labelledby="popular-h" className="flex flex-col gap-4">
+      <SectionHead id="popular-h" title={t('home.popular.title')} soft={t('home.popular.soft')} />
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {popular.data.map((r) => (
           <RecipeCard key={r.id} recipe={r} />
         ))}
       </div>

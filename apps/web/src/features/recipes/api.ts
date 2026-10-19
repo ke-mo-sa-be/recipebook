@@ -63,7 +63,10 @@ export type Recipe = {
   } | null;
   ingredients: IngredientLine[];
   steps: Step[];
+  stats: RecipeStats | null;
 };
+
+export type RecipeStats = { like_count: number; save_count: number; comment_count: number };
 
 /** A recipe's own title in the language it was written in, then the other one. */
 export function titles(r: Pick<Recipe, 'title_ml' | 'title_en' | 'content_lang'>, uiLang: Lang) {
@@ -76,11 +79,13 @@ const DETAIL = `id, author_id, slug, title_ml, title_en, description, content_la
   prep_minutes, cook_minutes, total_minutes, servings, tips, cover_path, status, published_at, updated_at,
   author:profiles!recipes_author_id_fkey(handle, display_name, avatar_path, district),
   ingredients:recipe_ingredients(id, position, group_label, amount, amount_max, unit_code, ingredient_id, item_text, note),
-  steps:recipe_steps(id, position, body, photo_path, timer_seconds)`;
+  steps:recipe_steps(id, position, body, photo_path, timer_seconds),
+  stats:recipe_stats(like_count, save_count, comment_count)`;
 
 export const CARD = `id, slug, title_ml, title_en, content_lang, category_id, diet, total_minutes, servings, cover_path, status,
   published_at, updated_at, author:profiles!recipes_author_id_fkey(handle, display_name, avatar_path, district),
-  ingredients:recipe_ingredients(ingredient_id, position)`;
+  ingredients:recipe_ingredients(ingredient_id, position),
+  stats:recipe_stats(like_count, save_count, comment_count)`;
 
 export type RecipeCardData = Omit<
   Recipe,

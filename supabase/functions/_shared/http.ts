@@ -10,7 +10,7 @@ export function corsHeaders(req: Request): Record<string, string> {
   return {
     'access-control-allow-origin': allowed.includes(origin) ? origin : (allowed[0] ?? ''),
     'access-control-allow-headers': 'authorization, apikey, content-type, x-client-info',
-    'access-control-allow-methods': 'POST, OPTIONS',
+    'access-control-allow-methods': 'GET, POST, OPTIONS',
     vary: 'origin',
   };
 }

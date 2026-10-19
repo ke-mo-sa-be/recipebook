@@ -3,6 +3,7 @@ import type { Lang } from '@recipebook/core';
 import { supabase } from '../../lib/supabaseClient.ts';
 import { env } from '../../lib/env.ts';
 import { AppError } from '../../lib/appError.ts';
+import { forgetThisDevice } from '../push/push.ts';
 
 // GoTrue error codes → i18n keys. Anything unknown becomes a generic message (never raw server text).
 const AUTH_ERRORS: Record<string, string> = {
@@ -74,6 +75,7 @@ export async function updatePassword(password: string) {
 }
 
 export async function signOut() {
+  await forgetThisDevice(); // the next person on this phone must not get my notifications
   const { error } = await supabase.auth.signOut();
   if (error) throw toAppError(error);
 }

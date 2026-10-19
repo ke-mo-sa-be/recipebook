@@ -8,11 +8,12 @@ import { EmptyState } from '../../components/ui/States.tsx';
 import { IconLink } from '../../components/ui/IconButton.tsx';
 import { HomeNotice } from './HomeNotice.tsx';
 import { ThemeToggle } from '../../components/ui/ThemeToggle.tsx';
+import { NotificationBell } from '../community/NotificationBell.tsx';
 import { Avatar } from '../../components/ui/Avatar.tsx';
 import { useAuth } from '../auth/AuthProvider.tsx';
 import { useMyProfile } from '../profile/api.ts';
 import { KitchenPicker } from './KitchenPicker.tsx';
-import { CategorySection, FeaturedSection, QuickSection } from './HomeSections.tsx';
+import { CategorySection, FeaturedSection, PopularSection, QuickSection } from './HomeSections.tsx';
 import { useLatestRecipes } from '../recipes/api.ts';
 import { RecipeCard } from '../recipes/RecipeCard.tsx';
 
@@ -45,6 +46,7 @@ export function HomePage() {
       <div className="flex items-center justify-between lg:hidden">
         <IconLink to="/settings" label={t('nav.settings')} icon={<Settings aria-hidden />} />
         <div className="flex items-center gap-2">
+          <NotificationBell />
           <ThemeToggle />
           {session ? (
             <Link to="/me" aria-label={t('nav.profile')} className="rounded-pill">
@@ -97,6 +99,7 @@ export function HomePage() {
       </div>
 
       <FeaturedSection />
+      <PopularSection />
       <QuickSection />
       <CategorySection />
 

@@ -402,8 +402,12 @@ inspector_port = 8083
 # The Deno major version to use.
 deno_version = 2
 
-# [edge_runtime.secrets]
-# secret_key = "env(SECRET_VALUE)"
+# Web push keys for the `push` function, from supabase/.env (see .env.example). Leave them empty and
+# push stays off: the app hides the option.
+[edge_runtime.secrets]
+VAPID_PUBLIC_KEY = "env(VAPID_PUBLIC_KEY)"
+VAPID_PRIVATE_KEY = "env(VAPID_PRIVATE_KEY)"
+VAPID_SUBJECT = "env(VAPID_SUBJECT)"
 
 [analytics]
 # Off: saves RAM; we use container logs instead.
@@ -443,4 +447,8 @@ verify_jwt = true
 
 # Called with the service key only (checked in the function); the gateway JWT check would reject it.
 [functions.media-gc]
+verify_jwt = false
+
+# GET is public (the VAPID public key); POST checks for a signed-in user or the service key itself.
+[functions.push]
 verify_jwt = false

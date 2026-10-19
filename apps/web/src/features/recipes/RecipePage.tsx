@@ -18,6 +18,8 @@ import { photoSrcSet, photoUrl } from '../media/api.ts';
 import { useUserId } from '../auth/AuthProvider.tsx';
 import { durationText } from '../editor/time.ts';
 import { DietMark } from './DietMark.tsx';
+import { Comments } from '../community/Comments.tsx';
+import { ReactionBar } from '../community/ReactionBar.tsx';
 import { amountText, lineSticker } from './format.ts';
 import { titles, useDeleteRecipe, useLookups, useRecipe, useSetStatus, type IngredientLine } from './api.ts';
 
@@ -140,6 +142,11 @@ export function RecipePage() {
             )}
           </div>
           {r.description && <p className="text-lead">{r.description}</p>}
+          {r.status === 'published' && (
+            <div lang={lang}>
+              <ReactionBar recipeId={r.id} stats={r.stats} />
+            </div>
+          )}
 
           <section aria-labelledby="ing-h" className="flex flex-col gap-4">
             <div className="flex flex-wrap items-center justify-between gap-3" lang={lang}>
@@ -273,6 +280,12 @@ export function RecipePage() {
           )}
         </section>
       </div>
+
+      {r.status === 'published' && (
+        <div lang={lang} className="lg:max-w-(--rb-size-reading-max)">
+          <Comments recipeId={r.id} open />
+        </div>
+      )}
 
       {/* Cooking mode is M5: the main action is shown but explains it isn't ready yet. */}
       <div

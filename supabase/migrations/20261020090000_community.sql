@@ -114,6 +114,11 @@ begin
     d := -1;
     rid := old.recipe_id;
   end if;
+  -- When the recipe itself is being deleted, its counts go with it. Touching the stats row again in
+  -- that same statement would re-check its foreign key against the vanished recipe and fail.
+  if not exists (select 1 from public.recipes r where r.id = rid) then
+    return null;
+  end if;
   if tg_table_name = 'likes' then
     update public.recipe_stats set like_count = greatest(like_count + d, 0) where recipe_id = rid;
   elsif tg_table_name = 'saves' then

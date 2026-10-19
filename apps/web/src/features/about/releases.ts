@@ -11,6 +11,26 @@ export const APP_VERSION = __APP_VERSION__;
 
 export const RELEASES: Release[] = [
   {
+    version: '0.4.0',
+    date: '2026-10-20',
+    notes: {
+      en: [
+        'Like and save recipes. Your saved recipes are on the Saved page; only you see what you liked or saved.',
+        'Comments: say how it turned out, and edit or delete your own.',
+        'Notifications: the bell shows when someone likes or comments on your recipe.',
+        'Push notifications on your phone: turn them on in Settings (on iPhone, add the app to your Home Screen first).',
+        '“Popular this week” on Home.',
+      ],
+      ml: [
+        'റെസിപ്പികൾ ഇഷ്ടപ്പെടാം, സേവ് ചെയ്യാം. സേവ് ചെയ്തവ “സേവ് ചെയ്തവ” പേജിൽ; നിങ്ങൾ ഇഷ്ടപ്പെട്ടതും സേവ് ചെയ്തതും നിങ്ങൾക്ക് മാത്രം കാണാം.',
+        'കമന്റുകൾ: ഉണ്ടാക്കിയിട്ട് എങ്ങനെയുണ്ടായിരുന്നു എന്ന് പറയൂ; സ്വന്തം കമന്റ് തിരുത്താം, ഡിലീറ്റ് ചെയ്യാം.',
+        'അറിയിപ്പുകൾ: ആരെങ്കിലും നിങ്ങളുടെ റെസിപ്പി ഇഷ്ടപ്പെടുകയോ കമന്റ് ചെയ്യുകയോ ചെയ്താൽ മണിയിൽ കാണാം.',
+        'ഫോണിൽ പുഷ് അറിയിപ്പുകൾ: സെറ്റിംഗ്സിൽ ഓൺ ആക്കൂ (ഐഫോണിൽ ആദ്യം ആപ്പ് ഹോം സ്ക്രീനിൽ ചേർക്കണം).',
+        'ഹോമിൽ “ഈ ആഴ്ചയിലെ ഇഷ്ടങ്ങൾ”.',
+      ],
+    },
+  },
+  {
     version: '0.3.0',
     date: '2026-10-19',
     notes: {

@@ -42,17 +42,18 @@ test('filters combine, show as removable chips and survive a reload', async ({ p
   await sheet.getByRole('button', { name: 'Show recipes' }).click();
   await expect(page).toHaveURL(/diet=veg/);
   await expect(page).toHaveURL(/time=30/);
-  // Veg includes vegan; all three seed recipes are 30 minutes or less.
-  await expect(page.getByRole('heading', { name: '3 recipes' })).toBeVisible();
+  // Veg includes vegan: the three seed recipes of 30 minutes or less (other tests may add more).
+  await expect(page.getByRole('heading', { name: /^\d+ recipes$/ })).toBeVisible();
+  await expect(results(page).filter({ hasText: 'Kerala Fish Curry' })).toHaveCount(0);
   for (const name of ['Sulaimani', 'Pazham Pori', 'Puttu']) {
     await expect(results(page).filter({ hasText: name })).toHaveCount(1);
   }
   await page.reload();
-  await expect(page.getByRole('heading', { name: '3 recipes' })).toBeVisible();
+  await expect(results(page).filter({ hasText: 'Pazham Pori' })).toHaveCount(1);
   // Removing the time chip widens the results.
   await page.getByRole('button', { name: /Under 30 min/ }).click();
   await expect(page).not.toHaveURL(/time=/);
-  await expect(page.getByRole('heading', { name: /^\d+ recipes$/ })).not.toHaveText('3 recipes');
+  await expect(results(page).filter({ hasText: 'Avial' })).toHaveCount(1); // 45 minutes
 });
 
 test('nothing found explains why and can clear the filters', async ({ page }) => {
@@ -81,7 +82,8 @@ test('Home links into category pages with counts, and category chips filter', as
   await cats.getByRole('link', { name: /Curry/ }).click();
   await expect(page).toHaveURL(/\/c\/curry$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Curry');
-  await expect(page.getByRole('heading', { name: '3 recipes', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /^\d+ recipes$/ })).toBeVisible();
+  await expect(results(page).filter({ hasText: 'Kadala Curry' })).toHaveCount(1);
   await page.getByRole('button', { name: 'Non-veg' }).click();
   await expect(page).toHaveURL(/\/c\/curry\?diet=nonveg/);
   await expect(results(page).filter({ hasText: 'Kadala Curry' })).toHaveCount(0);

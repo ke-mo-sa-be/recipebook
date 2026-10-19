@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { Clock } from 'lucide-react';
+import { Clock, Heart, MessageCircle } from 'lucide-react';
 import { currentLang } from '../../i18n/index.ts';
 import { StickerRow } from '../../components/ui/Sticker.tsx';
 import { Polaroid } from '../../components/ui/Polaroid.tsx';
@@ -49,6 +49,28 @@ export function RecipeCard({ recipe, to }: { recipe: RecipeCardData; to?: string
       {(other || category) && (
         <p className="-mt-1 text-small text-text-muted">
           {other ?? (category ? t(`categories.${category.slug}`) : '')}
+        </p>
+      )}
+      {((recipe.stats?.like_count ?? 0) > 0 || (recipe.stats?.comment_count ?? 0) > 0) && (
+        <p className="flex items-center gap-3 text-small text-text-muted">
+          {(recipe.stats?.like_count ?? 0) > 0 && (
+            <span
+              className="inline-flex items-center gap-1"
+              aria-label={t('community.likes', { count: recipe.stats!.like_count })}
+            >
+              <Heart aria-hidden className="size-4" />
+              {recipe.stats!.like_count}
+            </span>
+          )}
+          {(recipe.stats?.comment_count ?? 0) > 0 && (
+            <span
+              className="inline-flex items-center gap-1"
+              aria-label={t('community.comments', { count: recipe.stats!.comment_count })}
+            >
+              <MessageCircle aria-hidden className="size-4" />
+              {recipe.stats!.comment_count}
+            </span>
+          )}
         </p>
       )}
     </Link>

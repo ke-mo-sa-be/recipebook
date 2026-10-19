@@ -15,6 +15,7 @@ import { useMyProfile, useUpdateProfile } from '../profile/api.ts';
 import { ProfileFields } from '../profile/ProfileFields.tsx';
 import { ProfilePhoto } from '../profile/ProfilePhoto.tsx';
 import { APP_VERSION } from '../about/releases.ts';
+import { PushCard } from '../push/PushCard.tsx';
 import { brand } from '../../brand/brand.ts';
 
 export function SettingsPage() {
@@ -98,6 +99,8 @@ export function SettingsPage() {
           )}
         </section>
       )}
+
+      {session && <PushCard inSettings />}
 
       <section aria-labelledby="about" className="card flex flex-col gap-3 p-5">
         <h2 id="about" className="text-h3">

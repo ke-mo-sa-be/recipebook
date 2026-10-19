@@ -6,6 +6,7 @@ import { currentLang } from '../i18n/index.ts';
 import { buttonClass } from '../components/ui/Button.tsx';
 import { Avatar } from '../components/ui/Avatar.tsx';
 import { ThemeToggle } from '../components/ui/ThemeToggle.tsx';
+import { NotificationBell } from '../features/community/NotificationBell.tsx';
 import { Sticker } from '../components/ui/Sticker.tsx';
 import { cx } from '../components/ui/cx.ts';
 import { useAuth } from '../features/auth/AuthProvider.tsx';
@@ -77,6 +78,7 @@ export function TopBar() {
             </NavLink>
           </li>
         </ul>
+        <NotificationBell />
         <span className="shrink-0">
           <ThemeToggle />
         </span>

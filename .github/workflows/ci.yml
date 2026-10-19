@@ -53,6 +53,12 @@ jobs:
             deno check --config "$dir/deno.json" "$dir/index.ts"
             echo "::endgroup::"
           done
+      - name: deno test functions that have tests
+        run: |
+          for dir in supabase/functions/*/; do
+            ls "$dir"*_test.ts >/dev/null 2>&1 || continue
+            deno test --allow-net --allow-env --allow-read --config "$dir/deno.json" "$dir"
+          done
 
   database:
     name: Migrations, RLS tests, schema lint

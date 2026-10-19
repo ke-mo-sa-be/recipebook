@@ -256,6 +256,10 @@
     "categories": {
       "title": "Browse by category",
       "soft": "From breakfast to payasam."
+    },
+    "popular": {
+      "title": "Popular this week",
+      "soft": "What everyone's cooking."
     }
   },
   "search": {
@@ -290,10 +294,12 @@
   "saved": {
     "empty": {
       "title": "Nothing saved yet",
-      "body": "Tap Save on any recipe to keep it here — even offline."
+      "body": "Tap Save on any recipe to keep it here."
     },
     "title": "Saved",
-    "soft": "Your recipes, even offline."
+    "soft": "Your recipes, in one place.",
+    "count_one": "{{count}} recipe saved",
+    "count_other": "{{count}} recipes saved"
   },
   "add": {
     "title": "Add a recipe",
@@ -584,5 +590,58 @@
     "kids": "For kids",
     "monsoon": "Monsoon",
     "tea-time": "Tea time"
+  },
+  "community": {
+    "like": "Like",
+    "liked": "Liked",
+    "likes_one": "{{count}} like",
+    "likes_other": "{{count}} likes",
+    "save": "Save",
+    "saved": "Saved",
+    "comments_one": "{{count}} comment",
+    "comments_other": "{{count}} comments",
+    "commentsTitle": "Comments",
+    "noComments": "No comments yet. Tried it? Be the first to say how it turned out.",
+    "addLabel": "Add a comment",
+    "placeholder": "Tried it? How did it turn out?",
+    "post": "Post",
+    "edited": "edited",
+    "editLabel": "Edit your comment",
+    "deleteConfirm": "Delete this comment?",
+    "signInToComment": "Sign in to comment"
+  },
+  "comment": {
+    "errors": {
+      "tooFast": "You're commenting very fast. Please wait a few minutes."
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "soft": "Likes and comments on your recipes.",
+    "bellUnread_one": "{{count}} new notification",
+    "bellUnread_other": "{{count}} new notifications",
+    "liked": "{{who}} liked your {{recipe}}",
+    "commented": "{{who}} commented on your {{recipe}}",
+    "someone": "Someone",
+    "new": "new",
+    "empty": {
+      "title": "Nothing yet",
+      "body": "When someone likes or comments on your recipes, you'll see it here."
+    }
+  },
+  "push": {
+    "title": "Notifications on this phone",
+    "turnOn": "Turn on",
+    "turnOff": "Turn off",
+    "state": {
+      "off": "Get a notification when someone likes or comments on your recipes.",
+      "on": "On. You'll be told here when someone likes or comments on your recipes.",
+      "denied": "Notifications are blocked for this site. Allow them in your browser's site settings, then come back.",
+      "needs-install": "On iPhone, first add Paachakam to your Home Screen (Share → Add to Home Screen), then open it from there."
+    },
+    "errors": {
+      "failed": "Couldn't turn on notifications. Please try again.",
+      "notConfigured": "Notifications aren't set up on this server yet."
+    }
   }
 }

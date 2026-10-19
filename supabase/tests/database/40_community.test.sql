@@ -1,6 +1,6 @@
 begin;
 \ir _helpers.inc
-select plan(47);
+select plan(48);
 
 select tests.create_user('chef@example.com', '{"display_name":"Chef"}') as chef \gset
 select tests.create_user('fan@example.com', '{"display_name":"Fan"}') as fan \gset
@@ -125,6 +125,11 @@ select throws_ok($$ select * from public.claim_push_batch(10) $$, '42501', null,
 -- ── popular this week ──
 select tests.act_as(null);
 select is((select id from public.popular_recipes(7) limit 1), :'pub'::uuid, 'the liked and saved recipe is popular');
+
+-- ── deleting accounts that liked, saved and commented on each other's recipes ──
+-- (account deletion, M6): the cascades reach recipe_stats by several paths in one statement.
+select tests.act_as_owner();
+select lives_ok(format($$ delete from auth.users where id in (%L, %L) $$, :'chef', :'fan'), 'deleting a cook and their fan together works');
 
 select * from finish();
 rollback;

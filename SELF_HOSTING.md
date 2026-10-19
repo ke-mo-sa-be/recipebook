@@ -24,6 +24,7 @@
   curl -fsS -X POST -H "Authorization: Bearer $SERVICE_ROLE_KEY" https://<your-host>/functions/v1/media-gc
   ```
 
+- **Push notifications:** set `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` and `VAPID_SUBJECT` in `supabase/.env` (see `.env.example`), then restart, because the edge runtime reads them at start. Without them push stays off. The app pokes the `push` function after each like and comment; a cron call (service key) every few minutes is an optional fallback.
 - **Image transforms:** photo processing needs Storage image transformation (imgproxy) enabled. The self-hosted compose includes it.
 - **Backups:** a nightly `pg_dump` plus the storage volume, with retention and a documented, tested restore.
 

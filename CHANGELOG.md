@@ -4,6 +4,50 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-20
+
+### M4 part 1: community and notifications (built and tested; waiting for phone acceptance)
+
+- **Likes and saves.** Who liked or saved what is private; the counts are public. Counts change the moment you tap and roll back if the server refuses. The **Saved** page now lists your saved recipes.
+- **Comments.** Flat, newest last; edit (marked "edited") and delete your own. Posting needs a published recipe and an active account, and is limited to 10 comments per 10 minutes until M6's rate limits.
+- **Counts** live in `recipe_stats` (kept by triggers) and show on cards.
+- **Notifications:**
+  - written by triggers when someone likes (once per person, ever) or comments on your recipe, never for your own actions,
+  - a bell with an unread badge in the desktop top bar and on Home; `/notifications` lists them and marks them read,
+  - a comment notification opens the recipe at its comments.
+- **Push:**
+  - the `push` Edge Function sends web push in the recipient's language via `web-push` 3.6.7,
+  - the app pokes it right after a like or comment, so pushes arrive at once,
+  - Settings has an on/off switch per device, and iPhones are told to add the app to the Home Screen first,
+  - signing out removes the device's subscription.
+  - Push endpoints are limited to known push services (no SSRF).
+  - The encryption is verified under Deno against an independent RFC 8291 decryption.
+  - Push stays off until the server has VAPID keys (`nirvanahome-infra/scripts/paachakam-push-keys.sh`).
+- **"Popular this week"** on Home: likes plus 2× saves over the last 7 days.
+- **Fixed before release:** deleting accounts or recipes with several likes, saves or comments failed with a foreign-key error from the counter trigger. It now skips recipes being deleted. Verified against the data that failed.
+- **Tests:**
+  - pgTAP 148, including 48 for community,
+  - unit 92,
+  - Deno 2 (push),
+  - E2E 36, including `community.spec.ts`.
+  - Search and layout specs no longer assume exact counts, since other specs publish into the same seed.
+- **Docs:** SECURITY now says staging is a public preview with real accounts. That makes the CLI's open database port a real risk; see the infra note.
+
+**Not yet verified / known gaps**
+
+- Push on a real phone: it needs the VAPID keys on the server, then your phone test.
+- The new Malayalam strings need a native speaker's check.
+- Cooked-it posts, "Make my version" and the WhatsApp share card are M4 part 2.
+
+**Test on your phone**
+
+1. Run `~/nirvanahome-infra/scripts/paachakam-push-keys.sh` once on the server, so push can work.
+2. Sign in, open any recipe, then tap Like and Save: the like count should change at once. Open Saved.
+3. Write a comment, edit it, and see "edited".
+4. Sign in as someone else (a family member), and like and comment on one of your recipes. Your bell should show 2, and Notifications should list both.
+5. Settings → Notifications on this phone → Turn on. On iPhone, add to the Home Screen first and open the app from there. Then have someone like your recipe: a notification should arrive, and tapping it should open the recipe.
+6. Sign out, and check the phone gets no more notifications for that account.
+
 ## [0.3.0] - 2026-10-19
 
 ### M3, discovery (built and tested; waiting for phone acceptance)
@@ -277,7 +321,8 @@ The first tagged release. It covers the M0 design gate, the M1 foundation and au
 - The JS bundle is 225 KB gzipped against the 170 KB M7 budget. Route-level code splitting is planned.
 - E2E runs locally in the Playwright container. It joins CI in M2.
 
-[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.2...v0.3.0
 [0.2.2]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.0...v0.2.1

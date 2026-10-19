@@ -136,6 +136,42 @@ Returns `[{ category_id, recipes }]` for published, visible recipes. Anyone can 
 
 `recipes.featured_at` is set by admins: by SQL until the M6 admin panel, and by the seed for 3 recipes in dev. Users can't write it. Home reads `recipes?featured_at=not.is.null&order=featured_at.desc&limit=3`.
 
+## Implemented endpoints (M4: community)
+
+### Likes and saves: `/rest/v1/likes`, `/rest/v1/saves`
+
+- **Insert** `{ recipe_id }`. `user_id` defaults to the caller. You need an active account; likes need a published, visible recipe, and saves need one you can read (your own drafts too). A duplicate returns `23505`, which the app treats as done.
+- **Delete** `?recipe_id=eq.<id>&user_id=eq.<me>`. **Select** returns only your own rows: who liked or saved what is private.
+- **Counts:** `recipe_stats(like_count, save_count, comment_count)`, readable with the recipe and embedded in cards (`stats:recipe_stats(...)`). Users can't write it; triggers keep it current.
+
+### Comments: `/rest/v1/comments`
+
+- **Insert** `{ recipe_id, body }`. The body is trimmed, 1–1000 characters, on a published recipe, from an active account. More than ten in ten minutes raises `P0001 comment.errors.tooFast`.
+- **Update** `{ body }` (own only). `edited_at` is set automatically. `mod_state` belongs to moderators (M6).
+- **Delete:** your own, or as a moderator. **Select:** visible comments on a readable recipe, plus your own and, for moderators, hidden ones.
+
+### Notifications: `/rest/v1/notifications`
+
+- Written only by triggers: when someone likes your recipe (once per person, ever) or comments on it, and never for your own actions.
+- **Select** your own. **Update** `{ read_at }` only. **Delete** your own.
+
+### `POST /rest/v1/rpc/popular_recipes`
+
+`{ days = 7 }` (1–90). Returns published recipes ranked by likes + 2 × saves in that window, as `setof recipes`, so card embeds work.
+
+### `POST /rest/v1/rpc/save_push_subscription`
+
+`{ endpoint, p256dh, auth }` from `PushSubscription.toJSON()`, for a signed-in, active account. It takes over the endpoint if another account had it (a shared phone). The endpoint must belong to a known push service (Google FCM, Mozilla, Apple, Microsoft), or it's refused with `23514`.
+
+### `/functions/v1/push`
+
+- `GET` (public): `{ publicKey }`, the VAPID public key, or `null` when the server has no keys (the app then hides push).
+- `POST` (a signed-in user, or the service key): claims undelivered notifications from the last hour (`claim_push_batch`, service role only). It words each one in the recipient's language, sends it to their devices with `web-push`, drops devices the push service reports gone (404/410), and returns `{ notifications, sent, removed }`.
+  - Callers can't choose what is sent.
+  - The app calls it right after a like or comment, so pushes arrive within seconds. Cron can call it as a fallback.
+- **Payload** (shown by `sw.js`): `{ title, body, url, tag, lang, unread }`. Tapping it opens `url`, and the installed app's badge shows `unread`.
+- **Tests:** `supabase/functions/push/push_test.ts`. It decrypts `web-push`'s output with an independent RFC 8291 implementation, verifies the VAPID signature, and checks the wording.
+
 ## Planned endpoints
 
 | Endpoint                                                                          | Milestone | Purpose                                                                               |

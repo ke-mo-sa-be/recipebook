@@ -106,7 +106,7 @@ These are not in v1 and are tracked in [`../ROADMAP.md`](../ROADMAP.md):
 - voice recipe entry and heritage card scan (v1.5),
 - festival collections and the Onam sadya planner (v1.5),
 - pantry "what can I cook", meal planner and diet tags (v2),
-- followers, notifications and native apps,
+- followers and native apps (notifications for likes and comments moved into v1, M4, at Adrian's request on 2026-10-19),
 - machine translation of recipe content,
 - ads, subscriptions, paywalls and tracking/analytics SDKs, ever.
 

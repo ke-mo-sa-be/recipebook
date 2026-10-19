@@ -13,7 +13,8 @@ The source of truth for the data model. **Every schema change is a migration** i
 | `claim_media_trash`, `stale_incoming_objects` (service role only, for `media-gc`)                                           | **Implemented (M2)** | `20261017090200_media_gc.sql`          |
 | Search: `private.recipe_search`, `private.search_vocab`, `manglish_key`, `search_recipes`, `category_counts`, `featured_at` | **Implemented (M3)** | `20261019090000_search.sql`            |
 | Reference data v2: "meen / മീൻ / fish" aliases on fish types (full idempotent upsert)                                       | **Implemented (M3)** | `20261019090100_reference_data_v2.sql` |
-| Likes, saves, comments, cooked posts, variations, collections                                                               | Planned (M4)         | —                                      |
+| Likes, saves, comments, `recipe_stats` counts, notifications, push subscriptions, `popular_recipes`                         | **Implemented (M4)** | `20261020090000_community.sql`         |
+| Cooked posts, variations, collections                                                                                       | Planned (M4, part 2) | —                                      |
 | Reports, moderation actions, rate limits, posting passes                                                                    | Planned (M6)         | —                                      |
 
 Everything from §2 on shows the **approved design**. Sections not yet implemented are marked _(planned)_.
@@ -50,7 +51,7 @@ Everything from §2 on shows the **approved design**. Sections not yet implement
 - Tables are `snake_case` and plural. Primary keys are `id uuid default gen_random_uuid()`. Lookup tables use `smallint` or text codes. Foreign keys are `<thing>_id`. Timestamps are `created_at` and `updated_at timestamptz`, with `updated_at` maintained by a trigger.
 - `public` schema = what PostgREST exposes, all with **RLS on**. `private` schema = helper functions and internal tables, not exposed.
 - No soft delete for user content. Deletion really deletes, because users own their data. Moderation uses `mod_state = 'hidden'`, which is reversible.
-- Counters (likes, saves, cooked, variations, comments) are kept on `recipes` by triggers, so cards never run `count(*)`.
+- Counters (likes, saves, comments; cooked and variations later) are kept by triggers in `recipe_stats`, one row per recipe, so cards never run `count(*)`. They live off the `recipes` row because updating a recipe re-runs its publish check and bumps `updated_at`. The trigger skips a recipe that is being deleted in the same statement: touching its stats row would re-check the foreign key against the vanished recipe.
 
 ## 3. ERD
 

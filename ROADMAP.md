@@ -4,17 +4,17 @@ v1 scope is defined in [docs/PRD.md](docs/PRD.md). This file tracks the mileston
 
 ## v1 milestones
 
-|     | Milestone                                                                                   | Status                                                      |
-| --- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| M0  | Design gate: design system and low-fi wireframes                                            | **Approved 2026-10-17**                                     |
-| M1  | Foundation: monorepo, local Supabase, profiles and roles, auth, i18n, theme, app shell, CI  | **Done** (v0.2.0). Google sign-in waits on an OAuth client  |
-| M2  | Recipes: schema, wizard, photo pipeline, recipe page, scaler, measures, drafts              | **Accepted 2026-10-18** (v0.2.0)                            |
-| M3  | Discovery: home feed, categories, search, filters                                           | **Built and tested** (v0.3.0): waiting for phone acceptance |
-| M4  | Community: comments, likes, saves, cooked-it, variations, WhatsApp share card               | Planned                                                     |
-| M5  | Cooking mode: steps, wake lock, timers, checklist, voice                                    | Planned                                                     |
-| M6  | Trust: reports, admin panel, rate limits, Turnstile, legal pages, export and delete account | Planned                                                     |
-| M7  | Polish: Malayalam pass, PWA/offline, performance, accessibility, URL import                 | Planned                                                     |
-| M8  | Go-live: production compose, Traefik and Cloudflare examples, backups, monitoring           | Planned                                                     |
+|     | Milestone                                                                                   | Status                                                                 |
+| --- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| M0  | Design gate: design system and low-fi wireframes                                            | **Approved 2026-10-17**                                                |
+| M1  | Foundation: monorepo, local Supabase, profiles and roles, auth, i18n, theme, app shell, CI  | **Done** (v0.2.0). Google sign-in waits on an OAuth client             |
+| M2  | Recipes: schema, wizard, photo pipeline, recipe page, scaler, measures, drafts              | **Accepted 2026-10-18** (v0.2.0)                                       |
+| M3  | Discovery: home feed, categories, search, filters                                           | **Built and tested** (v0.3.0): waiting for phone acceptance            |
+| M4  | Community: comments, likes, saves, cooked-it, variations, WhatsApp share card               | **Part 1 built** (v0.4.0): likes, saves, comments, notifications, push |
+| M5  | Cooking mode: steps, wake lock, timers, checklist, voice                                    | Planned                                                                |
+| M6  | Trust: reports, admin panel, rate limits, Turnstile, legal pages, export and delete account | Planned                                                                |
+| M7  | Polish: Malayalam pass, PWA/offline, performance, accessibility, URL import                 | Planned                                                                |
+| M8  | Go-live: production compose, Traefik and Cloudflare examples, backups, monitoring           | Planned                                                                |
 
 ## Milestone acceptance criteria
 
@@ -93,6 +93,8 @@ _The non-UI half of M1 proceeds while M0 is in review._
 ### M4 — Community
 
 - Comments (flat, realtime if cheap), likes, saves, cooked-it posts with a counter on the card, and "Make my version" with an "N variations" link.
+- **Added at Adrian's request (2026-10-19):** in-app notifications and web push for likes and comments on your recipes, plus "Popular this week" on Home.
+- Part 1 (v0.4.0) shipped likes, saves, comments, counts, notifications and push. Part 2 is cooked-it posts, variations and the WhatsApp share card.
 - WhatsApp button first (`wa.me` with text and link), then the native share sheet.
 - The `share-page` and `share-card` functions (D4 spike first).
 - **AC:**
@@ -169,7 +171,6 @@ The data model already has room for these (see [docs/DATABASE.md §6](docs/DATAB
 ## Later / ideas
 
 - Followers.
-- **Push notifications** (asked for in M2 feedback). They're planned with M4, when there is something to notify about: comments, likes, "someone cooked your recipe". This needs web push (VAPID keys), a sender function and a permission prompt that shows only after the person does something that warrants it. On iPhone it works only for the installed app.
 - **More languages** (asked for in M2 feedback). Each needs about 400 interface strings with native review, a font, dictionary names and a `lang` enum value for recipe content. This comes after the Malayalam family review, in an order Adrian picks.
 - **Recipe translation:** a "Translate" button for steps written in another language. It needs an outside service and has a running cost. For now recipes show "Written in Malayalam / English".
 - Native apps, if the PWA isn't enough.

@@ -29,3 +29,6 @@ e2e/.results/
 
 docs/design/hifi.html
 e2e/.tools/
+
+# Deno writes a lockfile when tests run from the repo root
+/deno.lock

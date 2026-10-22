@@ -5,12 +5,21 @@ import { cx } from '../../components/ui/cx.ts';
 import { useUserId } from '../auth/AuthProvider.tsx';
 import type { RecipeStats } from '../recipes/api.ts';
 import { useReactions, useToggleReaction } from './api.ts';
+import { ShareButton } from './ShareButton.tsx';
 
 const pill =
   'inline-flex min-h-tap items-center gap-2 rounded-pill border px-4 font-semibold transition-colors [&>svg]:size-5';
 
 /** Like, save and jump to comments. Counts change the moment you tap; signed-out taps go to sign in. */
-export function ReactionBar({ recipeId, stats }: { recipeId: string; stats: RecipeStats | null }) {
+export function ReactionBar({
+  recipeId,
+  stats,
+  title,
+}: {
+  recipeId: string;
+  stats: RecipeStats | null;
+  title: string;
+}) {
   const { t } = useTranslation();
   const uid = useUserId();
   const navigate = useNavigate();
@@ -61,6 +70,7 @@ export function ReactionBar({ recipeId, stats }: { recipeId: string; stats: Reci
         <MessageCircle aria-hidden />
         <span>{t('community.comments', { count: stats?.comment_count ?? 0 })}</span>
       </a>
+      <ShareButton recipeId={recipeId} title={title} />
     </div>
   );
 }

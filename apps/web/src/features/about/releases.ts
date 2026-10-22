@@ -11,6 +11,24 @@ export const APP_VERSION = __APP_VERSION__;
 
 export const RELEASES: Release[] = [
   {
+    version: '0.4.1',
+    date: '2026-10-22',
+    notes: {
+      en: [
+        '“I cooked this”: post a photo of what you made, with a short note. Location and camera details are removed.',
+        '“Make my version”: copy any recipe into your drafts and change it your way. The original cook is credited as “Based on”.',
+        'Share to WhatsApp: the link shows a card with the recipe’s name in Malayalam and English.',
+        'Your profile now shows your versions and the dishes you cooked.',
+      ],
+      ml: [
+        '“ഞാനും ഉണ്ടാക്കി”: ഉണ്ടാക്കിയതിന്റെ ഫോട്ടോ ചെറിയ കുറിപ്പോടെ പോസ്റ്റ് ചെയ്യാം. സ്ഥലവും ക്യാമറ വിവരങ്ങളും നീക്കം ചെയ്യും.',
+        '“എന്റെ പതിപ്പ്”: ഏത് റെസിപ്പിയും നിങ്ങളുടെ ഡ്രാഫ്റ്റിലേക്ക് പകർത്തി സ്വന്തം രീതിയിൽ മാറ്റാം. യഥാർത്ഥ പാചകക്കാരന് “ആധാരം” ആയി ക്രെഡിറ്റ്.',
+        'വാട്സ്ആപ്പിൽ ഷെയർ ചെയ്യാം: ലിങ്കിൽ റെസിപ്പിയുടെ പേര് മലയാളത്തിലും ഇംഗ്ലീഷിലും ഉള്ള കാർഡ് കാണാം.',
+        'പ്രൊഫൈലിൽ നിങ്ങളുടെ പതിപ്പുകളും ഉണ്ടാക്കിയ വിഭവങ്ങളും കാണാം.',
+      ],
+    },
+  },
+  {
     version: '0.4.0',
     date: '2026-10-20',
     notes: {

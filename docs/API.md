@@ -172,14 +172,33 @@ Returns `[{ category_id, recipes }]` for published, visible recipes. Anyone can 
 - **Payload** (shown by `sw.js`): `{ title, body, url, tag, lang, unread }`. Tapping it opens `url`, and the installed app's badge shows `unread`.
 - **Tests:** `supabase/functions/push/push_test.ts`. It decrypts `web-push`'s output with an independent RFC 8291 implementation, verifies the VAPID signature, and checks the wording.
 
+## Implemented endpoints (M4 part 2: cooked-it, versions, sharing)
+
+### Cooked-it posts
+
+- **Create:** through `process-image` with `{ purpose: "cooked", path, recipeId, note? }`. The photo goes through the same pipeline: re-encoded, metadata stripped, 400/800/1600 px WebP under `cooked/{uid}/`. The function then calls `create_cooked_post` (service role only). That requires an active account and a published recipe, and allows five posts an hour; beyond that it answers `429 cooked.errors.tooFast`. People can't insert rows themselves.
+- **`/rest/v1/cooked_posts`:** select (visible on a readable recipe, own, or moderator), update `{ note }` (own), delete (own or moderator). A deleted photo is queued for `media-gc`.
+- **Counts:** `recipe_stats.cooked_count`. The recipe's cook gets a `cooked` notification.
+
+### `POST /rest/v1/rpc/make_variation`
+
+`{ source }` → the new draft's id. It copies a published recipe (or your own) into your drafts: fields, ingredients, steps with timers, and tags, but **not photos**. It sets `parent_recipe_id` and `is_variation`, which users can't write directly.
+
+- Publishing the version adds to the original's `recipe_stats.variation_count` and notifies the original cook (`variation`). Unpublishing takes it off again.
+- Deleting the original leaves the version with `parent_recipe_id = null` and `is_variation = true`, which the app shows as "original no longer available".
+
+### Share links: `/s/:id` and `/s/:id/card.png` (the `share` function, public)
+
+- `/s/:id`: an HTML page with Open Graph and Twitter tags (title in both languages, time, servings, credit, and `og:image` = the card with `?v=<updated_at>`). A meta refresh then sends people to `/r/:id/:slug`. Cached for 5 minutes.
+- `/s/:id/card.png`: the 1200×630 card (decision D4). Text is shaped by HarfBuzz, so Malayalam is correct. The cover comes in as JPEG through the image transformer; without one, the app icon is shown. Cached for a day; the URL changes when the recipe does.
+- Only published, visible recipes; anything else is a plain 404. The proxy rewrites `/s/*` to `/functions/v1/share/*`.
+- **Tests:** `supabase/functions/share/share_test.ts` (wording, escaping, real renders) and `e2e/community.spec.ts`.
+
 ## Planned endpoints
 
 | Endpoint                                                                          | Milestone | Purpose                                                                               |
 | --------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------- |
-| `rpc/make_variation(source_id)`                                                   | M4        | Copy a recipe into the caller's drafts, linked to the original                        |
 | `rpc/mod_set_state`, `rpc/mod_suspend`, `rpc/admin_set_role`, `rpc/admin_feature` | M6        | Moderation. Each checks the role and writes to `moderation_actions`.                  |
-| `functions/v1/share-page/:id` (public path `/s/:id`)                              | M4        | Open Graph HTML, then a redirect to `/r/:id`                                          |
-| `functions/v1/share-card/:id`                                                     | M4        | 1200×630 PNG card (decision D4)                                                       |
 | `functions/v1/verify-human`                                                       | M6        | Turnstile token → 30-minute posting pass                                              |
 | `functions/v1/delete-account`                                                     | M6        | Delete storage objects, then the auth user (which cascades)                           |
 | `functions/v1/import-recipe`                                                      | M7        | URL → JSON-LD → validated draft. SSRF-guarded: no private IPs, 5 s timeout, 2 MB cap. |

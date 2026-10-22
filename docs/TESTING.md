@@ -23,8 +23,10 @@ The functionality that matters most, in order:
   - M2 (`recipe.spec.ts`): the whole Add wizard to Publish, with a GPS-tagged photo, Manglish ingredient search, step timer detection, the draft surviving a reload, the scaler (4 → 8 doubles), metric mode, a byte check that the public photo has no EXIF/XMP or camera data, and a signed-out visitor seeing the recipe without an Edit button.
 
   - M3 (`search.spec.ts`): jeerakam / jeeragam / ജീരകം / cumin find the cumin recipes, kudampuli finds the fish curry, filters combine and survive a reload, an empty state that clears filters, the kitchen picker, category pages with counts, and Home's featured and quick rows. The layout check gained a 1024 px desktop project plus the search, filters, category and What's new pages.
-  - M4 (`community.spec.ts`): signed-out Like goes to sign-in; a fan likes, saves, comments and edits, with counts changing at once; Saved lists it; the cook sees the bell badge and both notifications, which are marked read on viewing; unlike and unsave bring the counts back down.
-- **Edge Function tests:** `deno test` for functions that have `*_test.ts` (CI runs them). `push` checks `web-push` under Deno against an independent RFC 8291 decryption and verifies the VAPID signature.
+  - M4 (`community.spec.ts`): an "I cooked this" photo through the pipeline with its note; "Make my version" opening your copy; Share offering the WhatsApp `/s/` link; the preview HTML and the card PNG from the `share` function; signed-out Like goes to sign-in; a fan likes, saves, comments and edits, with counts changing at once; Saved lists it; the cook sees the bell badge and both notifications, which are marked read on viewing; unlike and unsave bring the counts back down.
+- **Edge Function tests:** `deno test` for functions that have `*_test.ts` (CI runs them).
+  - `push` checks `web-push` under Deno against an independent RFC 8291 decryption and verifies the VAPID signature.
+  - `share` renders real cards (with and without a photo), checks the PNG size and the wording, and checks HTML escaping.
 
   To be added:
   - cook,

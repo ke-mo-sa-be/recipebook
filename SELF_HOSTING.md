@@ -14,7 +14,7 @@
 - **Frontend:** the static Vite build served by `nginx-unprivileged` (`deploy/compose/docker-compose.yml`), with security headers: CSP, HSTS, `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`.
 - **Reverse proxy:** any proxy that can route by path. The examples in `deploy/examples/` use Traefik behind a Cloudflare Tunnel.
   - `/auth/v1`, `/rest/v1`, `/storage/v1`, `/realtime/v1`, `/functions/v1` → Supabase gateway
-  - `/s/*` → gateway, rewritten to `/functions/v1/share-page/*`
+  - `/s/*` → gateway, rewritten to `/functions/v1/share/*`
   - everything else → frontend
   - **Never route the gateway's `/` (Studio) or `/pg` publicly.**
 - **Email:** any SMTP provider, configured with the `SMTP_*` variables in `supabase/.env` (see `.env.example`). `SMTP_ENABLED=false` sends auth mail to the local test inbox instead. The auth email rate limit is 30 an hour (`[auth.rate_limit] email_sent` in `supabase/config.toml`), so keep it within your provider's quota. A personal Gmail account works for a small preview: use port 587 with a Google app password. Consumer Gmail sends at most about 500 emails a day.
@@ -25,6 +25,7 @@
   ```
 
 - **Push notifications:** set `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` and `VAPID_SUBJECT` in `supabase/.env` (see `.env.example`), then restart, because the edge runtime reads them at start. Without them push stays off. The app pokes the `push` function after each like and comment; a cron call (service key) every few minutes is an optional fallback.
+- **Share function assets:** the `share` function reads its fonts and WebAssembly at run time, so `supabase/config.toml` lists them under `[functions.share] static_files`. The edge runtime only picks up new functions when it's recreated (`supabase stop`, then `start`).
 - **Image transforms:** photo processing needs Storage image transformation (imgproxy) enabled. The self-hosted compose includes it.
 - **Backups:** a nightly `pg_dump` plus the storage volume, with retention and a documented, tested restore.
 

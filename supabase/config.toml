@@ -409,6 +409,8 @@ deno_version = 2
 VAPID_PUBLIC_KEY = "env(VAPID_PUBLIC_KEY)"
 VAPID_PRIVATE_KEY = "env(VAPID_PRIVATE_KEY)"
 VAPID_SUBJECT = "env(VAPID_SUBJECT)"
+# The public origin, for absolute links in share previews.
+SITE_URL = "env(SITE_URL)"
 
 [analytics]
 # Off: saves RAM; we use container logs instead.
@@ -449,6 +451,12 @@ verify_jwt = true
 # Called with the service key only (checked in the function); the gateway JWT check would reject it.
 [functions.media-gc]
 verify_jwt = false
+
+# Public: link previews and the card image (/s/* is rewritten here by the proxy).
+[functions.share]
+verify_jwt = false
+# Fonts, the resvg WebAssembly and the icon art are read at run time, so they ship with the bundle.
+static_files = ["./functions/share/assets/*", "./functions/share/fonts/*"]
 
 # GET is public (the VAPID public key); POST checks for a signed-in user or the service key itself.
 [functions.push]

@@ -674,5 +674,13 @@
     "emptyTitle": "No versions yet",
     "empty": "Cooks can tap “Make my version” to start from this recipe and change it their way.",
     "startedFrom": "This is your copy. Change anything, then publish. The original cook gets the credit as “Based on”."
+  },
+  "share": {
+    "button": "Share",
+    "title": "Share this recipe",
+    "whatsapp": "Share on WhatsApp",
+    "more": "More options…",
+    "copy": "Copy link",
+    "copied": "Link copied"
   }
 }

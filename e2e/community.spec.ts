@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
 
 // M4: likes, saves, comments and the notifications they create. A cook (recipe published through the
@@ -157,4 +158,56 @@ test('unlike and unsave take the counts back down', async ({ page }) => {
   await expect(page.getByRole('button', { name: /^Like/ })).not.toContainText('1');
   await page.goto('/saved');
   await expect(page.getByRole('heading', { name: 'Nothing saved yet' })).toBeVisible();
+});
+
+test('I cooked this: a photo with a note, counted, and the cook is told', async ({ page }) => {
+  await signIn(page, fan.email, `/r/${recipeId}`);
+  await page.getByRole('button', { name: 'I cooked this' }).click();
+  const sheet = page.getByRole('dialog', { name: 'I cooked this' });
+  await sheet
+    .getByLabel('Take or choose a photo')
+    .setInputFiles(fileURLToPath(new URL('fixtures/photo-with-gps.jpg', import.meta.url)));
+  await sheet.getByLabel('A short note (optional)').fill('Added extra curd');
+  await sheet.getByRole('button', { name: 'Post photo' }).click();
+  await expect(sheet).toBeHidden({ timeout: 30_000 });
+  const tile = page.locator('#cooked figure').filter({ hasText: 'Added extra curd' });
+  await expect(tile).toContainText(fan.name);
+  await expect(page.locator('#cooked-title')).toContainText('1');
+  // The published photo went through the pipeline: WebP in the public bucket.
+  await expect(tile.locator('img')).toHaveAttribute('src', /public-media\/cooked\/.+-400\.webp$/);
+});
+
+test('Make my version copies the recipe into my drafts with a note', async ({ page }) => {
+  await signIn(page, fan.email, `/r/${recipeId}`);
+  await page.getByRole('button', { name: 'Make my version' }).click();
+  await expect(page).toHaveURL(/\/edit\/[0-9a-f-]+\/basics\?from=variation$/);
+  await expect(page.getByRole('note')).toContainText('This is your copy');
+  await expect(page.getByLabel('Name in English')).toHaveValue(title);
+});
+
+test('Share offers WhatsApp with the /s/ link, and that link previews the recipe', async ({
+  page,
+  request,
+}) => {
+  await page.addInitScript(() => localStorage.setItem('rb-lang', 'en'));
+  await page.goto(`/r/${recipeId}`);
+  await page.getByRole('button', { name: 'Share' }).click();
+  const wa = page.getByRole('link', { name: 'Share on WhatsApp' });
+  await expect(wa).toHaveAttribute('href', new RegExp(`^https://wa\\.me/\\?text=.*%2Fs%2F${recipeId}$`));
+  // The preview page and the card, straight from the function (the proxy maps /s/* there).
+  const html = await (await request.get(`${API}/functions/v1/share/${recipeId}`)).text();
+  expect(html).toContain(`<meta property="og:title" content="${title}">`);
+  expect(html).toContain(`/s/${recipeId}/card.png`);
+  const card = await request.get(`${API}/functions/v1/share/${recipeId}/card.png`);
+  expect(card.status()).toBe(200);
+  expect(card.headers()['content-type']).toBe('image/png');
+  expect((await card.body()).length).toBeGreaterThan(20_000);
+  expect((await request.get(`${API}/functions/v1/share/00000000-0000-0000-0000-000000000000`)).status()).toBe(
+    404,
+  );
+});
+
+test('the cook sees cooked-it and version notifications', async ({ page }) => {
+  await signIn(page, cook.email, '/notifications');
+  await expect(page.getByText(`${fan.name} cooked your ${title}`)).toBeVisible();
 });

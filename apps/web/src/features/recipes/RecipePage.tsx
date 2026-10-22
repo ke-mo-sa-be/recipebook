@@ -149,7 +149,7 @@ export function RecipePage() {
           {r.description && <p className="text-lead">{r.description}</p>}
           {r.status === 'published' && (
             <div lang={lang}>
-              <ReactionBar recipeId={r.id} stats={r.stats} />
+              <ReactionBar recipeId={r.id} stats={r.stats} title={main} />
               <div className="mt-3">
                 <VariationActions recipe={r} />
               </div>

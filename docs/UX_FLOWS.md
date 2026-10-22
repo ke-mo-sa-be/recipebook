@@ -24,15 +24,15 @@ Bottom nav (mobile): **Home · Search · ➕ Add · Saved · Profile**, always w
 | `/settings`                                                                           | Language, text size, theme, profile edit, export my data, delete account                       | signed in                  |
 | `/admin` · `/admin/reports/:id` · `/admin/content` · `/admin/log`                     | Report queue, review, hidden content, audit log                                                | moderator                  |
 | `/admin/users` · `/admin/featured` · `/admin/dictionary`                              | Suspend and roles · Featured row · Ingredient dictionary                                       | admin (suspend: moderator) |
-| `/s/:id` (served by `share-page`, not the SPA)                                        | Open Graph HTML for WhatsApp, then a redirect to `/r/:id`                                      | public                     |
-| `/s/:id/card.png` (served by `share-card`)                                            | 1200×630 share image                                                                           | public                     |
+| `/s/:id` (served by the `share` function, not the SPA)                                | Open Graph HTML for WhatsApp, then a redirect to `/r/:id`                                      | public                     |
+| `/s/:id/card.png` (served by the `share` function)                                    | 1200×630 share image                                                                           | public                     |
 
 \* Visible to the public only if the recipe is published and visible. The owner and moderators can always see it.
 
 **Traefik routing (single host):**
 
 - `/auth/v1`, `/rest/v1`, `/storage/v1`, `/realtime/v1`, `/functions/v1` → gateway
-- `/s/*` → gateway, rewritten to `/functions/v1/share-page/*`
+- `/s/*` → gateway, rewritten to `/functions/v1/share/*`
 - everything else → nginx (SPA)
 
 Share links always use `/s/:id`, so WhatsApp's crawler (which doesn't run JavaScript) gets real meta tags, and nothing has to guess the user agent.

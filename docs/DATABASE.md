@@ -14,7 +14,8 @@ The source of truth for the data model. **Every schema change is a migration** i
 | Search: `private.recipe_search`, `private.search_vocab`, `manglish_key`, `search_recipes`, `category_counts`, `featured_at` | **Implemented (M3)** | `20261019090000_search.sql`            |
 | Reference data v2: "meen / മീൻ / fish" aliases on fish types (full idempotent upsert)                                       | **Implemented (M3)** | `20261019090100_reference_data_v2.sql` |
 | Likes, saves, comments, `recipe_stats` counts, notifications, push subscriptions, `popular_recipes`                         | **Implemented (M4)** | `20261020090000_community.sql`         |
-| Cooked posts, variations, collections                                                                                       | Planned (M4, part 2) | —                                      |
+| Cooked posts (`create_cooked_post`), variations (`make_variation`), cooked/variation counts and notifications               | **Implemented (M4)** | `20261022090000_cooked_variations.sql` |
+| Collections                                                                                                                 | Planned (v1.5)       | —                                      |
 | Reports, moderation actions, rate limits, posting passes                                                                    | Planned (M6)         | —                                      |
 
 Everything from §2 on shows the **approved design**. Sections not yet implemented are marked _(planned)_.

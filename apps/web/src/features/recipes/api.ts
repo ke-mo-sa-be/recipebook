@@ -98,7 +98,7 @@ const DETAIL = `id, author_id, slug, title_ml, title_en, description, content_la
   ingredients:recipe_ingredients(id, position, group_label, amount, amount_max, unit_code, ingredient_id, item_text, note),
   steps:recipe_steps(id, position, body, photo_path, timer_seconds),
   parent_recipe_id, is_variation,
-  parent:recipes!recipes_parent_recipe_id_fkey(id, slug, title_ml, title_en, content_lang, status,
+  parent:parent_recipe_id(id, slug, title_ml, title_en, content_lang, status,
     author:profiles!recipes_author_id_fkey(handle, display_name)),
   stats:recipe_stats(like_count, save_count, comment_count, cooked_count, variation_count)`;
 

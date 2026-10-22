@@ -4,6 +4,45 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-10-22
+
+### M4 part 2: cooked-it, versions and sharing (built and tested; waiting for phone acceptance)
+
+- **"I cooked this":**
+  - a photo plus a 140-character note, through the same pipeline as other photos (re-encoded, metadata stripped, WebP),
+  - `process-image` creates the post via `create_cooked_post`: an active account, a published recipe, five an hour,
+  - shown as a strip on the recipe, with a gallery at `/r/:id/cooked` and on the profile's "Cooked it" tab,
+  - counted, and the recipe's cook is notified (in-app and push).
+- **"Make my version":**
+  - `make_variation` copies a recipe (text, ingredients, steps, tags; not photos) into your drafts, linked to the original,
+  - the editor explains it's your copy,
+  - the version shows "Based on <recipe> · by <cook>", or that the original is no longer available,
+  - the original lists its published versions at `/r/:id/variations`; publishing counts and notifies,
+  - the profile's "Variations" tab is live.
+- **Sharing:**
+  - a Share button offers WhatsApp first (`wa.me` with the `/s/:id` link), then the phone's share sheet and Copy link,
+  - the new `share` function serves the `/s/:id` preview page (Open Graph tags, then a redirect) and the 1200×630 `card.png`.
+- **D4 spike (share card):** resvg 2.6.2 alone garbled Malayalam vowel signs. Shaping with HarfBuzz (`harfbuzzjs`) into glyph outlines matched Chromium glyph for glyph. The card therefore renders inside the Edge Function: no Chromium sidecar, about 1.5 s per render, cached for a day.
+- **Fixed during testing:** the "based on" embed needed PostgREST's column form (`parent:parent_recipe_id(…)`). The edge runtime bundles only code unless files are listed in `static_files`.
+- **Tests:**
+  - pgTAP 178, including 31 for cooked posts and versions,
+  - Deno 5 (push 2, share 3),
+  - unit 92,
+  - E2E 40.
+
+**Not yet verified / known gaps**
+
+- A real WhatsApp preview of a staging link: needs your phone.
+- The cooked-it and version notifications by push on a real phone.
+- The Malayalam strings, including the card's "പങ്കുവെച്ചത്" credit line, need a native speaker's check.
+
+**Test on your phone**
+
+1. Open a recipe, tap Share, then WhatsApp, and send the link to yourself. The preview should show the card with the Malayalam title.
+2. On someone else's recipe, tap "I cooked this", take a photo, add a note, then Post photo. It appears in the strip, and the cook gets a notification.
+3. Tap "Make my version", change something, then publish. Your version shows "Based on …", and the original shows "1 version".
+4. Your profile's Variations and Cooked it tabs list both.
+
 ## [0.4.0] - 2026-10-20
 
 ### M4 part 1: community and notifications (built and tested; waiting for phone acceptance)
@@ -321,7 +360,8 @@ The first tagged release. It covers the M0 design gate, the M1 foundation and au
 - The JS bundle is 225 KB gzipped against the 170 KB M7 budget. Route-level code splitting is planned.
 - E2E runs locally in the Playwright container. It joins CI in M2.
 
-[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.2...v0.3.0
 [0.2.2]: https://github.com/ke-mo-sa-be/recipebook/compare/v0.2.1...v0.2.2

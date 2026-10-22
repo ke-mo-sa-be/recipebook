@@ -12,6 +12,10 @@ import { useUserId } from '../auth/AuthProvider.tsx';
 import { useProfileByHandle } from './api.ts';
 import { useRecipesByAuthor } from '../recipes/api.ts';
 import { RecipeCard } from '../recipes/RecipeCard.tsx';
+import { titles } from '../recipes/api.ts';
+import { currentLang } from '../../i18n/index.ts';
+import { CookedTile } from '../community/CookedSection.tsx';
+import { useCookedByAuthor, useVariationsByAuthor } from '../community/cooked.ts';
 import { NotFoundPage } from '../../app/NotFoundPage.tsx';
 
 const TABS = ['recipes', 'variations', 'cooked', 'drafts'] as const;
@@ -33,21 +37,29 @@ export function ProfilePage() {
   const [tab, setTab] = useState<Tab>('recipes');
   const published = useRecipesByAuthor(query.data?.id, 'published');
   const drafts = useRecipesByAuthor(query.data && query.data.id === uid ? uid : undefined, 'draft');
+  const variations = useVariationsByAuthor(query.data?.id);
+  const cooked = useCookedByAuthor(query.data?.id);
 
   if (query.isPending) return <Skeleton className="h-48 w-full" />;
   if (query.isError) return <ErrorState onRetry={() => void query.refetch()} />;
   const p = query.data;
   if (!p) return <NotFoundPage />;
   const isMe = p.id === uid;
-  // Variations and cooked-it posts arrive in M4.
   const counts: Record<Tab, number> = {
     recipes: published.data?.length ?? 0,
-    variations: 0,
-    cooked: 0,
+    variations: variations.data?.length ?? 0,
+    cooked: cooked.data?.length ?? 0,
     drafts: drafts.data?.length ?? 0,
   };
   const tabs = TABS.filter((k) => k !== 'drafts' || isMe);
-  const list = tab === 'recipes' ? published.data : tab === 'drafts' ? drafts.data : [];
+  const list =
+    tab === 'recipes'
+      ? published.data
+      : tab === 'drafts'
+        ? drafts.data
+        : tab === 'variations'
+          ? variations.data
+          : [];
 
   return (
     <div className="flex flex-col gap-5">
@@ -130,7 +142,26 @@ export function ProfilePage() {
         ))}
       </div>
       <div role="tabpanel">
-        {list && list.length > 0 ? (
+        {tab === 'cooked' && cooked.data && cooked.data.length > 0 ? (
+          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {cooked.data.map((c) => (
+              <li key={c.id}>
+                <CookedTile
+                  post={c}
+                  recipeId={c.recipe_id}
+                  recipeLink={
+                    c.recipe
+                      ? {
+                          to: `/r/${c.recipe_id}/${c.recipe.slug}#cooked`,
+                          title: titles(c.recipe, currentLang()).main,
+                        }
+                      : undefined
+                  }
+                />
+              </li>
+            ))}
+          </ul>
+        ) : list && list.length > 0 ? (
           <div className="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {list.map((r) => (
               <RecipeCard key={r.id} recipe={r} to={tab === 'drafts' ? `/edit/${r.id}/basics` : undefined} />

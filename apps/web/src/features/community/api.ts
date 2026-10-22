@@ -204,7 +204,7 @@ export const useDeleteComment = (recipeId: string) =>
 
 export type Notification = {
   id: number;
-  kind: 'like' | 'comment';
+  kind: 'like' | 'comment' | 'cooked' | 'variation';
   created_at: string;
   read_at: string | null;
   recipe: {

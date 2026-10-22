@@ -20,6 +20,8 @@ import { durationText } from '../editor/time.ts';
 import { DietMark } from './DietMark.tsx';
 import { Comments } from '../community/Comments.tsx';
 import { ReactionBar } from '../community/ReactionBar.tsx';
+import { CookedSection } from '../community/CookedSection.tsx';
+import { BasedOn, VariationActions } from '../community/Variations.tsx';
 import { amountText, lineSticker } from './format.ts';
 import { titles, useDeleteRecipe, useLookups, useRecipe, useSetStatus, type IngredientLine } from './api.ts';
 
@@ -104,6 +106,9 @@ export function RecipePage() {
                 <span className="block">{main || t('recipe.untitled')}</span>
                 {other && <span className="block text-h2 text-text-soft">{other}</span>}
               </h1>
+              <div lang={lang} className="mt-2">
+                <BasedOn recipe={r} />
+              </div>
             </div>
             <Polaroid
               path={r.cover_path}
@@ -145,6 +150,9 @@ export function RecipePage() {
           {r.status === 'published' && (
             <div lang={lang}>
               <ReactionBar recipeId={r.id} stats={r.stats} />
+              <div className="mt-3">
+                <VariationActions recipe={r} />
+              </div>
             </div>
           )}
 
@@ -283,7 +291,10 @@ export function RecipePage() {
 
       {r.status === 'published' && (
         <div lang={lang} className="lg:max-w-(--rb-size-reading-max)">
-          <Comments recipeId={r.id} open />
+          <CookedSection recipeId={r.id} count={r.stats?.cooked_count ?? 0} />
+          <div className="mt-8">
+            <Comments recipeId={r.id} open />
+          </div>
         </div>
       )}
 

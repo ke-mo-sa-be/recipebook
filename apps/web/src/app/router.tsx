@@ -11,6 +11,7 @@ import { RecipePage } from '../features/recipes/RecipePage.tsx';
 import { MePage } from '../features/profile/MePage.tsx';
 import { ProfilePage } from '../features/profile/ProfilePage.tsx';
 import { NotificationsPage } from '../features/community/NotificationsPage.tsx';
+import { CookedGalleryPage, VariationsPage } from '../features/community/RecipeListsPages.tsx';
 import { CategoryPage } from '../features/search/CategoryPage.tsx';
 import { WhatsNewPage } from '../features/about/WhatsNewPage.tsx';
 import { SettingsPage } from '../features/settings/SettingsPage.tsx';
@@ -54,6 +55,8 @@ export const routes: RouteObject[] = [
           </RequireAuth>
         ),
       },
+      { path: 'r/:id/cooked', element: <CookedGalleryPage /> },
+      { path: 'r/:id/variations', element: <VariationsPage /> },
       { path: 'r/:id/:slug?', element: <RecipePage /> },
       { path: 'c/:slug', element: <CategoryPage /> },
       {

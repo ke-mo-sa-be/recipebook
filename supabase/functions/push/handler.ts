@@ -22,7 +22,7 @@ const PUSH_SERVICE =
 
 type Row = {
   id: number;
-  kind: 'like' | 'comment';
+  kind: 'like' | 'comment' | 'cooked' | 'variation';
   lang: 'ml' | 'en';
   actor_name: string;
   recipe_id: string;
@@ -38,10 +38,14 @@ const TEXT = {
   en: {
     like: (who: string) => `❤️ ${who} liked your recipe`,
     comment: (who: string, recipe: string) => `💬 ${who} commented on ${recipe}`,
+    cooked: (who: string) => `📸 ${who} cooked your recipe`,
+    variation: (who: string) => `🍲 ${who} made their own version of your recipe`,
   },
   ml: {
     like: (who: string) => `❤️ ${who} നിങ്ങളുടെ റെസിപ്പി ഇഷ്ടപ്പെട്ടു`,
     comment: (who: string, recipe: string) => `💬 ${who} ${recipe}-ൽ കമന്റ് ചെയ്തു`,
+    cooked: (who: string) => `📸 ${who} നിങ്ങളുടെ റെസിപ്പി ഉണ്ടാക്കി നോക്കി`,
+    variation: (who: string) => `🍲 ${who} നിങ്ങളുടെ റെസിപ്പിയുടെ സ്വന്തം പതിപ്പ് ഉണ്ടാക്കി`,
   },
 };
 
@@ -49,10 +53,12 @@ const TEXT = {
 export function payload(n: Row) {
   const lang = n.lang === 'en' ? 'en' : 'ml';
   const recipe = (lang === 'ml' ? n.title_ml || n.title_en : n.title_en || n.title_ml) ?? '';
-  const url = `/r/${n.recipe_id}/${n.recipe_slug}${n.kind === 'comment' ? '#comments' : ''}`;
+  const anchor = n.kind === 'comment' ? '#comments' : n.kind === 'cooked' ? '#cooked' : '';
+  const url = `/r/${n.recipe_id}/${n.recipe_slug}${anchor}`;
+  const t = TEXT[lang];
   return {
-    title: n.kind === 'like' ? TEXT[lang].like(n.actor_name) : TEXT[lang].comment(n.actor_name, recipe),
-    body: n.kind === 'like' ? recipe : (n.comment_body ?? ''),
+    title: n.kind === 'comment' ? t.comment(n.actor_name, recipe) : t[n.kind](n.actor_name),
+    body: n.kind === 'comment' ? (n.comment_body ?? '') : recipe,
     url,
     tag: `${n.kind}-${n.recipe_id}`,
     lang,

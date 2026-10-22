@@ -620,14 +620,16 @@
     "soft": "Likes and comments on your recipes.",
     "bellUnread_one": "{{count}} new notification",
     "bellUnread_other": "{{count}} new notifications",
-    "liked": "{{who}} liked your {{recipe}}",
-    "commented": "{{who}} commented on your {{recipe}}",
     "someone": "Someone",
     "new": "new",
     "empty": {
       "title": "Nothing yet",
       "body": "When someone likes or comments on your recipes, you'll see it here."
-    }
+    },
+    "like": "{{who}} liked your {{recipe}}",
+    "comment": "{{who}} commented on your {{recipe}}",
+    "cooked": "{{who}} cooked your {{recipe}}",
+    "variation": "{{who}} published their own version of your recipe: {{recipe}}"
   },
   "push": {
     "title": "Notifications on this phone",
@@ -643,5 +645,34 @@
       "failed": "Couldn't turn on notifications. Please try again.",
       "notConfigured": "Notifications aren't set up on this server yet."
     }
+  },
+  "cooked": {
+    "title": "Cooked it",
+    "cta": "I cooked this",
+    "empty": "No photos yet. Made it? Show everyone how it turned out.",
+    "emptyTitle": "No photos yet",
+    "sheetTitle": "I cooked this",
+    "sheetBody": "Share a photo of what you made. Location and camera details are removed before anyone sees it.",
+    "choosePhoto": "Take or choose a photo",
+    "changePhoto": "Choose another photo",
+    "noteLabel": "A short note (optional)",
+    "notePlaceholder": "Added extra green chilli…",
+    "post": "Post photo",
+    "photoAlt": "{{name}}'s dish",
+    "errors": {
+      "tooFast": "That's a lot of photos for one hour. Please try again later."
+    }
+  },
+  "variations": {
+    "make": "Make my version",
+    "count_one": "{{count}} version",
+    "count_other": "{{count}} versions",
+    "title": "Versions",
+    "basedOn": "Based on",
+    "by": "by {{name}}",
+    "originalRemoved": "A version of a recipe that is no longer available.",
+    "emptyTitle": "No versions yet",
+    "empty": "Cooks can tap “Make my version” to start from this recipe and change it their way.",
+    "startedFrom": "This is your copy. Change anything, then publish. The original cook gets the credit as “Based on”."
   }
 }

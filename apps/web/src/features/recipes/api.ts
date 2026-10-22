@@ -64,9 +64,26 @@ export type Recipe = {
   ingredients: IngredientLine[];
   steps: Step[];
   stats: RecipeStats | null;
+  parent_recipe_id?: string | null;
+  is_variation?: boolean;
+  parent?: {
+    id: string;
+    slug: string;
+    title_ml: string | null;
+    title_en: string | null;
+    content_lang: Lang;
+    status: 'draft' | 'published';
+    author: { handle: string; display_name: string } | null;
+  } | null;
 };
 
-export type RecipeStats = { like_count: number; save_count: number; comment_count: number };
+export type RecipeStats = {
+  like_count: number;
+  save_count: number;
+  comment_count: number;
+  cooked_count: number;
+  variation_count: number;
+};
 
 /** A recipe's own title in the language it was written in, then the other one. */
 export function titles(r: Pick<Recipe, 'title_ml' | 'title_en' | 'content_lang'>, uiLang: Lang) {
@@ -80,12 +97,15 @@ const DETAIL = `id, author_id, slug, title_ml, title_en, description, content_la
   author:profiles!recipes_author_id_fkey(handle, display_name, avatar_path, district),
   ingredients:recipe_ingredients(id, position, group_label, amount, amount_max, unit_code, ingredient_id, item_text, note),
   steps:recipe_steps(id, position, body, photo_path, timer_seconds),
-  stats:recipe_stats(like_count, save_count, comment_count)`;
+  parent_recipe_id, is_variation,
+  parent:recipes!recipes_parent_recipe_id_fkey(id, slug, title_ml, title_en, content_lang, status,
+    author:profiles!recipes_author_id_fkey(handle, display_name)),
+  stats:recipe_stats(like_count, save_count, comment_count, cooked_count, variation_count)`;
 
 export const CARD = `id, slug, title_ml, title_en, content_lang, category_id, diet, total_minutes, servings, cover_path, status,
   published_at, updated_at, author:profiles!recipes_author_id_fkey(handle, display_name, avatar_path, district),
   ingredients:recipe_ingredients(ingredient_id, position),
-  stats:recipe_stats(like_count, save_count, comment_count)`;
+  stats:recipe_stats(like_count, save_count, comment_count, cooked_count, variation_count)`;
 
 export type RecipeCardData = Omit<
   Recipe,

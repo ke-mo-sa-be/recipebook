@@ -1,7 +1,8 @@
 // The photo pipeline (docs/API.md → Storage). A signed-in person uploads a photo to their own
 // incoming/<uid>/ folder; this function checks they may attach it, re-encodes it through Storage's
 // image transform (imgproxy: resize + WebP, camera/GPS data dropped), strips any remaining WebP
-// metadata, writes three sizes to the public bucket, points the row at it and deletes the original.
+// metadata, writes three sizes to the public bucket, points the row at it (or, for "I cooked this",
+// creates the post) and deletes the original.
 // Users can never write the public bucket directly.
 import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
@@ -17,7 +18,24 @@ const body = z.discriminatedUnion('purpose', [
   z.object({ purpose: z.literal('avatar'), path: z.string().nullable() }),
   z.object({ purpose: z.literal('recipe-cover'), path: z.string().nullable(), recipeId: z.uuid() }),
   z.object({ purpose: z.literal('step'), path: z.string().nullable(), recipeId: z.uuid(), stepId: z.uuid() }),
+  // "I cooked this": a new post on someone's published recipe (create_cooked_post checks the rest).
+  z.object({
+    purpose: z.literal('cooked'),
+    path: z.string(),
+    recipeId: z.uuid(),
+    note: z.string().max(140).optional(),
+  }),
 ]);
+
+/** A refusal from the database that the person should see (its message is an i18n key). */
+class Refused extends Error {
+  constructor(
+    public status: number,
+    public key: string,
+  ) {
+    super(key);
+  }
+}
 type Body = z.infer<typeof body>;
 
 Deno.serve(async (req) => {
@@ -50,7 +68,7 @@ Deno.serve(async (req) => {
     return fail(req, 403, 'errors.forbidden');
   }
 
-  if (input.purpose !== 'avatar') {
+  if (input.purpose === 'recipe-cover' || input.purpose === 'step') {
     const { data: recipe } = await asUser
       .from('recipes')
       .select('id, author_id')
@@ -73,6 +91,17 @@ Deno.serve(async (req) => {
       return admin.from('profiles').update({ avatar_path: base }).eq('id', user.id);
     if (input.purpose === 'recipe-cover')
       return admin.from('recipes').update({ cover_path: base }).eq('id', input.recipeId);
+    if (input.purpose === 'cooked') {
+      const { error } = await admin.rpc('create_cooked_post', {
+        author: user.id,
+        recipe: input.recipeId,
+        photo: base,
+        note: input.note ?? null,
+      });
+      if (error?.message === 'cooked.errors.tooFast') throw new Refused(429, error.message);
+      if (error?.code === '42501') throw new Refused(403, 'errors.forbidden');
+      return { error };
+    }
     return admin.from('recipe_steps').update({ photo_path: base }).eq('id', input.stepId);
   };
 
@@ -88,7 +117,9 @@ Deno.serve(async (req) => {
       ? `avatars/${user.id}`
       : input.purpose === 'recipe-cover'
         ? `recipes/${user.id}/${input.recipeId}`
-        : `steps/${user.id}/${input.recipeId}`;
+        : input.purpose === 'cooked'
+          ? `cooked/${user.id}`
+          : `steps/${user.id}/${input.recipeId}`;
   const base = `${folder}/${crypto.randomUUID()}`;
   const written: string[] = [];
   try {
@@ -118,6 +149,7 @@ Deno.serve(async (req) => {
       reason: e instanceof Error ? e.message : String(e),
     });
     if (written.length) await admin.storage.from('public-media').remove(written);
+    if (e instanceof Refused) return fail(req, e.status, e.key);
     return fail(req, 422, 'media.errors.processFailed');
   } finally {
     // The original (possibly with GPS data) never lingers.

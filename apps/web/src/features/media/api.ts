@@ -7,7 +7,8 @@ export type PhotoSize = 400 | 800 | 1600;
 export type PhotoTarget =
   | { purpose: 'avatar' }
   | { purpose: 'recipe-cover'; recipeId: string }
-  | { purpose: 'step'; recipeId: string; stepId: string };
+  | { purpose: 'step'; recipeId: string; stepId: string }
+  | { purpose: 'cooked'; recipeId: string; note?: string };
 
 /** Public URL of a processed photo (stored as a base path; files are <base>-<size>.webp). */
 export function photoUrl(base: string, size: PhotoSize = 800): string {
@@ -16,6 +17,17 @@ export function photoUrl(base: string, size: PhotoSize = 800): string {
 
 export function photoSrcSet(base: string): string {
   return ([400, 800, 1600] as const).map((s) => `${photoUrl(base, s)} ${s}w`).join(', ');
+}
+
+/** The i18n key a function refused with (e.g. cooked.errors.tooFast), or the fallback. */
+async function refusalKey(error: unknown, fallback: string): Promise<string> {
+  const res = (error as { context?: Response } | null)?.context;
+  try {
+    const code = res ? ((await res.clone().json()) as { error?: { code?: string } }).error?.code : undefined;
+    return code && /^[a-z]+\.errors\.[a-zA-Z]+$/.test(code) ? code : fallback;
+  } catch {
+    return fallback;
+  }
 }
 
 /** Phone → private incoming folder → process-image (re-encode, strip metadata, publish). Returns the base path. */
@@ -33,7 +45,7 @@ export async function uploadPhoto(file: File, target: PhotoTarget): Promise<stri
   const { data, error } = await supabase.functions.invoke<{ path: string }>('process-image', {
     body: { ...target, path },
   });
-  if (error || !data?.path) throw new AppError('media.errors.processFailed', error);
+  if (error || !data?.path) throw new AppError(await refusalKey(error, 'media.errors.processFailed'), error);
   return data.path;
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { Heart, MessageCircle } from 'lucide-react';
+import { Camera, GitFork, Heart, MessageCircle } from 'lucide-react';
 import { Avatar } from '../../components/ui/Avatar.tsx';
 import { PageHeader } from '../../components/ui/PageHeader.tsx';
 import { EmptyState, ErrorState, Skeleton } from '../../components/ui/States.tsx';
@@ -18,7 +18,8 @@ function Item({ n }: { n: Notification }) {
   if (!n.recipe) return null;
   const { main } = titles(n.recipe, lang);
   const who = n.actor?.display_name ?? t('notifications.someone');
-  const to = `/r/${n.recipe.id}/${n.recipe.slug}${n.kind === 'comment' ? '#comments' : ''}`;
+  const anchor = n.kind === 'comment' ? '#comments' : n.kind === 'cooked' ? '#cooked' : '';
+  const to = `/r/${n.recipe.id}/${n.recipe.slug}${anchor}`;
   return (
     <li>
       <Link to={to} className={cx('card flex items-start gap-3 p-4', !n.read_at && 'ring-2 ring-accent/40')}>
@@ -27,17 +28,17 @@ function Item({ n }: { n: Notification }) {
           <span className="absolute -right-1 -bottom-1 inline-flex size-5 items-center justify-center rounded-pill bg-surface shadow-sm">
             {n.kind === 'like' ? (
               <Heart aria-hidden className="size-3.5 text-accent" fill="currentColor" />
+            ) : n.kind === 'cooked' ? (
+              <Camera aria-hidden className="size-3.5" />
+            ) : n.kind === 'variation' ? (
+              <GitFork aria-hidden className="size-3.5" />
             ) : (
               <MessageCircle aria-hidden className="size-3.5" />
             )}
           </span>
         </span>
         <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <span className="wrap-break-word">
-            {n.kind === 'like'
-              ? t('notifications.liked', { who, recipe: main })
-              : t('notifications.commented', { who, recipe: main })}
-          </span>
+          <span className="wrap-break-word">{t(`notifications.${n.kind}`, { who, recipe: main })}</span>
           {n.kind === 'comment' && n.comment && (
             <span className="line-clamp-2 text-small text-text-muted">“{n.comment.body}”</span>
           )}

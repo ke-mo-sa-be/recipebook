@@ -133,4 +133,10 @@ Deno.test('notifications are worded in the recipient’s language and link to th
   assertMatch(comment.title, /Ammini മീൻ കറി-ൽ കമന്റ് ചെയ്തു/);
   assertEquals(comment.body, 'Lovely with appam!');
   assertEquals(comment.url, '/r/r1/kerala-fish-curry#comments');
+  const cooked = payload({ ...base, kind: 'cooked', lang: 'en' });
+  assertEquals(cooked.title, '📸 Ammini cooked your recipe');
+  assertEquals(cooked.url, '/r/r1/kerala-fish-curry#cooked');
+  const version = payload({ ...base, kind: 'variation', lang: 'ml' });
+  assertMatch(version.title, /സ്വന്തം പതിപ്പ്/);
+  assertEquals(version.body, 'മീൻ കറി');
 });

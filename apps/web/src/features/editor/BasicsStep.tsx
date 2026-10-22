@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import type { Lang } from '@recipebook/core';
 import { Headline } from '../../components/ui/Headline.tsx';
@@ -23,9 +24,15 @@ export function BasicsStep({ fields, setField }: { fields: EditorFields; setFiel
   ];
   if (!ml) titleFields.reverse();
 
+  const fromVariation = useSearchParams()[0].get('from') === 'variation';
   return (
     <div className="flex flex-col gap-6">
       <Headline soft={t('wizard.basics.soft')}>{t('wizard.basics.title')}</Headline>
+      {fromVariation && (
+        <p role="note" className="rounded-lg bg-leaf-soft p-3 text-small text-on-leaf-soft">
+          {t('variations.startedFrom')}
+        </p>
+      )}
       <ChoiceGroup<Lang>
         legend={t('wizard.new.writingIn')}
         value={fields.content_lang}
